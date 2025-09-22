@@ -1,0 +1,230 @@
+/*
+  Головний файл стилів для застосунку. Всі коментарі українською мовою для зручності розробників.
+*/
+
+:root {
+  /* Основні кольори інтерфейсу */
+  color-scheme: dark;
+  --bg-body: #050508;
+  --bg-canvas: #0b0b0f;
+  --text-main: #f5f5f5;
+  --accent: #d7d7ff;
+  --overlay-bg: rgba(11, 11, 15, 0.85);
+}
+
+/* Скидання базових відступів для передбачуваного рендеру */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  /* Темний фон та приховування вертикальної прокрутки під час рендера */
+  background: var(--bg-body);
+  color: var(--text-main);
+  font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
+  line-height: 1.4;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+/* Візуально прихований текст для доступності (екранні читачі) */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.top-bar {
+  /* Закріплюємо панель зверху та на всю ширину */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  background: rgba(15, 15, 22, 0.96);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 100;
+}
+
+.top-bar__left {
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.top-bar__inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.top-bar__inputs input,
+.top-bar__inputs select {
+  /* Поля вводу мають простий футуристичний вигляд без зайвих рамок */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: var(--text-main);
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+.fallback-inputs {
+  /* Фолбек-селекти розміщуємо в рядок для економії простору */
+  display: flex;
+}
+
+.fallback-inputs[hidden] {
+  display: none !important;
+}
+
+.fallback-inputs .fallback-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.launch-button,
+.info-button,
+.modal__close {
+  /* Прості кнопки без зайвих ефектів, але з читабельним текстом */
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-main);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.launch-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.launch-button:not([disabled]):hover,
+.info-button:hover,
+.modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.info-button {
+  margin-left: auto;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+
+#scene {
+  /* Полотно розтягується на всю ширину та висоту, розраховану в JS */
+  display: block;
+  width: 100vw;
+  background: var(--bg-canvas);
+  margin-top: 56px;
+}
+
+.modal[hidden] {
+  display: none;
+}
+
+.modal {
+  /* Оверлей перекриває весь екран */
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+}
+
+.modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--overlay-bg);
+  opacity: 0;
+  animation: overlayFade 160ms ease forwards;
+}
+
+.modal__dialog {
+  position: relative;
+  max-width: 420px;
+  width: calc(100% - 32px);
+  padding: 24px;
+  border-radius: 12px;
+  background: rgba(20, 20, 30, 0.94);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.35);
+  transform: translateY(16px);
+  opacity: 0;
+  animation: dialogIn 180ms ease forwards;
+}
+
+.modal__title {
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+}
+
+.modal__text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+@keyframes overlayFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 680px) {
+  .top-bar {
+    gap: 8px;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 12px 16px;
+  }
+
+  #scene {
+    margin-top: 88px;
+  }
+
+  .info-button {
+    order: 2;
+  }
+
+  .launch-button {
+    order: 3;
+    width: 100%;
+  }
+}

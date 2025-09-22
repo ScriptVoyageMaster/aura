@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>aura.bit.city — генератор лісажу-кривих</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <!-- Верхня панель керування, що залишається на місці під час прокрутки -->
+    <header class="top-bar">
+      <div class="top-bar__left">Твоя дата народження</div>
+      <div class="top-bar__inputs" id="native-inputs">
+        <label class="visually-hidden" for="birth-date">Дата народження</label>
+        <input id="birth-date" type="date" required />
+        <label class="visually-hidden" for="birth-time">Час народження</label>
+        <input id="birth-time" type="time" step="60" />
+      </div>
+      <!-- Контейнер для фолбеків, показується лише якщо браузер не підтримує типи date/time -->
+      <div class="top-bar__inputs fallback-inputs" id="fallback-inputs" hidden>
+        <div class="fallback-group">
+          <label for="fallback-day">День</label>
+          <select id="fallback-day"></select>
+        </div>
+        <div class="fallback-group">
+          <label for="fallback-month">Місяць</label>
+          <select id="fallback-month"></select>
+        </div>
+        <div class="fallback-group">
+          <label for="fallback-year">Рік</label>
+          <select id="fallback-year"></select>
+        </div>
+        <div class="fallback-group">
+          <label for="fallback-hour">Година</label>
+          <select id="fallback-hour"></select>
+        </div>
+        <div class="fallback-group">
+          <label for="fallback-minute">Хвилина</label>
+          <select id="fallback-minute"></select>
+        </div>
+      </div>
+      <button id="launch" class="launch-button" disabled>Запустити</button>
+      <button id="info" class="info-button" aria-haspopup="dialog" aria-controls="info-modal">?</button>
+    </header>
+
+    <!-- Головне полотно для рендеру лісажу-кривих -->
+    <canvas id="scene" aria-hidden="true"></canvas>
+
+    <!-- Модальне вікно з поясненням задуму сайту -->
+    <div class="modal" id="info-modal" hidden role="dialog" aria-modal="true" aria-labelledby="info-modal-title">
+      <div class="modal__overlay" id="modal-overlay"></div>
+      <div class="modal__dialog">
+        <div class="modal__content">
+          <h2 class="modal__title" id="info-modal-title">Про цей проєкт</h2>
+          <p class="modal__text">
+            Цей сайт відкриває приховану геометрію вашого життя.<br />
+            На основі дати й часу народження народжується унікальний візерунок — візуальний відбиток вашої присутності у Всесвіті.<br />
+            Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.
+          </p>
+          <button class="modal__close" id="modal-close">Добре</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/utils/prng.js"></script>
+    <script src="assets/js/scenes/lissajous.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
