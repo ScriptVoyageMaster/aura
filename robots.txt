@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://ТВІЙ-ДОМЕН/sitemap.xml
+
+Sitemap: https://aura.bit.city/sitemap.xml
