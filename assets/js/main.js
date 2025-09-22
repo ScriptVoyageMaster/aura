@@ -1,8 +1,15 @@
-// Основний файл, що керує всім життєвим циклом застосунку: від роботи інтерфейсу до анімації полотна.
-// Коментарі максимально деталізовані українською мовою, щоб навіть недосвідчений користувач міг розібратися.
+// Основний модуль, що керує інтерфейсом, багатомовністю та життєвим циклом сцен.
+// Коментарі максимально детальні українською мовою, аби навіть новачок зрозумів кожен крок.
 
 (() => {
   "use strict";
+
+  if (!window.CONFIG) {
+    console.error("CONFIG не знайдено. Переконайтесь, що config.js підключено перед main.js.");
+    return;
+  }
+
+  const CONFIG = window.CONFIG;
 
   // --- 1. Збір посилань на DOM-елементи ---
   const canvas = document.getElementById("scene");
@@ -17,10 +24,14 @@
   const timeInput = document.getElementById("birth-time");
   const launchButton = document.getElementById("launch");
   const infoButton = document.getElementById("info");
+  const sceneToggle = document.getElementById("scene-toggle");
+  const langToggle = document.getElementById("lang-toggle");
+  const sceneButtons = Array.from(sceneToggle.querySelectorAll("[data-scene]"));
+  const langButtons = Array.from(langToggle.querySelectorAll("[data-lang]"));
+
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
   const modalClose = document.getElementById("modal-close");
-  const modalText = modal.querySelector(".modal__text");
 
   const nativeInputsContainer = document.getElementById("native-inputs");
   const fallbackInputsContainer = document.getElementById("fallback-inputs");
@@ -30,14 +41,13 @@
   const fallbackHour = document.getElementById("fallback-hour");
   const fallbackMinute = document.getElementById("fallback-minute");
 
-  // Переконуємося, що текст модального вікна відповідає константі з config.js.
-  modalText.innerHTML = MODAL_TEXT;
+  // --- 2. Дані сцен ---
+  const scenes = {
+    lissajous: window.lissajousScene,
+    rune: window.runeScene,
+  };
 
-  // --- 2. Загальні допоміжні змінні та об'єкти стану ---
-  const scene = window.lissajousScene;
-  const frameInterval = 1000 / TARGET_FPS; // Інтервал між кадрами для фіксованих 30 FPS.
-  const pauseReasons = new Set(); // Набір причин, які тимчасово ставлять анімацію на паузу.
-
+  // --- 3. Глобальний стан ---
   const state = {
     isRunning: false,
     isPaused: false,
@@ -46,14 +56,27 @@
     cssWidth: 0,
     cssHeight: 0,
     effectiveDpr: 1,
+    designScale: 1,
+    designOffsetX: 0,
+    designOffsetY: 0,
+    activeSceneKey: "",
+    sceneInstance: null,
+    runStartedAt: 0,
+    lang: CONFIG.i18n.default,
+    usingFallback: false,
+    currentSeed: "",
   };
 
-  // --- 3. Корисні функції для дат, часу та форматування ---
+  const performanceTracker = { samples: [] };
+  const pauseReasons = new Set();
 
-  /**
-   * Повертає сьогоднішню дату у форматі YYYY-MM-DD.
-   * Використовуємо локальний час, щоб уникнути зміщень через часові пояси.
-   */
+  const frameInterval = 1000 / CONFIG.global.TARGET_FPS;
+  const scenesDesignWidth = CONFIG.global.DESIGN_WIDTH;
+  const scenesDesignHeight = CONFIG.global.DESIGN_HEIGHT;
+
+  // --- 4. Допоміжні функції ---
+
+  /** Повертає рядок сьогоднішньої дати у форматі YYYY-MM-DD. */
   function getTodayIso() {
     const now = new Date();
     const year = now.getFullYear();
@@ -62,180 +85,69 @@
     return `${year}-${month}-${day}`;
   }
 
-  /**
-   * Обчислює кількість днів у конкретному місяці певного року.
-   * @param {number} year - Рік, наприклад 1995.
-   * @param {number} month - Місяць від 1 до 12.
-   */
+  /** Рахує кількість днів у конкретному місяці певного року. */
   function getDaysInMonth(year, month) {
     return new Date(year, month, 0).getDate();
   }
 
-  /**
-   * Додає провідний нуль до числових значень, щоб отримати рядок виду "05".
-   * @param {number} value - Ціле число.
-   */
+  /** Додає провідний нуль до чисел (наприклад, 7 → "07"). */
   function pad(value) {
     return String(value).padStart(2, "0");
   }
 
-  /**
-   * Перевіряє, чи підтримує браузер певний тип інпуту (date або time).
-   * @param {string} type - Ім'я типу.
-   */
+  /** Перевіряє, чи підтримує браузер певний тип input (date/time). */
   function isInputTypeSupported(type) {
     const input = document.createElement("input");
     input.setAttribute("type", type);
     return input.type === type;
   }
 
-  /**
-   * Готує об'єкт з частинами сьогоднішньої дати.
-   */
-  function getTodayParts() {
-    const today = getTodayIso();
-    const [year, month, day] = today.split("-");
-    return { year, month, day };
-  }
-
-  // --- 4. Налаштування полів дати та часу ---
-
-  DATE_MAX = getTodayIso();
-  dateInput.min = DATE_MIN;
-  dateInput.max = DATE_MAX;
-
-  if (!timeInput.value) {
-    timeInput.value = DEFAULT_TIME;
-  }
-
-  const supportsNativeDate = isInputTypeSupported("date");
-  const supportsNativeTime = isInputTypeSupported("time");
-  const usingFallback = !(supportsNativeDate && supportsNativeTime);
-
-  nativeInputsContainer.hidden = usingFallback;
-  fallbackInputsContainer.hidden = !usingFallback;
-
-  // --- 5. Налаштування фолбек-селекторів (якщо потрібні) ---
-  if (usingFallback) {
-    initFallbackInputs();
-  }
-
-  /**
-   * Заповнює селектори фолбеку значеннями та встановлює дефолтні вибори.
-   */
-  function initFallbackInputs() {
-    const { year, month, day } = getTodayParts();
-
-    // 5.1. Список років (від поточного вниз до 1900).
-    const currentYear = Number(year);
-    for (let y = currentYear; y >= Number(DATE_MIN.slice(0, 4)); y -= 1) {
-      const option = document.createElement("option");
-      option.value = String(y);
-      option.textContent = String(y);
-      fallbackYear.append(option);
+  function getStored(key) {
+    try {
+      return window.localStorage.getItem(key);
+    } catch (error) {
+      return null;
     }
-
-    // 5.2. Список місяців із короткими українськими підписами.
-    const monthLabels = [
-      "Січ",
-      "Лют",
-      "Бер",
-      "Кві",
-      "Тра",
-      "Чер",
-      "Лип",
-      "Сер",
-      "Вер",
-      "Жов",
-      "Лис",
-      "Гру",
-    ];
-    monthLabels.forEach((label, index) => {
-      const option = document.createElement("option");
-      option.value = pad(index + 1);
-      option.textContent = label;
-      fallbackMonth.append(option);
-    });
-
-    // 5.3. Список годин (0..23) і хвилин (0..59).
-    for (let h = 0; h < 24; h += 1) {
-      const option = document.createElement("option");
-      option.value = pad(h);
-      option.textContent = pad(h);
-      fallbackHour.append(option);
-    }
-    for (let m = 0; m < 60; m += 1) {
-      const option = document.createElement("option");
-      option.value = pad(m);
-      option.textContent = pad(m);
-      fallbackMinute.append(option);
-    }
-
-    // Встановлюємо дефолтні значення (сьогоднішня дата + час за замовчуванням).
-    fallbackYear.value = year;
-    fallbackMonth.value = month;
-    syncFallbackDayOptions();
-    fallbackDay.value = day.padStart(2, "0");
-
-    const [defaultHour, defaultMinute] = DEFAULT_TIME.split(":");
-    fallbackHour.value = defaultHour;
-    fallbackMinute.value = defaultMinute;
-
-    // Слухаємо зміни, щоб підтримувати валідність дати й оновлювати кнопку запуску.
-    fallbackYear.addEventListener("change", () => {
-      syncFallbackDayOptions();
-      updateLaunchState();
-    });
-    fallbackMonth.addEventListener("change", () => {
-      syncFallbackDayOptions();
-      updateLaunchState();
-    });
-    fallbackDay.addEventListener("change", updateLaunchState);
-    fallbackHour.addEventListener("change", updateLaunchState);
-    fallbackMinute.addEventListener("change", updateLaunchState);
-
-    // Для фокусів/блюрів додаємо паузу, щоб полегшити користувачу вибір.
-    [fallbackYear, fallbackMonth, fallbackDay, fallbackHour, fallbackMinute].forEach((el) => {
-      el.addEventListener("focus", () => addPauseReason("fallback-input"));
-      el.addEventListener("blur", () => removePauseReason("fallback-input"));
-    });
   }
 
-  /**
-   * Оновлює список доступних днів у фолбек-селекторі з урахуванням вибраного року та місяця.
-   */
-  function syncFallbackDayOptions() {
-    const yearValue = Number(fallbackYear.value);
-    const monthValue = Number(fallbackMonth.value);
-    if (!yearValue || !monthValue) {
-      return;
+  function setStored(key, value) {
+    try {
+      window.localStorage.setItem(key, value);
+    } catch (error) {
+      // Ігноруємо помилки localStorage (наприклад, у приватному режимі).
     }
-    const days = getDaysInMonth(yearValue, monthValue);
-    const currentDay = Number(fallbackDay.value) || 1;
-
-    fallbackDay.innerHTML = "";
-    for (let d = 1; d <= days; d += 1) {
-      const option = document.createElement("option");
-      option.value = pad(d);
-      option.textContent = String(d);
-      fallbackDay.append(option);
-    }
-
-    const safeDay = Math.min(currentDay, days);
-    fallbackDay.value = pad(safeDay);
   }
 
-  // --- 6. Події для нативних інпутів ---
-  if (!usingFallback) {
-    dateInput.addEventListener("focus", () => addPauseReason("native-input"));
-    dateInput.addEventListener("blur", () => removePauseReason("native-input"));
-    timeInput.addEventListener("focus", () => addPauseReason("native-input"));
-    timeInput.addEventListener("blur", () => removePauseReason("native-input"));
-    dateInput.addEventListener("input", updateLaunchState);
-    timeInput.addEventListener("input", updateLaunchState);
+  function detectInitialLang() {
+    const saved = getStored("lang");
+    if (saved && CONFIG.i18n.dict[saved]) {
+      return saved;
+    }
+    const navigatorLangs = Array.isArray(navigator.languages) ? navigator.languages : [];
+    for (let i = 0; i < navigatorLangs.length; i += 1) {
+      const code = navigatorLangs[i].slice(0, 2).toLowerCase();
+      if (CONFIG.i18n.dict[code]) {
+        return code;
+      }
+      if (code === "uk" && CONFIG.i18n.dict.ua) {
+        return "ua";
+      }
+    }
+    return CONFIG.i18n.default;
   }
 
-  // --- 7. Функції для керування паузою анімації ---
+  function detectInitialScene() {
+    const saved = getStored("scene");
+    if (saved && scenes[saved]) {
+      return saved;
+    }
+    return "lissajous";
+  }
+
+  function resetPerformanceTracker() {
+    performanceTracker.samples = [];
+  }
+
   function addPauseReason(reason) {
     pauseReasons.add(reason);
     updatePauseState();
@@ -257,47 +169,259 @@
     }
   }
 
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) {
-      addPauseReason("tab-hidden");
-    } else {
-      removePauseReason("tab-hidden");
+  function renderFallbackMonths(dict) {
+    if (!state.usingFallback) return;
+    const currentValue = fallbackMonth.value;
+    fallbackMonth.innerHTML = "";
+    dict.monthsShort.forEach((label, index) => {
+      const option = document.createElement("option");
+      option.value = pad(index + 1);
+      option.textContent = label;
+      fallbackMonth.append(option);
+    });
+    if (currentValue) {
+      fallbackMonth.value = currentValue;
     }
-  });
-
-  // --- 8. Розрахунок та оновлення розмірів canvas ---
-  window.addEventListener("resize", () => {
-    updateCanvasSize();
-  });
-
-  function updateCanvasSize() {
-    const headerHeight = topBar.offsetHeight;
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
-    const availableHeight = Math.max(viewportHeight - headerHeight, 200);
-
-    canvas.style.marginTop = `${headerHeight}px`;
-
-    const effectiveDpr = Math.min(window.devicePixelRatio || 1, MAX_DEVICE_PIXEL_RATIO);
-    canvas.width = Math.floor(viewportWidth * effectiveDpr);
-    canvas.height = Math.floor(availableHeight * effectiveDpr);
-    canvas.style.width = `${viewportWidth}px`;
-    canvas.style.height = `${availableHeight}px`;
-
-    ctx.setTransform(effectiveDpr, 0, 0, effectiveDpr, 0, 0);
-
-    state.cssWidth = viewportWidth;
-    state.cssHeight = availableHeight;
-    state.effectiveDpr = effectiveDpr;
-
-    scene.resize(viewportWidth, availableHeight);
+    syncFallbackDayOptions();
   }
 
-  updateCanvasSize();
+  function applyI18n(lang) {
+    const dict = CONFIG.i18n.dict[lang] || CONFIG.i18n.dict[CONFIG.i18n.default];
+    state.lang = lang;
 
-  // --- 9. Допоміжні функції для отримання значень дати та часу ---
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+      const key = el.dataset.i18n;
+      if (!key || !(key in dict)) return;
+      const attr = el.dataset.i18nAttr;
+      if (attr) {
+        el.setAttribute(attr, dict[key]);
+        return;
+      }
+      el.textContent = dict[key];
+    });
+
+    document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+      const key = el.dataset.i18nHtml;
+      if (!key || !(key in dict)) return;
+      el.innerHTML = dict[key];
+    });
+
+    const htmlLang = lang === "ua" ? "uk" : lang;
+    document.documentElement.lang = htmlLang;
+    document.title = dict.title;
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", dict.description);
+    }
+
+    if (state.usingFallback) {
+      renderFallbackMonths(dict);
+    }
+
+    updateLanguageButtons();
+    updateSceneButtons();
+    updateCanvasSize();
+    updateLaunchState();
+  }
+
+  function updateSceneButtons() {
+    sceneButtons.forEach((button) => {
+      if (button.dataset.scene === state.activeSceneKey) {
+        button.classList.add("is-active");
+      } else {
+        button.classList.remove("is-active");
+      }
+    });
+  }
+
+  function updateLanguageButtons() {
+    langButtons.forEach((button) => {
+      if (button.dataset.lang === state.lang) {
+        button.classList.add("is-active");
+      } else {
+        button.classList.remove("is-active");
+      }
+    });
+  }
+
+  function setLanguage(lang) {
+    if (!CONFIG.i18n.dict[lang]) {
+      lang = CONFIG.i18n.default;
+    }
+    setStored("lang", lang);
+    applyI18n(lang);
+  }
+
+  function setActiveScene(sceneKey, { forceRestart = false } = {}) {
+    if (!scenes[sceneKey]) return;
+    state.activeSceneKey = sceneKey;
+    state.sceneInstance = scenes[sceneKey];
+    setStored("scene", sceneKey);
+    updateSceneButtons();
+
+    if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
+      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    }
+
+    if (state.isRunning || forceRestart) {
+      restartActiveScene({ force: true });
+    } else if (state.sceneInstance && typeof state.sceneInstance.resetModeLock === "function") {
+      state.sceneInstance.resetModeLock();
+    }
+  }
+
+  function getTodayParts() {
+    const today = getTodayIso();
+    const [year, month, day] = today.split("-");
+    return { year, month, day };
+  }
+
+  // --- 5. Налаштування дат і часу ---
+  const dateMax = getTodayIso();
+  dateInput.min = CONFIG.global.DATE_MIN;
+  dateInput.max = dateMax;
+
+  if (!timeInput.value) {
+    timeInput.value = CONFIG.global.DEFAULT_TIME;
+  }
+
+  const supportsNativeDate = isInputTypeSupported("date");
+  const supportsNativeTime = isInputTypeSupported("time");
+  state.usingFallback = !(supportsNativeDate && supportsNativeTime);
+
+  nativeInputsContainer.hidden = state.usingFallback;
+  fallbackInputsContainer.hidden = !state.usingFallback;
+
+  function initFallbackInputs(dict) {
+    const { year, month, day } = getTodayParts();
+    const minYear = Number(CONFIG.global.DATE_MIN.slice(0, 4));
+    const currentYear = Number(year);
+
+    fallbackYear.innerHTML = "";
+    for (let y = currentYear; y >= minYear; y -= 1) {
+      const option = document.createElement("option");
+      option.value = String(y);
+      option.textContent = String(y);
+      fallbackYear.append(option);
+    }
+
+    renderFallbackMonths(dict);
+
+    fallbackHour.innerHTML = "";
+    fallbackMinute.innerHTML = "";
+    for (let h = 0; h < 24; h += 1) {
+      const option = document.createElement("option");
+      option.value = pad(h);
+      option.textContent = pad(h);
+      fallbackHour.append(option);
+    }
+    for (let m = 0; m < 60; m += 1) {
+      const option = document.createElement("option");
+      option.value = pad(m);
+      option.textContent = pad(m);
+      fallbackMinute.append(option);
+    }
+
+    fallbackYear.value = year;
+    fallbackMonth.value = month;
+    syncFallbackDayOptions();
+    fallbackDay.value = day;
+
+    const [defaultHour, defaultMinute] = CONFIG.global.DEFAULT_TIME.split(":");
+    fallbackHour.value = defaultHour;
+    fallbackMinute.value = defaultMinute;
+
+    const fallbackElements = [
+      fallbackYear,
+      fallbackMonth,
+      fallbackDay,
+      fallbackHour,
+      fallbackMinute,
+    ];
+
+    fallbackElements.forEach((el) => {
+      el.addEventListener("focus", () => addPauseReason("fallback-input"));
+      el.addEventListener("blur", () => removePauseReason("fallback-input"));
+      el.addEventListener("change", () => {
+        if (el === fallbackYear || el === fallbackMonth) {
+          syncFallbackDayOptions();
+        }
+        updateLaunchState();
+        if (state.isRunning) {
+          restartActiveScene();
+        }
+      });
+    });
+  }
+
+  function syncFallbackDayOptions() {
+    if (!state.usingFallback) return;
+    const yearValue = Number(fallbackYear.value);
+    const monthValue = Number(fallbackMonth.value);
+    if (!yearValue || !monthValue) return;
+
+    const daysInMonth = getDaysInMonth(yearValue, monthValue);
+    const currentDay = Number(fallbackDay.value) || 1;
+
+    fallbackDay.innerHTML = "";
+    for (let d = 1; d <= daysInMonth; d += 1) {
+      const option = document.createElement("option");
+      option.value = pad(d);
+      option.textContent = String(d);
+      fallbackDay.append(option);
+    }
+
+    fallbackDay.value = pad(Math.min(currentDay, daysInMonth));
+  }
+
+  if (state.usingFallback) {
+    initFallbackInputs(CONFIG.i18n.dict[state.lang]);
+  }
+
+  if (!state.usingFallback) {
+    dateInput.addEventListener("focus", () => addPauseReason("native-input"));
+    dateInput.addEventListener("blur", () => removePauseReason("native-input"));
+    timeInput.addEventListener("focus", () => addPauseReason("native-input"));
+    timeInput.addEventListener("blur", () => removePauseReason("native-input"));
+    dateInput.addEventListener("input", () => {
+      updateLaunchState();
+      if (state.isRunning) restartActiveScene();
+    });
+    timeInput.addEventListener("input", () => {
+      updateLaunchState();
+      if (state.isRunning) restartActiveScene();
+    });
+  }
+
+  // --- 6. Мультимовність ---
+  const initialLang = detectInitialLang();
+  setLanguage(initialLang);
+
+  langButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const { lang } = button.dataset;
+      if (lang && lang !== state.lang) {
+        setLanguage(lang);
+      }
+    });
+  });
+
+  // --- 7. Вибір сцени ---
+  const initialSceneKey = detectInitialScene();
+  setActiveScene(initialSceneKey);
+
+  sceneButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const { scene: sceneKey } = button.dataset;
+      if (sceneKey && sceneKey !== state.activeSceneKey) {
+        setActiveScene(sceneKey, { forceRestart: state.isRunning });
+      }
+    });
+  });
+
+  // --- 8. Робота з датами та запуском ---
   function getSelectedDate() {
-    if (usingFallback) {
+    if (state.usingFallback) {
       const year = fallbackYear.value;
       const month = fallbackMonth.value;
       const day = fallbackDay.value;
@@ -310,7 +434,7 @@
   }
 
   function getSelectedTime() {
-    if (usingFallback) {
+    if (state.usingFallback) {
       const hour = fallbackHour.value;
       const minute = fallbackMinute.value;
       if (!hour || !minute) {
@@ -318,11 +442,11 @@
       }
       return `${hour}:${minute}`;
     }
-    return timeInput.value || DEFAULT_TIME;
+    return timeInput.value || CONFIG.global.DEFAULT_TIME;
   }
 
   function isDateInRange(dateStr) {
-    return dateStr >= DATE_MIN && dateStr <= DATE_MAX;
+    return dateStr >= CONFIG.global.DATE_MIN && dateStr <= dateMax;
   }
 
   function isTimeValid(timeStr) {
@@ -336,9 +460,28 @@
     launchButton.disabled = !isValid;
   }
 
+  function buildSeed() {
+    const dateValue = getSelectedDate();
+    const timeValue = getSelectedTime();
+    if (!dateValue || !timeValue) {
+      return "";
+    }
+    return `${dateValue}T${timeValue}`;
+  }
+
   updateLaunchState();
 
-  // --- 10. Анімаційний цикл ---
+  // --- 9. Анімаційний цикл ---
+  function startAnimation() {
+    if (!state.animationScheduled) {
+      state.animationScheduled = true;
+      state.lastFrameTime = performance.now();
+      requestAnimationFrame(animationLoop);
+    } else {
+      state.lastFrameTime = performance.now();
+    }
+  }
+
   function animationLoop(now) {
     if (!state.isRunning) {
       state.animationScheduled = false;
@@ -360,44 +503,127 @@
     const dt = elapsed / 1000;
     state.lastFrameTime = now - (elapsed % frameInterval);
 
-    ctx.fillStyle = CANVAS_BG;
+    ctx.setTransform(state.effectiveDpr, 0, 0, state.effectiveDpr, 0, 0);
+    ctx.fillStyle = CONFIG.global.CANVAS_BG;
     ctx.fillRect(0, 0, state.cssWidth, state.cssHeight);
 
-    scene.update(dt);
-    scene.draw(ctx);
+    ctx.save();
+    ctx.setTransform(
+      state.designScale * state.effectiveDpr,
+      0,
+      0,
+      state.designScale * state.effectiveDpr,
+      state.designOffsetX * state.effectiveDpr,
+      state.designOffsetY * state.effectiveDpr,
+    );
+
+    if (state.sceneInstance) {
+      state.sceneInstance.update(dt, now);
+      state.sceneInstance.draw(ctx, now);
+    }
+
+    ctx.restore();
+
+    recordFrame(now, dt);
+    evaluatePerformance(now);
   }
 
-  function startAnimation() {
-    if (!state.animationScheduled) {
-      state.animationScheduled = true;
-      state.lastFrameTime = performance.now();
-      requestAnimationFrame(animationLoop);
-    } else {
-      state.lastFrameTime = performance.now();
+  function recordFrame(now, dt) {
+    if (dt <= 0) return;
+    const fps = 1 / dt;
+    performanceTracker.samples.push({ time: now, fps });
+    const windowMs = CONFIG.global.FPS_FALLBACK_WINDOW_MS;
+    while (performanceTracker.samples.length > 0 && now - performanceTracker.samples[0].time > windowMs) {
+      performanceTracker.samples.shift();
     }
   }
 
-  // --- 11. Обробник кнопки "Запустити" ---
-  launchButton.addEventListener("click", () => {
-    const dateValue = getSelectedDate();
-    const timeValue = getSelectedTime() || DEFAULT_TIME;
-    if (!dateValue || !timeValue) {
-      return;
-    }
+  function evaluatePerformance(now) {
+    if (!state.sceneInstance || typeof state.sceneInstance.force2dMode !== "function") return;
+    if (state.sceneInstance.isModeLockedTo2d && state.sceneInstance.isModeLockedTo2d()) return;
+    if (now - state.runStartedAt < CONFIG.global.MIN_SECONDS_BEFORE_CHECK * 1000) return;
+    if (performanceTracker.samples.length === 0) return;
 
-    const seed = `${dateValue}T${timeValue}`;
+    let sum = 0;
+    for (let i = 0; i < performanceTracker.samples.length; i += 1) {
+      sum += performanceTracker.samples[i].fps;
+    }
+    const avgFps = sum / performanceTracker.samples.length;
+    if (avgFps < CONFIG.global.FPS_FALLBACK_THRESHOLD) {
+      state.sceneInstance.force2dMode();
+    }
+  }
+
+  // --- 10. Робота з розмірами канви ---
+  function updateCanvasSize() {
+    const headerHeight = topBar.offsetHeight;
+    const viewportWidth = window.innerWidth;
+    const viewportHeight = window.innerHeight;
+    const availableHeight = Math.max(viewportHeight - headerHeight, 200);
+
+    canvas.style.marginTop = `${headerHeight}px`;
+
+    const effectiveDpr = Math.min(window.devicePixelRatio || 1, CONFIG.global.MAX_DEVICE_PIXEL_RATIO);
+    canvas.width = Math.floor(viewportWidth * effectiveDpr);
+    canvas.height = Math.floor(availableHeight * effectiveDpr);
+    canvas.style.width = `${viewportWidth}px`;
+    canvas.style.height = `${availableHeight}px`;
+
+    state.cssWidth = viewportWidth;
+    state.cssHeight = availableHeight;
+    state.effectiveDpr = effectiveDpr;
+
+    const scale = Math.min(viewportWidth / scenesDesignWidth, availableHeight / scenesDesignHeight);
+    const offsetX = (viewportWidth - scenesDesignWidth * scale) / 2;
+    const offsetY = (availableHeight - scenesDesignHeight * scale) / 2;
+
+    state.designScale = scale;
+    state.designOffsetX = offsetX;
+    state.designOffsetY = offsetY;
+
+    ctx.setTransform(effectiveDpr, 0, 0, effectiveDpr, 0, 0);
+
+    if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
+      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    }
+  }
+
+  window.addEventListener("resize", updateCanvasSize);
+  updateCanvasSize();
+
+  // --- 11. Перезапуск сцени ---
+  function initializeScene(seed) {
+    if (!state.sceneInstance) return;
     const seedInt = window.hashStringToInt32(seed);
     const prng = window.makePrng(seedInt);
+    if (typeof state.sceneInstance.resetModeLock === "function") {
+      state.sceneInstance.resetModeLock();
+    }
+    state.sceneInstance.init(seed, prng);
+    state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    resetPerformanceTracker();
+    state.currentSeed = seed;
+    state.runStartedAt = performance.now();
+    state.lastFrameTime = state.runStartedAt;
+  }
 
-    scene.init(seed, prng);
-    updateCanvasSize();
+  function restartActiveScene({ force = false } = {}) {
+    const seed = buildSeed();
+    if (!seed) return;
+    if (!force && seed === state.currentSeed) return;
+    initializeScene(seed);
+  }
 
+  // --- 12. Обробник кнопки запуску ---
+  launchButton.addEventListener("click", () => {
+    const seed = buildSeed();
+    if (!seed) return;
+    initializeScene(seed);
     state.isRunning = true;
-    state.lastFrameTime = performance.now();
     startAnimation();
   });
 
-  // --- 12. Керування модальним вікном ---
+  // --- 13. Керування модальним вікном ---
   infoButton.addEventListener("click", () => {
     modal.hidden = false;
     addPauseReason("modal");
@@ -411,6 +637,14 @@
     removePauseReason("modal");
   }
 
-  // --- 13. Початкові паузи та перевірки ---
+  // --- 14. Системні події ---
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      addPauseReason("tab-hidden");
+    } else {
+      removePauseReason("tab-hidden");
+    }
+  });
+
   updatePauseState();
 })();

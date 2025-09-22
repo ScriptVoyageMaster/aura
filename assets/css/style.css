@@ -70,6 +70,46 @@ body {
   flex-wrap: wrap;
 }
 
+.top-bar__toggles {
+  /* Окремий блок для перемикачів сцени та мови */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toggle-group {
+  /* Невеликий контейнер, що групує кнопки перемикача */
+  display: inline-flex;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.toggle-button {
+  /* Кнопки перемикачів поводяться як таби */
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  padding: 6px 12px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.toggle-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.toggle-button.is-active {
+  background: rgba(255, 255, 255, 0.25);
+  color: #050508;
+  font-weight: 600;
+}
+
 .top-bar__inputs input,
 .top-bar__inputs select {
   /* Поля вводу мають простий футуристичний вигляд без зайвих рамок */
@@ -213,6 +253,22 @@ body {
     flex-wrap: wrap;
     height: auto;
     padding: 12px 16px;
+  }
+
+  .top-bar__toggles {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .toggle-group {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .toggle-button {
+    flex: 1 1 50%;
   }
 
   #scene {
