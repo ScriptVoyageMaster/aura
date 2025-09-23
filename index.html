@@ -88,6 +88,30 @@
       <div class="top-bar__toggles">
         <div
           class="toggle-group"
+          id="scene-toggle"
+          role="group"
+          data-i18n-attr="aria-label"
+          data-i18n="sceneToggleAria"
+        >
+          <button
+            type="button"
+            class="toggle-button"
+            data-scene="lissajous"
+            data-i18n="sceneLissajous"
+          >
+            Ліссажу
+          </button>
+          <button
+            type="button"
+            class="toggle-button"
+            data-scene="rune"
+            data-i18n="sceneRune"
+          >
+            Руни
+          </button>
+        </div>
+        <div
+          class="toggle-group"
           id="lang-toggle"
           role="group"
           data-i18n-attr="aria-label"
@@ -143,7 +167,8 @@
 
     <script src="assets/js/config.js"></script>
     <script src="assets/js/utils/prng.js"></script>
-    <script src="assets/js/scenes/MayaScene.js"></script>
+    <script src="assets/js/scenes/lissajous.js"></script>
+    <script src="assets/js/scenes/rune.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>

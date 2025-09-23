@@ -24,10 +24,10 @@
   const timeInput = document.getElementById("birth-time");
   const launchButton = document.getElementById("launch");
   const infoButton = document.getElementById("info");
+  const sceneToggle = document.getElementById("scene-toggle");
   const langToggle = document.getElementById("lang-toggle");
-  const langButtons = langToggle
-    ? Array.from(langToggle.querySelectorAll("[data-lang]"))
-    : [];
+  const sceneButtons = Array.from(sceneToggle.querySelectorAll("[data-scene]"));
+  const langButtons = Array.from(langToggle.querySelectorAll("[data-lang]"));
 
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
@@ -41,12 +41,11 @@
   const fallbackHour = document.getElementById("fallback-hour");
   const fallbackMinute = document.getElementById("fallback-minute");
 
-  // --- 2. Єдина сцена MayaScene ---
-  const mayaSceneInstance = window.mayaScene;
-  if (!mayaSceneInstance) {
-    console.error("MayaScene не знайдена. Переконайтесь, що MayaScene.js підключено перед main.js.");
-    return;
-  }
+  // --- 2. Дані сцен ---
+  const scenes = {
+    lissajous: window.lissajousScene,
+    rune: window.runeScene,
+  };
 
   // --- 3. Глобальний стан ---
   const state = {
@@ -60,7 +59,8 @@
     designScale: 1,
     designOffsetX: 0,
     designOffsetY: 0,
-    sceneInstance: mayaSceneInstance,
+    activeSceneKey: "",
+    sceneInstance: null,
     runStartedAt: 0,
     lang: CONFIG.i18n.default,
     usingFallback: false,
@@ -134,6 +134,14 @@
       }
     }
     return CONFIG.i18n.default;
+  }
+
+  function detectInitialScene() {
+    const saved = getStored("scene");
+    if (saved && scenes[saved]) {
+      return saved;
+    }
+    return "lissajous";
   }
 
   function resetPerformanceTracker() {
@@ -211,8 +219,19 @@
     }
 
     updateLanguageButtons();
+    updateSceneButtons();
     updateCanvasSize();
     updateLaunchState();
+  }
+
+  function updateSceneButtons() {
+    sceneButtons.forEach((button) => {
+      if (button.dataset.scene === state.activeSceneKey) {
+        button.classList.add("is-active");
+      } else {
+        button.classList.remove("is-active");
+      }
+    });
   }
 
   function updateLanguageButtons() {
@@ -231,6 +250,24 @@
     }
     setStored("lang", lang);
     applyI18n(lang);
+  }
+
+  function setActiveScene(sceneKey, { forceRestart = false } = {}) {
+    if (!scenes[sceneKey]) return;
+    state.activeSceneKey = sceneKey;
+    state.sceneInstance = scenes[sceneKey];
+    setStored("scene", sceneKey);
+    updateSceneButtons();
+
+    if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
+      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    }
+
+    if (state.isRunning || forceRestart) {
+      restartActiveScene({ force: true });
+    } else if (state.sceneInstance && typeof state.sceneInstance.resetModeLock === "function") {
+      state.sceneInstance.resetModeLock();
+    }
   }
 
   function getTodayParts() {
@@ -369,10 +406,18 @@
     });
   });
 
-  // --- 7. Підготовка єдиної сцени ---
-  if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
-    state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
-  }
+  // --- 7. Вибір сцени ---
+  const initialSceneKey = detectInitialScene();
+  setActiveScene(initialSceneKey);
+
+  sceneButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const { scene: sceneKey } = button.dataset;
+      if (sceneKey && sceneKey !== state.activeSceneKey) {
+        setActiveScene(sceneKey, { forceRestart: state.isRunning });
+      }
+    });
+  });
 
   // --- 8. Робота з датами та запуском ---
   function getSelectedDate() {
@@ -549,33 +594,13 @@
   // --- 11. Перезапуск сцени ---
   function initializeScene(seed) {
     if (!state.sceneInstance) return;
-    const seedInt =
-      typeof window.hashStringToInt32 === "function" ? window.hashStringToInt32(seed) : 0;
-    const prng = typeof window.makePrng === "function" ? window.makePrng(seedInt) : null;
+    const seedInt = window.hashStringToInt32(seed);
+    const prng = window.makePrng(seedInt);
     if (typeof state.sceneInstance.resetModeLock === "function") {
       state.sceneInstance.resetModeLock();
     }
-    if (typeof state.sceneInstance.init === "function") {
-      // Передаємо seed та PRNG (якщо він створений), щоб сцена могла реагувати на вхідні дані.
-      state.sceneInstance.init(seed, prng);
-    } else {
-      // Якщо сцена не підтримує init, м'яко скидаємо базові таймери вручну.
-      if ("seed" in state.sceneInstance) {
-        state.sceneInstance.seed = seed;
-      }
-      if ("phase" in state.sceneInstance) {
-        state.sceneInstance.phase = "intro";
-      }
-      if ("time" in state.sceneInstance) {
-        state.sceneInstance.time = 0;
-      }
-      if ("startedAt" in state.sceneInstance) {
-        state.sceneInstance.startedAt = performance.now();
-      }
-    }
-    if (typeof state.sceneInstance.resize === "function") {
-      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
-    }
+    state.sceneInstance.init(seed, prng);
+    state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
     resetPerformanceTracker();
     state.currentSeed = seed;
     state.runStartedAt = performance.now();
