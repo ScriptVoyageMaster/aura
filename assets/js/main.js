@@ -1,3 +1,10 @@
+import { TZOLKIN_GLYPHS, TZOLKIN_ORDER } from "./glyphs/index.js";
+
+// Робимо мапу та впорядкований список гліфів доступними глобально для майбутніх сценаріїв.
+// Так інші скрипти можуть звернутися до даних без додаткових імпортів.
+window.TZOLKIN_GLYPHS = TZOLKIN_GLYPHS;
+window.TZOLKIN_ORDER = TZOLKIN_ORDER;
+
 // Основний модуль, що керує інтерфейсом, багатомовністю та життєвим циклом сцен.
 // Коментарі максимально детальні українською мовою, аби навіть новачок зрозумів кожен крок.
 
@@ -21,6 +28,7 @@
 
   const topBar = document.querySelector(".top-bar");
   const dateInput = document.getElementById("dateInput");
+  const genderSelect = document.getElementById("gender");
   const btnRun = document.getElementById("btnRun");
   const btnHelp = document.getElementById("btnHelp");
   const langSelect = document.getElementById("langSelect");
@@ -41,6 +49,8 @@
     lissajous: window.lissajousScene,
     rune: window.runeScene,
   };
+
+  const USER_INPUT_STORAGE_KEY = "aura_user_input";
 
   // --- 3. Глобальний стан ---
   const state = {
@@ -115,6 +125,61 @@
     } catch (error) {
       // Ігноруємо помилки localStorage (наприклад, у приватному режимі).
     }
+  }
+
+  function getSelectedGender() {
+    // Акуратно читаємо значення вибору статі. Якщо елемента немає або значення невідоме, повертаємо "unspecified".
+    if (!genderSelect) {
+      return "unspecified";
+    }
+    const value = genderSelect.value;
+    if (value === "female" || value === "male") {
+      return value;
+    }
+    return "unspecified";
+  }
+
+  function readStoredUserInput() {
+    // Прагнемо безпечно розпарсити попередньо збережені дані користувача.
+    const raw = getStored(USER_INPUT_STORAGE_KEY);
+    if (!raw) {
+      return null;
+    }
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object") {
+        return parsed;
+      }
+    } catch (error) {
+      // Якщо JSON зіпсований, просто ігноруємо його, аби не ламати застосунок.
+    }
+    return null;
+  }
+
+  function persistUserInput(dob, gender) {
+    // Зберігаємо дату народження та стать у localStorage, щоб їх можна було відновити під час наступного візиту.
+    const userInput = { dob, gender };
+    try {
+      window.localStorage.setItem(USER_INPUT_STORAGE_KEY, JSON.stringify(userInput));
+    } catch (error) {
+      // У деяких браузерах (режим інкогніто) може не бути доступу до localStorage — у такому разі мовчки пропускаємо запис.
+    }
+  }
+
+  function hydrateGenderFromStorage() {
+    // Під час завантаження сторінки намагаємося відновити попередньо обрану стать.
+    if (!genderSelect) {
+      return;
+    }
+    const stored = readStoredUserInput();
+    if (!stored || typeof stored.gender !== "string") {
+      return;
+    }
+    const allowedValues = ["unspecified", "female", "male"];
+    if (!allowedValues.includes(stored.gender)) {
+      return;
+    }
+    genderSelect.value = stored.gender;
   }
 
   function detectInitialLang() {
@@ -481,6 +546,9 @@
   function runWithCurrentDate() {
     const dateStr = readDateFromUI();
     if (!dateStr) return;
+    const gender = getSelectedGender();
+    // Записуємо введені користувачем дані, щоб легко повернутися до них у майбутньому.
+    persistUserInput(dateStr, gender);
     const seed = buildSeedFromDateStr(dateStr);
     writeStateToUrl(dateStr);
     if (window.activeScene && typeof window.activeScene.setSeed === "function") {
@@ -495,6 +563,7 @@
   }
 
   hydrateUIFromUrlOrToday();
+  hydrateGenderFromStorage();
   updateLaunchState();
   writeStateToUrl(readDateFromUI());
 

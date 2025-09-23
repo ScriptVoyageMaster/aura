@@ -67,6 +67,14 @@ body {
   align-items: flex-start;
 }
 
+.controls-row {
+  /* Гнучкий рядок, у якому розташовані основні контролери запуску */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 8px;
+}
+
 .hint {
   /* Пояснювальний текст під контролями дати */
   color: rgba(245, 245, 245, 0.72);
@@ -144,6 +152,21 @@ body {
 
 #controls-date-row select {
   min-width: 100px;
+}
+
+.gender-field {
+  /* Окремий блок для випадаючого списку статі, щоб елементи стояли один під одним */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.gender-field label {
+  /* Робимо підпис трохи світлішим і компактнішим */
+  color: rgba(245, 245, 245, 0.72);
+  letter-spacing: 0.04em;
 }
 
 .fallback-inputs {
