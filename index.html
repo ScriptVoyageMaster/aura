@@ -34,6 +34,7 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="client/assets/css/topbar.css" />
 
   <!-- Favicon (опційно) -->
   <link rel="icon" href="assets/img/favicon.png" type="image/png" />
@@ -49,14 +50,11 @@
   gtag('config', 'G-R03TE5MZQ7');
 </script>
   <body>
-    <!-- Верхня панель керування, що залишається на місці під час прокрутки -->
-    <header class="top-bar">
-      <div class="top-bar__left" data-i18n="topBarLabel">Твоя дата народження</div>
-
-      <div class="top-bar__controls" id="native-date-controls">
-        <!-- DATE ROW (no time) -->
-        <div class="controls-row" id="controls-date-row" aria-label="Date controls">
-          <label for="dateInput" class="visually-hidden" data-i18n="date_label">Дата</label>
+    <!-- Вирівняна верхня панель із керуванням датою, режимами та мовою -->
+    <header class="topbar" role="banner" aria-label="Основна панель керування">
+      <div class="topbar__left">
+        <label class="field" for="dateInput">
+          <span class="field__label" data-i18n="topBarLabel">Твоя дата народження</span>
           <input
             id="dateInput"
             type="date"
@@ -65,62 +63,62 @@
             aria-describedby="dateHelp"
             required
           />
+          <small id="dateHelp" class="field__hint" data-i18n="date_help">
+            Обери дату народження (без часу).
+          </small>
+        </label>
 
-          <div class="gender-field">
-            <label for="gender" data-i18n="gender_label">Стать</label>
-            <select id="gender" name="gender">
+        <label class="field field--sm" for="gender">
+          <span class="field__label" data-i18n="gender_label">Стать</span>
+          <div class="select">
+            <select id="gender" name="gender" aria-label="Стать">
               <option value="unspecified" selected data-i18n="gender_unspecified">Не вказувати</option>
               <option value="female" data-i18n="gender_female">Жіноча</option>
               <option value="male" data-i18n="gender_male">Чоловіча</option>
             </select>
           </div>
+        </label>
 
-          <button id="btnRun" class="launch-button" type="button" data-i18n="run_btn" disabled>
-            Запустити
-          </button>
-
-          <div class="spacer" aria-hidden="true"></div>
-
-          <label for="langSelect" class="visually-hidden" data-i18n="lang_label">Мова</label>
-          <select id="langSelect" aria-label="Language" data-i18n-attr="aria-label" data-i18n="lang_label">
-            <option value="ua">UA</option>
-            <option value="en">EN</option>
-          </select>
-
-          <button
-            id="btnHelp"
-            type="button"
-            class="info-button"
-            aria-haspopup="dialog"
-            aria-controls="info-modal"
-            data-i18n-attr="aria-label"
-            data-i18n="infoAriaLabel"
-          >
-            ?
-          </button>
-        </div>
-        <small id="dateHelp" class="hint" data-i18n="date_help">
-          Обери дату народження (без часу).
-        </small>
-        <div class="fallback-inputs" id="fallback-inputs" hidden>
-          <div class="fallback-group">
-            <label for="daySelect" data-i18n="fallbackDayLabel">День</label>
-            <select id="daySelect"></select>
-          </div>
-          <div class="fallback-group">
-            <label for="monthSelect" data-i18n="fallbackMonthLabel">Місяць</label>
-            <select id="monthSelect"></select>
-          </div>
-          <div class="fallback-group">
-            <label for="yearSelect" data-i18n="fallbackYearLabel">Рік</label>
-            <select id="yearSelect"></select>
+        <div class="topbar__fallback" id="native-date-controls">
+          <div class="fallback-inputs" id="fallback-inputs" hidden>
+            <div class="fallback-group">
+              <label for="daySelect" data-i18n="fallbackDayLabel">День</label>
+              <select id="daySelect"></select>
+            </div>
+            <div class="fallback-group">
+              <label for="monthSelect" data-i18n="fallbackMonthLabel">Місяць</label>
+              <select id="monthSelect"></select>
+            </div>
+            <div class="fallback-group">
+              <label for="yearSelect" data-i18n="fallbackYearLabel">Рік</label>
+              <select id="yearSelect"></select>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="top-bar__toggles">
+      <div class="topbar__center">
+        <button id="btnRun" class="btn btn--primary" type="button" data-i18n="run_btn" disabled>
+          Запустити
+        </button>
+      </div>
+
+      <div class="topbar__right">
+        <label for="langSelect" class="visually-hidden" data-i18n="lang_label">Мова</label>
+        <div class="select select--sm" aria-label="Мова інтерфейсу">
+          <select
+            id="langSelect"
+            aria-label="Language"
+            data-i18n-attr="aria-label"
+            data-i18n="lang_label"
+          >
+            <option value="ua">UA</option>
+            <option value="en">EN</option>
+          </select>
+        </div>
+
         <div
-          class="toggle-group"
+          class="segmented"
           id="scene-toggle"
           role="group"
           data-i18n-attr="aria-label"
@@ -128,21 +126,35 @@
         >
           <button
             type="button"
-            class="toggle-button"
+            class="segmented__btn"
             data-scene="lissajous"
+            aria-pressed="false"
             data-i18n="sceneLissajous"
           >
             Ліссажу
           </button>
           <button
             type="button"
-            class="toggle-button"
+            class="segmented__btn"
             data-scene="rune"
+            aria-pressed="false"
             data-i18n="sceneRune"
           >
             Руни
           </button>
         </div>
+
+        <button
+          id="btnHelp"
+          type="button"
+          class="icon-btn"
+          aria-haspopup="dialog"
+          aria-controls="info-modal"
+          data-i18n-attr="aria-label"
+          data-i18n="infoAriaLabel"
+        >
+          ?
+        </button>
       </div>
     </header>
 

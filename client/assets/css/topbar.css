@@ -1,0 +1,231 @@
+/* ====== Топбар: темна, компактна, рівні поля ====== */
+/* Базові кольори темної теми */
+:root {
+  --bg-900: #0f1115;
+  --bg-850: #151820;
+  --bg-800: #1b1f29;
+  --line-700: #2a2f3a;
+  --txt-100: #e9eef5;
+  --txt-200: #cfd6e4;
+  --accent: #6aa7ff;
+  --accent-press: #4e8cf0;
+  --muted: #97a0b2;
+  --danger: #ff6a7a;
+  --radius: 12px;
+  --h: 44px;        /* Єдина висота елементів */
+  --pad-x: 12px;    /* Горизонтальні відступи інпутів/селектів */
+}
+
+/* Увімкнути темне оформлення для нативних контролів (Chrome/Edge/Firefox) */
+.topbar,
+.topbar select,
+.topbar input {
+  color-scheme: dark;
+}
+
+/* Контейнер топбару */
+.topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: linear-gradient(180deg, var(--bg-900), var(--bg-850));
+  border-bottom: 1px solid var(--line-700);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* Зони */
+.topbar__left,
+.topbar__center,
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.topbar__center { justify-content: center; }
+.topbar__right  { justify-content: flex-end; }
+
+/* Поле з міткою зверху */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 240px;
+}
+.field--sm { min-width: 160px; }
+
+.field__label {
+  font-size: 12px;
+  letter-spacing: .02em;
+  color: var(--muted);
+}
+
+/* Уніфікований вигляд інпутів та селектів */
+.field input[type="text"],
+.field input[type="date"],
+.select select {
+  height: var(--h);
+  padding: 0 var(--pad-x);
+  background: var(--bg-800);
+  color: var(--txt-100);
+  border: 1px solid var(--line-700);
+  border-radius: var(--radius);
+  outline: none;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+
+.field input::placeholder { color: #6b7280; }
+
+.field input:focus,
+.select select:focus {
+  border-color: var(--accent);
+  background: #202635;
+}
+
+/* Красива стрілка для select */
+.select {
+  position: relative;
+}
+.select select {
+  appearance: none;        /* прибрати стандартну стрілку */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 36px;     /* місце для стрілки */
+  cursor: pointer;
+}
+.select::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid var(--txt-200); /* стрілка */
+  pointer-events: none;
+  opacity: .9;
+}
+
+/* Кнопки */
+.btn {
+  height: var(--h);
+  padding: 0 18px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line-700);
+  background: var(--bg-800);
+  color: var(--txt-100);
+  font-weight: 600;
+  letter-spacing: .01em;
+  transition: transform .04s ease, background-color .15s ease, border-color .15s ease;
+}
+.btn:hover { background: #232a3a; }
+.btn:active { transform: translateY(1px); }
+.btn--primary {
+  background: var(--accent);
+  color: #0b1020;
+  border-color: transparent;
+}
+.btn--primary:hover { background: var(--accent-press); }
+
+/* Іконкована кнопка (?) */
+.icon-btn {
+  width: var(--h);
+  height: var(--h);
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  border-radius: var(--radius);
+  background: var(--bg-800);
+  color: var(--txt-100);
+  border: 1px solid var(--line-700);
+  font-weight: 700;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+.icon-btn:hover { background: #232a3a; }
+
+/* Сегментований перемикач режимів */
+.segmented {
+  display: inline-flex;
+  background: var(--bg-800);
+  border: 1px solid var(--line-700);
+  border-radius: var(--radius);
+  overflow: hidden;
+  height: var(--h);
+}
+.segmented__btn {
+  padding: 0 14px;
+  color: var(--txt-200);
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+.segmented__btn + .segmented__btn {
+  border-left: 1px solid var(--line-700);
+}
+.segmented__btn[aria-pressed="true"] {
+  color: var(--txt-100);
+  background: #232a3a;
+}
+
+/* Адаптивність */
+@media (max-width: 1200px) {
+  .topbar { grid-template-columns: 1fr; }
+  .topbar__left, .topbar__center, .topbar__right { justify-content: stretch; flex-wrap: wrap; }
+  .topbar__center { order: 3; }
+  .topbar__right  { order: 2; }
+  .field { flex: 1 1 300px; }
+}
+@media (max-width: 640px) {
+  :root { --h: 40px; }
+  .field { min-width: 100%; }
+  .field--sm { min-width: 48%; }
+}
+
+/* ====== Додаткові уточнення для конкретної верстки ====== */
+/* Пояснювальний текст під датою виглядає як частина поля */
+.field__hint {
+  font-size: 11px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+
+/* Зони ліворуч можуть переносити елементи на новий рядок разом із фолбек-контролями */
+.topbar__left {
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+/* Фолбек із селектами займає всю ширину, щоб ставати рядком під основними полями */
+.topbar__fallback {
+  flex-basis: 100%;
+}
+
+/* Компактніший селект для вибору мови */
+.select--sm select {
+  min-width: 72px;
+}
+
+/* Робимо підписи режимів верхнім регістром для стилістичної єдності */
+.segmented__btn {
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* Для дати з типом date приховуємо стандартну піктограму, щоб не зламати візуальний стиль */
+.field input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.8);
+  opacity: 0.8;
+}
+
+/* На невеликих екранах забезпечуємо, щоб фолбек не прилипає до країв */
+@media (max-width: 640px) {
+  .topbar__fallback {
+    flex-basis: 100%;
+  }
+}

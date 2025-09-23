@@ -41,134 +41,6 @@ body {
   border: 0;
 }
 
-.top-bar {
-  /* Закріплюємо панель зверху та на всю ширину */
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 0 16px;
-  background: rgba(15, 15, 22, 0.96);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  z-index: 100;
-}
-
-.top-bar__controls {
-  /* Колонка з полем дати, кнопкою запуску та вибором мови */
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1 1 auto;
-  min-width: 0;
-  align-items: flex-start;
-}
-
-.controls-row {
-  /* Гнучкий рядок, у якому розташовані основні контролери запуску */
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: 8px;
-}
-
-.hint {
-  /* Пояснювальний текст під контролями дати */
-  color: rgba(245, 245, 245, 0.72);
-  font-size: 0.7rem;
-  letter-spacing: 0.02em;
-  display: block;
-}
-
-.top-bar__left {
-  font-size: 0.95rem;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
-  align-self: flex-start;
-  padding-top: 6px;
-}
-
-.top-bar__toggles {
-  /* Окремий блок для перемикачів сцени та мови */
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-left: auto;
-  align-self: flex-start;
-  padding-top: 6px;
-}
-
-.toggle-group {
-  /* Невеликий контейнер, що групує кнопки перемикача */
-  display: inline-flex;
-  align-items: stretch;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.toggle-button {
-  /* Кнопки перемикачів поводяться як таби */
-  background: transparent;
-  border: none;
-  color: var(--text-main);
-  padding: 6px 12px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.toggle-button:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.toggle-button.is-active {
-  background: rgba(255, 255, 255, 0.25);
-  color: #050508;
-  font-weight: 600;
-}
-
-#controls-date-row input,
-#controls-date-row select {
-  /* Поля вводу мають простий футуристичний вигляд без зайвих рамок */
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 6px;
-  color: var(--text-main);
-  padding: 6px 10px;
-  font-size: 0.9rem;
-  min-width: 120px;
-}
-
-.info-button {
-  margin-left: 0;
-}
-
-#controls-date-row select {
-  min-width: 100px;
-}
-
-.gender-field {
-  /* Окремий блок для випадаючого списку статі, щоб елементи стояли один під одним */
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-}
-
-.gender-field label {
-  /* Робимо підпис трохи світлішим і компактнішим */
-  color: rgba(245, 245, 245, 0.72);
-  letter-spacing: 0.04em;
-}
-
 .fallback-inputs {
   /* Фолбек-селекти розміщуємо в рядок для економії простору */
   display: flex;
@@ -199,78 +71,6 @@ body {
   padding: 6px 10px;
   font-size: 0.9rem;
   min-width: 72px;
-}
-
-.launch-button,
-.info-button,
-.modal__close {
-  /* Прості кнопки без зайвих ефектів, але з читабельним текстом */
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: var(--text-main);
-  border-radius: 6px;
-  padding: 8px 14px;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.launch-button[disabled] {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
-.launch-button:not([disabled]):hover,
-.info-button:hover,
-.modal__close:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-.info-button {
-  width: 36px;
-  height: 36px;
-  display: grid;
-  place-items: center;
-  font-weight: 600;
-}
-
-/* Controls row without time input */
-#controls-date-row {
-  display: grid;
-  grid-template-columns: minmax(180px, 1fr) auto 1fr auto auto;
-  gap: 8px;
-  align-items: center;
-  width: 100%;
-}
-
-#controls-date-row .spacer {
-  width: 100%;
-  height: 1px;
-}
-
-/* On small screens stack more compactly */
-@media (max-width: 600px) {
-  #controls-date-row {
-    grid-template-columns: 1fr 1fr auto;
-    grid-template-areas:
-      "date date date"
-      "run lang help";
-  }
-  #dateInput {
-    grid-area: date;
-  }
-  #btnRun {
-    grid-area: run;
-  }
-  #langSelect {
-    grid-area: lang;
-  }
-  #btnHelp {
-    grid-area: help;
-  }
-  #controls-date-row .spacer {
-    display: none;
-  }
 }
 
 #scene {
@@ -327,6 +127,22 @@ body {
   margin-bottom: 16px;
 }
 
+.modal__close {
+  /* Кнопка закриття модалки зберігає простий вигляд */
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-main);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.modal__close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 @keyframes overlayFade {
   from {
     opacity: 0;
@@ -347,20 +163,4 @@ body {
   }
 }
 
-@media (max-width: 680px) {
-  .top-bar {
-    gap: 8px;
-    flex-wrap: wrap;
-    height: auto;
-    padding: 12px 16px;
-  }
 
-  #scene {
-    margin-top: 88px;
-  }
-
-  .top-bar__toggles {
-    width: 100%;
-    justify-content: center;
-  }
-}

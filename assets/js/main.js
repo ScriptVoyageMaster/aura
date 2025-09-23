@@ -26,7 +26,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     return;
   }
 
-  const topBar = document.querySelector(".top-bar");
+  const topBar = document.querySelector(".topbar");
   const dateInput = document.getElementById("dateInput");
   const genderSelect = document.getElementById("gender");
   const btnRun = document.getElementById("btnRun");
@@ -290,12 +290,10 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   function updateSceneButtons() {
+    // Оновлюємо aria-pressed для кожної кнопки, щоб екранні читачі бачили активний стан.
     sceneButtons.forEach((button) => {
-      if (button.dataset.scene === state.activeSceneKey) {
-        button.classList.add("is-active");
-      } else {
-        button.classList.remove("is-active");
-      }
+      const isActive = button.dataset.scene === state.activeSceneKey;
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
   }
 
@@ -652,7 +650,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   // --- 10. Робота з розмірами канви ---
   function updateCanvasSize() {
-    const headerHeight = topBar.offsetHeight;
+    // Якщо елемент шапки з якоїсь причини не знайдеться, вважаємо її висоту нульовою.
+    const headerHeight = topBar ? topBar.offsetHeight : 0;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const availableHeight = Math.max(viewportHeight - headerHeight, 200);
