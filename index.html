@@ -1,149 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="uk">
-  <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Aura — генеративна графіка</title>
-  <meta
-    name="description"
-    content="Aura — сервіс генеративної графіки. Створюйте унікальні візерунки на основі дати та часу народження."
-  />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Aura — генеративна графіка" />
-  <meta
-    property="og:description"
-    content="Створюйте унікальні візерунки на основі дати та часу народження."
-  />
-  <meta property="og:image" content="https://aura.bit.city/preview.png" />
-  <meta property="og:url" content="https://aura.bit.city/" />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Aura — генеративна графіка" />
-  <meta
-    name="twitter:description"
-    content="Створюйте унікальні візерунки на основі дати та часу народження."
-  />
-  <meta name="twitter:image" content="https://aura.bit.city/preview.png" />
-
-  <!-- Canonical -->
-  <link rel="canonical" href="https://aura.bit.city/" />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="assets/css/style.css" />
-
-  <!-- Favicon (опційно) -->
-  <link rel="icon" href="assets/img/favicon.png" type="image/png" />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>Calendars — Symbols</title>
+  <link rel="stylesheet" href="src/styles/theme.css" />
+  <link rel="stylesheet" href="src/styles/controls.css" />
 </head>
-
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R03TE5MZQ7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-R03TE5MZQ7');
-</script>
-  <body>
-    <!-- Верхня панель керування, що залишається на місці під час прокрутки -->
-    <header class="top-bar">
-      <div class="top-bar__left" data-i18n="topBarLabel">Твоя дата народження</div>
-      <div class="top-bar__inputs" id="native-inputs">
-        <label class="visually-hidden" for="birth-date" data-i18n="dateLabel"
-          >Дата народження</label
-        >
-        <input id="birth-date" type="date" required />
-        <label class="visually-hidden" for="birth-time" data-i18n="timeLabel"
-          >Час народження</label
-        >
-        <input id="birth-time" type="time" step="60" />
-      </div>
-      <!-- Контейнер для фолбеків, показується лише якщо браузер не підтримує типи date/time -->
-      <div class="top-bar__inputs fallback-inputs" id="fallback-inputs" hidden>
-        <div class="fallback-group">
-          <label for="fallback-day" data-i18n="fallbackDayLabel">День</label>
-          <select id="fallback-day"></select>
-        </div>
-        <div class="fallback-group">
-          <label for="fallback-month" data-i18n="fallbackMonthLabel">Місяць</label>
-          <select id="fallback-month"></select>
-        </div>
-        <div class="fallback-group">
-          <label for="fallback-year" data-i18n="fallbackYearLabel">Рік</label>
-          <select id="fallback-year"></select>
-        </div>
-        <div class="fallback-group">
-          <label for="fallback-hour" data-i18n="fallbackHourLabel">Година</label>
-          <select id="fallback-hour"></select>
-        </div>
-        <div class="fallback-group">
-          <label for="fallback-minute" data-i18n="fallbackMinuteLabel">Хвилина</label>
-          <select id="fallback-minute"></select>
-        </div>
-      </div>
-      <div class="top-bar__toggles">
-        <div
-          class="toggle-group"
-          id="lang-toggle"
-          role="group"
-          data-i18n-attr="aria-label"
-          data-i18n="langToggleAria"
-        >
-          <button type="button" class="toggle-button" data-lang="ua" data-i18n="langUA">
-            UA
-          </button>
-          <button type="button" class="toggle-button" data-lang="en" data-i18n="langEN">
-            EN
-          </button>
-        </div>
-      </div>
-      <button id="launch" class="launch-button" disabled data-i18n="start">Запустити</button>
-      <button
-        id="info"
-        class="info-button"
-        aria-haspopup="dialog"
-        aria-controls="info-modal"
-        data-i18n-attr="aria-label"
-        data-i18n="infoAriaLabel"
-      >
-        ?
-      </button>
-    </header>
-
-    <!-- Головне полотно для рендеру сцен -->
-    <canvas id="scene" aria-hidden="true"></canvas>
-
-    <!-- Модальне вікно з поясненням задуму сайту -->
-    <div
-      class="modal"
-      id="info-modal"
-      hidden
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="info-modal-title"
-    >
-      <div class="modal__overlay" id="modal-overlay"></div>
-      <div class="modal__dialog">
-        <div class="modal__content">
-          <h2 class="modal__title" id="info-modal-title" data-i18n="aboutTitle">Про проєкт</h2>
-          <p class="modal__text" data-i18n-html="modalText">
-            Цей сайт відкриває приховану геометрію вашого життя.<br />
-            На основі дати й часу народження народжується унікальний візерунок — візуальний відбиток вашої присутності у
-            Всесвіті.<br />
-            Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.
-          </p>
-          <button class="modal__close" id="modal-close" data-i18n="modalClose">Добре</button>
-        </div>
-      </div>
+<body>
+  <header id="controls" class="controls">
+    <div class="controls-left">
+      <label class="field">
+        <span class="label">Дата</span>
+        <input id="birthdate" type="date" />
+      </label>
+      <button id="runBtn" class="btn primary">Запустити</button>
     </div>
+    <div class="controls-right">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button class="lang" data-lang="uk" aria-pressed="true">UA</button>
+        <button class="lang" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <button id="helpBtn" class="icon-btn" aria-label="Допомога">?</button>
+    </div>
+  </header>
 
-    <script src="assets/js/config.js"></script>
-    <script src="assets/js/utils/prng.js"></script>
-    <script src="assets/js/scenes/MayaScene.js"></script>
-    <script src="assets/js/main.js"></script>
-  </body>
+  <main id="stage">
+    <canvas id="canvas"></canvas>
+    <section id="desc" class="desc"></section>
+  </main>
+
+  <script type="module" src="main.js"></script>
+</body>
 </html>
