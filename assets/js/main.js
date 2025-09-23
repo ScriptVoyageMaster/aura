@@ -20,26 +20,21 @@
   }
 
   const topBar = document.querySelector(".top-bar");
-  const dateInput = document.getElementById("birth-date");
-  const timeInput = document.getElementById("birth-time");
-  const launchButton = document.getElementById("launch");
-  const infoButton = document.getElementById("info");
+  const dateInput = document.getElementById("dateInput");
+  const btnRun = document.getElementById("btnRun");
+  const btnHelp = document.getElementById("btnHelp");
+  const langSelect = document.getElementById("langSelect");
   const sceneToggle = document.getElementById("scene-toggle");
-  const langToggle = document.getElementById("lang-toggle");
   const sceneButtons = Array.from(sceneToggle.querySelectorAll("[data-scene]"));
-  const langButtons = Array.from(langToggle.querySelectorAll("[data-lang]"));
 
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
   const modalClose = document.getElementById("modal-close");
 
-  const nativeInputsContainer = document.getElementById("native-inputs");
   const fallbackInputsContainer = document.getElementById("fallback-inputs");
-  const fallbackDay = document.getElementById("fallback-day");
-  const fallbackMonth = document.getElementById("fallback-month");
-  const fallbackYear = document.getElementById("fallback-year");
-  const fallbackHour = document.getElementById("fallback-hour");
-  const fallbackMinute = document.getElementById("fallback-minute");
+  const fallbackDay = document.getElementById("daySelect");
+  const fallbackMonth = document.getElementById("monthSelect");
+  const fallbackYear = document.getElementById("yearSelect");
 
   // --- 2. Дані сцен ---
   const scenes = {
@@ -76,13 +71,17 @@
 
   // --- 4. Допоміжні функції ---
 
+  /** Форматуємо об'єкт Date у рядок YYYY-MM-DD без згадки про час. */
+  function formatDateYYYYMMDD(dateObj) {
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const d = String(dateObj.getDate()).padStart(2, "0");
+    return `${y}-${m}-${d}`;
+  }
+
   /** Повертає рядок сьогоднішньої дати у форматі YYYY-MM-DD. */
   function getTodayIso() {
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, "0");
-    const day = String(now.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
+    return formatDateYYYYMMDD(new Date());
   }
 
   /** Рахує кількість днів у конкретному місяці певного року. */
@@ -95,7 +94,7 @@
     return String(value).padStart(2, "0");
   }
 
-  /** Перевіряє, чи підтримує браузер певний тип input (date/time). */
+  /** Перевіряє, чи підтримує браузер певний тип input (наприклад, date). */
   function isInputTypeSupported(type) {
     const input = document.createElement("input");
     input.setAttribute("type", type);
@@ -171,6 +170,7 @@
 
   function renderFallbackMonths(dict) {
     if (!state.usingFallback) return;
+    if (!fallbackMonth || !fallbackYear || !fallbackDay) return;
     const currentValue = fallbackMonth.value;
     fallbackMonth.innerHTML = "";
     dict.monthsShort.forEach((label, index) => {
@@ -218,7 +218,7 @@
       renderFallbackMonths(dict);
     }
 
-    updateLanguageButtons();
+    updateLanguageControl();
     updateSceneButtons();
     updateCanvasSize();
     updateLaunchState();
@@ -234,14 +234,10 @@
     });
   }
 
-  function updateLanguageButtons() {
-    langButtons.forEach((button) => {
-      if (button.dataset.lang === state.lang) {
-        button.classList.add("is-active");
-      } else {
-        button.classList.remove("is-active");
-      }
-    });
+  function updateLanguageControl() {
+    if (langSelect) {
+      langSelect.value = state.lang;
+    }
   }
 
   function setLanguage(lang) {
@@ -256,6 +252,7 @@
     if (!scenes[sceneKey]) return;
     state.activeSceneKey = sceneKey;
     state.sceneInstance = scenes[sceneKey];
+    window.activeScene = state.sceneInstance;
     setStored("scene", sceneKey);
     updateSceneButtons();
 
@@ -276,23 +273,26 @@
     return { year, month, day };
   }
 
-  // --- 5. Налаштування дат і часу ---
+  // --- 5. Налаштування дати ---
   const dateMax = getTodayIso();
-  dateInput.min = CONFIG.global.DATE_MIN;
-  dateInput.max = dateMax;
-
-  if (!timeInput.value) {
-    timeInput.value = CONFIG.global.DEFAULT_TIME;
+  if (dateInput) {
+    dateInput.min = CONFIG.global.DATE_MIN;
+    dateInput.max = dateMax;
   }
 
   const supportsNativeDate = isInputTypeSupported("date");
-  const supportsNativeTime = isInputTypeSupported("time");
-  state.usingFallback = !(supportsNativeDate && supportsNativeTime);
+  state.usingFallback = !supportsNativeDate;
 
-  nativeInputsContainer.hidden = state.usingFallback;
-  fallbackInputsContainer.hidden = !state.usingFallback;
+  if (dateInput) {
+    dateInput.hidden = state.usingFallback;
+    dateInput.disabled = state.usingFallback;
+  }
+  if (fallbackInputsContainer) {
+    fallbackInputsContainer.hidden = !state.usingFallback;
+  }
 
   function initFallbackInputs(dict) {
+    if (!fallbackYear || !fallbackMonth || !fallbackDay) return;
     const { year, month, day } = getTodayParts();
     const minYear = Number(CONFIG.global.DATE_MIN.slice(0, 4));
     const currentYear = Number(year);
@@ -307,36 +307,15 @@
 
     renderFallbackMonths(dict);
 
-    fallbackHour.innerHTML = "";
-    fallbackMinute.innerHTML = "";
-    for (let h = 0; h < 24; h += 1) {
-      const option = document.createElement("option");
-      option.value = pad(h);
-      option.textContent = pad(h);
-      fallbackHour.append(option);
-    }
-    for (let m = 0; m < 60; m += 1) {
-      const option = document.createElement("option");
-      option.value = pad(m);
-      option.textContent = pad(m);
-      fallbackMinute.append(option);
-    }
-
     fallbackYear.value = year;
     fallbackMonth.value = month;
     syncFallbackDayOptions();
     fallbackDay.value = day;
 
-    const [defaultHour, defaultMinute] = CONFIG.global.DEFAULT_TIME.split(":");
-    fallbackHour.value = defaultHour;
-    fallbackMinute.value = defaultMinute;
-
     const fallbackElements = [
       fallbackYear,
       fallbackMonth,
       fallbackDay,
-      fallbackHour,
-      fallbackMinute,
     ];
 
     fallbackElements.forEach((el) => {
@@ -347,6 +326,7 @@
           syncFallbackDayOptions();
         }
         updateLaunchState();
+        writeStateToUrl(readDateFromUI());
         if (state.isRunning) {
           restartActiveScene();
         }
@@ -356,6 +336,7 @@
 
   function syncFallbackDayOptions() {
     if (!state.usingFallback) return;
+    if (!fallbackYear || !fallbackMonth || !fallbackDay) return;
     const yearValue = Number(fallbackYear.value);
     const monthValue = Number(fallbackMonth.value);
     if (!yearValue || !monthValue) return;
@@ -376,19 +357,12 @@
 
   if (state.usingFallback) {
     initFallbackInputs(CONFIG.i18n.dict[state.lang]);
-  }
-
-  if (!state.usingFallback) {
+  } else if (dateInput) {
     dateInput.addEventListener("focus", () => addPauseReason("native-input"));
     dateInput.addEventListener("blur", () => removePauseReason("native-input"));
-    timeInput.addEventListener("focus", () => addPauseReason("native-input"));
-    timeInput.addEventListener("blur", () => removePauseReason("native-input"));
     dateInput.addEventListener("input", () => {
       updateLaunchState();
-      if (state.isRunning) restartActiveScene();
-    });
-    timeInput.addEventListener("input", () => {
-      updateLaunchState();
+      writeStateToUrl(readDateFromUI());
       if (state.isRunning) restartActiveScene();
     });
   }
@@ -397,14 +371,14 @@
   const initialLang = detectInitialLang();
   setLanguage(initialLang);
 
-  langButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const { lang } = button.dataset;
-      if (lang && lang !== state.lang) {
-        setLanguage(lang);
+  if (langSelect) {
+    langSelect.addEventListener("change", () => {
+      const newLang = langSelect.value;
+      if (newLang && newLang !== state.lang) {
+        setLanguage(newLang);
       }
     });
-  });
+  }
 
   // --- 7. Вибір сцени ---
   const initialSceneKey = detectInitialScene();
@@ -420,56 +394,109 @@
   });
 
   // --- 8. Робота з датами та запуском ---
-  function getSelectedDate() {
-    if (state.usingFallback) {
-      const year = fallbackYear.value;
-      const month = fallbackMonth.value;
-      const day = fallbackDay.value;
-      if (!year || !month || !day) {
-        return "";
-      }
-      return `${year}-${month}-${day}`;
+  function readDateFromUI() {
+    if (!state.usingFallback && dateInput && dateInput.value) {
+      return dateInput.value;
     }
-    return dateInput.value;
-  }
 
-  function getSelectedTime() {
-    if (state.usingFallback) {
-      const hour = fallbackHour.value;
-      const minute = fallbackMinute.value;
-      if (!hour || !minute) {
-        return "";
+    if (state.usingFallback && fallbackYear && fallbackMonth && fallbackDay) {
+      const year = fallbackYear.value;
+      const monthRaw = fallbackMonth.value;
+      const dayRaw = fallbackDay.value;
+      if (year && monthRaw && dayRaw) {
+        const normalizedYear = year.padStart(4, "0");
+        const normalizedMonth = String(parseInt(monthRaw, 10)).padStart(2, "0");
+        const normalizedDay = String(parseInt(dayRaw, 10)).padStart(2, "0");
+        return `${normalizedYear}-${normalizedMonth}-${normalizedDay}`;
       }
-      return `${hour}:${minute}`;
     }
-    return timeInput.value || CONFIG.global.DEFAULT_TIME;
+
+    return formatDateYYYYMMDD(new Date());
   }
 
   function isDateInRange(dateStr) {
     return dateStr >= CONFIG.global.DATE_MIN && dateStr <= dateMax;
   }
 
-  function isTimeValid(timeStr) {
-    return /^\d{2}:\d{2}$/.test(timeStr);
+  function buildSeedFromDateStr(dateStr) {
+    return dateStr;
+  }
+
+  function readStateFromUrl() {
+    const params = new URLSearchParams(location.search);
+    const date = params.get("date");
+    if (date && /^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return { date };
+    }
+    return null;
+  }
+
+  function writeStateToUrl(dateStr) {
+    const params = new URLSearchParams();
+    params.set("date", dateStr);
+    const newUrl = `${location.pathname}?${params.toString()}${location.hash}`;
+    history.replaceState(null, "", newUrl);
+  }
+
+  function hydrateUIFromUrlOrToday() {
+    const stateFromUrl = readStateFromUrl();
+    let dateStr = stateFromUrl?.date ?? formatDateYYYYMMDD(new Date());
+    if (!isDateInRange(dateStr)) {
+      dateStr = formatDateYYYYMMDD(new Date());
+    }
+
+    if (!state.usingFallback && dateInput) {
+      dateInput.value = dateStr;
+    } else if (state.usingFallback && fallbackYear && fallbackMonth && fallbackDay) {
+      const [year, month, day] = dateStr.split("-");
+      if (year && month && day) {
+        fallbackYear.value = year;
+        fallbackMonth.value = month;
+        syncFallbackDayOptions();
+        fallbackDay.value = day;
+      }
+    }
   }
 
   function updateLaunchState() {
-    const dateValue = getSelectedDate();
-    const timeValue = getSelectedTime();
-    const isValid = Boolean(dateValue && timeValue && isDateInRange(dateValue) && isTimeValid(timeValue));
-    launchButton.disabled = !isValid;
-  }
-
-  function buildSeed() {
-    const dateValue = getSelectedDate();
-    const timeValue = getSelectedTime();
-    if (!dateValue || !timeValue) {
-      return "";
+    let dateValue = "";
+    if (state.usingFallback) {
+      if (fallbackYear && fallbackMonth && fallbackDay) {
+        const year = fallbackYear.value;
+        const month = fallbackMonth.value;
+        const day = fallbackDay.value;
+        if (year && month && day) {
+          dateValue = `${year}-${month}-${day}`;
+        }
+      }
+    } else if (dateInput) {
+      dateValue = dateInput.value;
     }
-    return `${dateValue}T${timeValue}`;
+
+    if (btnRun) {
+      btnRun.disabled = !(dateValue && isDateInRange(dateValue));
+    }
   }
 
+  function runWithCurrentDate() {
+    const dateStr = readDateFromUI();
+    if (!dateStr) return;
+    const seed = buildSeedFromDateStr(dateStr);
+    writeStateToUrl(dateStr);
+    if (window.activeScene && typeof window.activeScene.setSeed === "function") {
+      window.activeScene.setSeed(seed);
+    }
+    if (typeof window.startRender === "function") {
+      window.startRender();
+    }
+    initializeScene(seed);
+    state.isRunning = true;
+    startAnimation();
+  }
+
+  hydrateUIFromUrlOrToday();
   updateLaunchState();
+  writeStateToUrl(readDateFromUI());
 
   // --- 9. Анімаційний цикл ---
   function startAnimation() {
@@ -608,26 +635,31 @@
   }
 
   function restartActiveScene({ force = false } = {}) {
-    const seed = buildSeed();
-    if (!seed) return;
+    const dateStr = readDateFromUI();
+    const seed = buildSeedFromDateStr(dateStr);
     if (!force && seed === state.currentSeed) return;
+    writeStateToUrl(dateStr);
+    if (window.activeScene && typeof window.activeScene.setSeed === "function") {
+      window.activeScene.setSeed(seed);
+    }
+    if (typeof window.startRender === "function") {
+      window.startRender();
+    }
     initializeScene(seed);
   }
 
   // --- 12. Обробник кнопки запуску ---
-  launchButton.addEventListener("click", () => {
-    const seed = buildSeed();
-    if (!seed) return;
-    initializeScene(seed);
-    state.isRunning = true;
-    startAnimation();
-  });
+  if (btnRun) {
+    btnRun.addEventListener("click", runWithCurrentDate);
+  }
 
   // --- 13. Керування модальним вікном ---
-  infoButton.addEventListener("click", () => {
-    modal.hidden = false;
-    addPauseReason("modal");
-  });
+  if (btnHelp) {
+    btnHelp.addEventListener("click", () => {
+      modal.hidden = false;
+      addPauseReason("modal");
+    });
+  }
 
   modalClose.addEventListener("click", closeModal);
   modalOverlay.addEventListener("click", closeModal);

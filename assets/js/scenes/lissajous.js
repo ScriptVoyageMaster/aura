@@ -21,7 +21,7 @@ class LissajousScene {
 
   /**
    * Підготовка сцени на основі seed та генератора псевдовипадкових чисел.
-   * @param {string} seedStr - Рядок, що описує дату та час.
+   * @param {string} seedStr - Рядок, що описує дату.
    * @param {{ next: () => number }} prng - Детермінований генератор випадкових чисел.
    */
   init(seedStr, prng) {
