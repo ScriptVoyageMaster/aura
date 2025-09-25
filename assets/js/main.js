@@ -39,6 +39,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const canvasPlaceholder = document.getElementById("canvas-placeholder");
   const footer = document.querySelector(".footer");
   const patternArea = document.querySelector(".pattern-area");
+  const canvasToggle = document.getElementById("canvas-toggle");
+  const canvasToggleLabel = document.getElementById("canvas-toggle-label");
+  const canvasOverlay = document.getElementById("canvas-overlay");
 
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
@@ -75,6 +78,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     lang: CONFIG.i18n.default,
     usingFallback: false,
     currentSeed: "",
+    isCanvasExpanded: false,
+    originalBodyOverflow: undefined,
   };
 
   const performanceTracker = { samples: [] };
@@ -304,10 +309,26 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       renderFallbackMonths(dict);
     }
 
+    updateCanvasToggleLabel();
     updateLanguageControl();
     updateSceneControl();
     updateCanvasSize();
     updateLaunchState();
+  }
+
+  function updateCanvasToggleLabel() {
+    // Підтримуємо текст кнопки розгортання у відповідності до мови та стану.
+    if (!canvasToggleLabel && !canvasToggle) {
+      return;
+    }
+    const dict = CONFIG.i18n.dict[state.lang] || CONFIG.i18n.dict[CONFIG.i18n.default];
+    const labelKey = state.isCanvasExpanded ? "canvasCollapse" : "canvasExpand";
+    if (canvasToggleLabel) {
+      canvasToggleLabel.textContent = dict[labelKey] || "";
+    }
+    if (canvasToggle) {
+      canvasToggle.setAttribute("title", dict[labelKey] || "");
+    }
   }
 
   function updateSceneControl() {
@@ -473,6 +494,19 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       if (selectedScene && selectedScene !== state.activeSceneKey) {
         setActiveScene(selectedScene, { forceRestart: state.isRunning });
       }
+    });
+  }
+
+  // --- 7a. Кнопка розгортання канви ---
+  if (canvasToggle) {
+    canvasToggle.addEventListener("click", () => {
+      setCanvasExpanded(!state.isCanvasExpanded);
+    });
+  }
+
+  if (canvasOverlay) {
+    canvasOverlay.addEventListener("click", () => {
+      setCanvasExpanded(false);
     });
   }
 
@@ -670,21 +704,72 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
   }
 
+  // --- 9a. Керування розгортанням області канви ---
+  function setCanvasExpanded(expanded) {
+    // Перемикаємо режим, не зупиняючи анімацію та не перериваючи цикли рендеру.
+    if (!canvasWrapper) {
+      return;
+    }
+
+    state.isCanvasExpanded = expanded;
+    canvasWrapper.classList.toggle("canvas-container--expanded", expanded);
+
+    if (canvasOverlay) {
+      if (expanded) {
+        canvasOverlay.hidden = false;
+        canvasOverlay.classList.add("is-active");
+        canvasOverlay.setAttribute("aria-hidden", "false");
+      } else {
+        canvasOverlay.classList.remove("is-active");
+        canvasOverlay.hidden = true;
+        canvasOverlay.setAttribute("aria-hidden", "true");
+      }
+    }
+
+    if (canvasToggle) {
+      canvasToggle.setAttribute("aria-expanded", expanded ? "true" : "false");
+    }
+
+    updateCanvasToggleLabel();
+
+    if (document.body) {
+      if (expanded) {
+        state.originalBodyOverflow = document.body.style.overflow || "";
+        document.body.style.overflow = "hidden";
+      } else if (state.originalBodyOverflow !== undefined) {
+        document.body.style.overflow = state.originalBodyOverflow;
+        state.originalBodyOverflow = undefined;
+      }
+    }
+
+    updateCanvasSize();
+  }
+
   // --- 10. Робота з розмірами канви ---
   function updateCanvasSize() {
-    // Обчислюємо сумарну висоту шапки (брендовий заголовок + топбар).
-    const headerHeight = (pageHeader ? pageHeader.offsetHeight : 0) + (topBar ? topBar.offsetHeight : 0);
-    const footerHeight = footer ? footer.offsetHeight : 0;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const availableHeight = Math.max(viewportHeight - headerHeight - footerHeight, 200);
-
-    // Вираховуємо доступну ширину з урахуванням горизонтальних відступів секції з канвою.
     let containerWidth = viewportWidth;
-    if (patternArea) {
-      const computed = window.getComputedStyle(patternArea);
-      const paddingX = parseFloat(computed.paddingLeft || "0") + parseFloat(computed.paddingRight || "0");
-      containerWidth = Math.max(viewportWidth - paddingX, 320);
+    let availableHeight;
+
+    if (state.isCanvasExpanded) {
+      // Для розгорнутого режиму створюємо "вікно" з невеликими полями по краях.
+      const marginX = Math.min(Math.max(viewportWidth * 0.05, 24), 72);
+      const marginY = Math.min(Math.max(viewportHeight * 0.05, 24), 72);
+      containerWidth = Math.max(viewportWidth - marginX * 2, 320);
+      availableHeight = Math.max(viewportHeight - marginY * 2, 240);
+    } else {
+      // Обчислюємо сумарну висоту шапки (брендовий заголовок + топбар).
+      const headerHeight = (pageHeader ? pageHeader.offsetHeight : 0) + (topBar ? topBar.offsetHeight : 0);
+      const footerHeight = footer ? footer.offsetHeight : 0;
+      availableHeight = Math.max(viewportHeight - headerHeight - footerHeight, 200);
+
+      // Вираховуємо доступну ширину з урахуванням горизонтальних відступів секції з канвою.
+      if (patternArea) {
+        const computed = window.getComputedStyle(patternArea);
+        const paddingX = parseFloat(computed.paddingLeft || "0") + parseFloat(computed.paddingRight || "0");
+        containerWidth = Math.max(viewportWidth - paddingX, 320);
+      }
     }
 
     if (canvasWrapper) {
@@ -774,6 +859,14 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   // --- 14. Системні події ---
+  document.addEventListener("keydown", (event) => {
+    // Додаємо гарячу клавішу Escape для швидкого згортання канви.
+    if (event.key === "Escape" && state.isCanvasExpanded) {
+      event.preventDefault();
+      setCanvasExpanded(false);
+    }
+  });
+
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {
       addPauseReason("tab-hidden");
