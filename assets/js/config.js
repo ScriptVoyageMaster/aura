@@ -6,6 +6,7 @@ const I18N = {
   ua: {
     title: "Aura — генеративна графіка",
     description: "Генеруйте унікальні візерунки на основі дати народження.",
+    subtitle: "Генеративна магія твоєї дати",
     topBarLabel: "Твоя дата народження",
     date_label: "Дата",
     date_help: "Обери дату народження (без часу).",
@@ -43,10 +44,13 @@ const I18N = {
     sceneRune: "Руни",
     infoAriaLabel: "Показати інформацію",
     sceneToggleAria: "Вибір сцени",
+    footerDescription: "Поєднання стародавніх календарів із сучасною графікою",
+    placeholderText: "Введи дату народження, щоб побачити свою унікальну ауру",
   },
   en: {
     title: "Aura — generative graphics",
     description: "Generate unique patterns based on your birth date.",
+    subtitle: "Generative magic of your date",
     topBarLabel: "Your birth date",
     date_label: "Date",
     date_help: "Pick the birth date (no time).",
@@ -83,6 +87,8 @@ const I18N = {
     sceneRune: "Runes",
     infoAriaLabel: "Show information",
     sceneToggleAria: "Scene selection",
+    footerDescription: "Combining ancient calendars with modern graphics",
+    placeholderText: "Enter your birth date to generate your unique aura pattern",
   },
 };
 

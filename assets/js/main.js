@@ -27,13 +27,19 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   const topBar = document.querySelector(".topbar");
+  const pageHeader = document.querySelector(".header");
   const dateInput = document.getElementById("dateInput");
   const genderSelect = document.getElementById("gender");
   const btnRun = document.getElementById("btnRun");
   const btnHelp = document.getElementById("btnHelp");
   const langSelect = document.getElementById("langSelect");
   const sceneToggle = document.getElementById("scene-toggle");
-  const sceneButtons = Array.from(sceneToggle.querySelectorAll("[data-scene]"));
+  const sceneButtons = sceneToggle ? Array.from(sceneToggle.querySelectorAll("[data-scene]")) : [];
+
+  const canvasWrapper = document.getElementById("canvas-wrapper");
+  const canvasPlaceholder = document.getElementById("canvas-placeholder");
+  const footer = document.querySelector(".footer");
+  const patternArea = document.querySelector(".pattern-area");
 
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
@@ -125,6 +131,22 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     } catch (error) {
       // Ігноруємо помилки localStorage (наприклад, у приватному режимі).
     }
+  }
+
+  /** Показуємо підказку над канвою, коли генерація ще не запускалась. */
+  function showCanvasPlaceholder() {
+    if (!canvasPlaceholder) {
+      return;
+    }
+    canvasPlaceholder.classList.remove("hidden");
+  }
+
+  /** Ховаємо плейсхолдер, щойно користувач запускає побудову орнаменту. */
+  function hideCanvasPlaceholder() {
+    if (!canvasPlaceholder) {
+      return;
+    }
+    canvasPlaceholder.classList.add("hidden");
   }
 
   function getSelectedGender() {
@@ -547,6 +569,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     const gender = getSelectedGender();
     // Записуємо введені користувачем дані, щоб легко повернутися до них у майбутньому.
     persistUserInput(dateStr, gender);
+    hideCanvasPlaceholder();
     const seed = buildSeedFromDateStr(dateStr);
     writeStateToUrl(dateStr);
     if (window.activeScene && typeof window.activeScene.setSeed === "function") {
@@ -560,6 +583,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     startAnimation();
   }
 
+  showCanvasPlaceholder();
   hydrateUIFromUrlOrToday();
   hydrateGenderFromStorage();
   updateLaunchState();
@@ -650,26 +674,39 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   // --- 10. Робота з розмірами канви ---
   function updateCanvasSize() {
-    // Якщо елемент шапки з якоїсь причини не знайдеться, вважаємо її висоту нульовою.
-    const headerHeight = topBar ? topBar.offsetHeight : 0;
+    // Обчислюємо сумарну висоту шапки (брендовий заголовок + топбар).
+    const headerHeight = (pageHeader ? pageHeader.offsetHeight : 0) + (topBar ? topBar.offsetHeight : 0);
+    const footerHeight = footer ? footer.offsetHeight : 0;
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
-    const availableHeight = Math.max(viewportHeight - headerHeight, 200);
+    const availableHeight = Math.max(viewportHeight - headerHeight - footerHeight, 200);
 
-    canvas.style.marginTop = `${headerHeight}px`;
+    // Вираховуємо доступну ширину з урахуванням горизонтальних відступів секції з канвою.
+    let containerWidth = viewportWidth;
+    if (patternArea) {
+      const computed = window.getComputedStyle(patternArea);
+      const paddingX = parseFloat(computed.paddingLeft || "0") + parseFloat(computed.paddingRight || "0");
+      containerWidth = Math.max(viewportWidth - paddingX, 320);
+    }
+
+    if (canvasWrapper) {
+      canvasWrapper.style.height = `${availableHeight}px`;
+      canvasWrapper.style.width = `${containerWidth}px`;
+    }
 
     const effectiveDpr = Math.min(window.devicePixelRatio || 1, CONFIG.global.MAX_DEVICE_PIXEL_RATIO);
-    canvas.width = Math.floor(viewportWidth * effectiveDpr);
+    canvas.width = Math.floor(containerWidth * effectiveDpr);
     canvas.height = Math.floor(availableHeight * effectiveDpr);
-    canvas.style.width = `${viewportWidth}px`;
+    canvas.style.width = `${containerWidth}px`;
     canvas.style.height = `${availableHeight}px`;
+    canvas.style.marginTop = "0px";
 
-    state.cssWidth = viewportWidth;
+    state.cssWidth = containerWidth;
     state.cssHeight = availableHeight;
     state.effectiveDpr = effectiveDpr;
 
-    const scale = Math.min(viewportWidth / scenesDesignWidth, availableHeight / scenesDesignHeight);
-    const offsetX = (viewportWidth - scenesDesignWidth * scale) / 2;
+    const scale = Math.min(containerWidth / scenesDesignWidth, availableHeight / scenesDesignHeight);
+    const offsetX = (containerWidth - scenesDesignWidth * scale) / 2;
     const offsetY = (availableHeight - scenesDesignHeight * scale) / 2;
 
     state.designScale = scale;
@@ -689,6 +726,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   // --- 11. Перезапуск сцени ---
   function initializeScene(seed) {
     if (!state.sceneInstance) return;
+    hideCanvasPlaceholder();
     const seedInt = window.hashStringToInt32(seed);
     const prng = window.makePrng(seedInt);
     if (typeof state.sceneInstance.resetModeLock === "function") {
