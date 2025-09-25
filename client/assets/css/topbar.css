@@ -67,6 +67,20 @@
   min-width: 160px;
 }
 
+/*
+  Спеціальне поле для кнопки довідки: забираємо мінімальну ширину,
+  щоб елемент не розтягувався, та вирівнюємо кнопку під підписом.
+*/
+.field--button {
+  min-width: unset;
+  width: auto;
+  align-items: flex-start;
+}
+
+.field--button .help-button {
+  align-self: flex-start;
+}
+
 .field__label {
   font-size: 0.75rem;
   font-weight: 600;
