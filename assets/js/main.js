@@ -33,8 +33,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const btnRun = document.getElementById("btnRun");
   const btnHelp = document.getElementById("btnHelp");
   const langSelect = document.getElementById("langSelect");
-  const sceneToggle = document.getElementById("scene-toggle");
-  const sceneButtons = sceneToggle ? Array.from(sceneToggle.querySelectorAll("[data-scene]")) : [];
+  const sceneSelect = document.getElementById("sceneSelect");
 
   const canvasWrapper = document.getElementById("canvas-wrapper");
   const canvasPlaceholder = document.getElementById("canvas-placeholder");
@@ -306,17 +305,16 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
 
     updateLanguageControl();
-    updateSceneButtons();
+    updateSceneControl();
     updateCanvasSize();
     updateLaunchState();
   }
 
-  function updateSceneButtons() {
-    // Оновлюємо aria-pressed для кожної кнопки, щоб екранні читачі бачили активний стан.
-    sceneButtons.forEach((button) => {
-      const isActive = button.dataset.scene === state.activeSceneKey;
-      button.setAttribute("aria-pressed", isActive ? "true" : "false");
-    });
+  function updateSceneControl() {
+    // Підтримуємо випадаючий список типу сцени в актуальному стані.
+    if (sceneSelect) {
+      sceneSelect.value = state.activeSceneKey;
+    }
   }
 
   function updateLanguageControl() {
@@ -339,7 +337,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     state.sceneInstance = scenes[sceneKey];
     window.activeScene = state.sceneInstance;
     setStored("scene", sceneKey);
-    updateSceneButtons();
+    updateSceneControl();
 
     if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
       state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
@@ -469,14 +467,14 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const initialSceneKey = detectInitialScene();
   setActiveScene(initialSceneKey);
 
-  sceneButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      const { scene: sceneKey } = button.dataset;
-      if (sceneKey && sceneKey !== state.activeSceneKey) {
-        setActiveScene(sceneKey, { forceRestart: state.isRunning });
+  if (sceneSelect) {
+    sceneSelect.addEventListener("change", () => {
+      const selectedScene = sceneSelect.value;
+      if (selectedScene && selectedScene !== state.activeSceneKey) {
+        setActiveScene(selectedScene, { forceRestart: state.isRunning });
       }
     });
-  });
+  }
 
   // --- 8. Робота з датами та запуском ---
   function readDateFromUI() {

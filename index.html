@@ -73,12 +73,8 @@
                   class="date-input"
                   inputmode="numeric"
                   autocomplete="bday"
-                  aria-describedby="dateHelp"
                   required
                 />
-                <small id="dateHelp" class="field__hint" data-i18n="date_help">
-                  Обери дату народження (без часу).
-                </small>
               </label>
 
               <label class="field field--sm" for="gender">
@@ -140,32 +136,26 @@
                 </div>
               </div>
 
-              <div
-                class="mode-toggle"
-                id="scene-toggle"
-                role="group"
-                data-i18n-attr="aria-label"
-                data-i18n="sceneToggleAria"
-              >
-                <button
-                  type="button"
-                  class="mode-toggle__btn"
-                  data-scene="lissajous"
-                  aria-pressed="false"
-                  data-i18n="sceneLissajous"
-                >
-                  Ліссажу
-                </button>
-                <button
-                  type="button"
-                  class="mode-toggle__btn"
-                  data-scene="rune"
-                  aria-pressed="false"
-                  data-i18n="sceneRune"
-                >
-                  Руни
-                </button>
-              </div>
+              <label class="field field--sm" for="sceneSelect">
+                <span class="field__label" data-i18n="sceneToggleAria">Вибір сцени</span>
+                <div class="select select--enhanced">
+                  <select
+                    id="sceneSelect"
+                    name="scene"
+                    aria-label="Вибір сцени"
+                    data-i18n-attr="aria-label"
+                    data-i18n="sceneToggleAria"
+                  >
+                    <option value="lissajous" data-i18n="sceneLissajous">Ліссажу</option>
+                    <option value="rune" data-i18n="sceneRune">Руни</option>
+                  </select>
+                  <div class="select__arrow" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </label>
 
               <button
                 id="btnHelp"
