@@ -133,6 +133,82 @@ body {
   width: 100%;
 }
 
+.canvas-container--expanded {
+  /* У розгорнутому режимі фіксуємо контейнер всередині вікна з невеликими полями */
+  position: fixed;
+  inset: 5vh 5vw;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  z-index: 160;
+  padding: 16px;
+  background: rgba(3, 7, 18, 0.92);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.canvas-toggle {
+  /* Кнопка керування режимом канви закріплена у правому верхньому куті контейнера */
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(12, 18, 32, 0.72);
+  color: var(--text-main);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease;
+  z-index: 2;
+}
+
+.canvas-toggle:hover,
+.canvas-toggle:focus {
+  /* Надаємо легке підсвічення при наведенні або фокусі */
+  background: rgba(37, 99, 235, 0.8);
+  border-color: rgba(96, 165, 250, 0.6);
+}
+
+.canvas-toggle__icon {
+  /* Невеликий відступ навколо SVG-іконки для кращої читабельності */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.canvas-container--expanded .canvas-toggle {
+  /* Під час розгортання переміщуємо кнопку ближче до краю діалогу */
+  top: 12px;
+  right: 12px;
+}
+
+.canvas-overlay {
+  /* Півпрозорий фон, що акцентує увагу на розгорнутій канві */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease;
+  z-index: 150;
+}
+
+.canvas-overlay.is-active {
+  opacity: 1;
+  pointer-events: all;
+}
+
 .canvas-placeholder {
   /* Пояснювальний текст відображається, поки не запущено генерацію */
   position: absolute;
