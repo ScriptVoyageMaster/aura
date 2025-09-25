@@ -3,12 +3,17 @@
 */
 
 :root {
-  /* Основні кольори інтерфейсу */
+  /* Основні кольори інтерфейсу, підібрані під нове візуальне оформлення */
   color-scheme: dark;
-  --bg-body: #050508;
-  --bg-canvas: #0b0b0f;
-  --text-main: #f5f5f5;
-  --accent: #d7d7ff;
+  --bg-body: #000000;
+  --bg-surface: #0b1120;
+  --bg-panel: #111827;
+  --bg-canvas: rgba(3, 7, 18, 0.5);
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --outline: #374151;
   --overlay-bg: rgba(11, 11, 15, 0.85);
 }
 
@@ -27,6 +32,35 @@ body {
   line-height: 1.4;
   overflow: hidden;
   min-height: 100vh;
+}
+
+.app {
+  /* Контейнер додатку розтягується на всю висоту та формує колонки для шапки й футера */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  /* Верхній блок із назвою та підзаголовком */
+  text-align: center;
+  padding: 24px 16px;
+  border-bottom: 1px solid var(--outline);
+}
+
+.title {
+  /* Логотип-підпис AURA у верхній частині сторінки */
+  font-size: 1.875rem;
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  color: #60a5fa;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  /* Короткий опис застосунку під логотипом */
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 /* Візуально прихований текст для доступності (екранні читачі) */
@@ -74,11 +108,59 @@ body {
 }
 
 #scene {
-  /* Полотно розтягується на всю ширину та висоту, розраховану в JS */
+  /* Полотно тепер має м'яке підсвічення та рамку, як у макеті */
   display: block;
-  width: 100vw;
+  width: 100%;
   background: var(--bg-canvas);
-  margin-top: 56px;
+  border: 1px solid var(--outline);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+}
+
+.pattern-area {
+  /* Блок із канвою розтягується та центрує контент */
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}
+
+.canvas-container {
+  /* Обгортка для канви дозволяє накладати плейсхолдер поверх */
+  position: relative;
+  width: 100%;
+}
+
+.canvas-placeholder {
+  /* Пояснювальний текст відображається, поки не запущено генерацію */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  pointer-events: none;
+}
+
+.canvas-placeholder.hidden {
+  display: none;
+}
+
+.footer {
+  /* Нижній рядок із короткою довідкою про сервіс */
+  text-align: center;
+  padding: 16px;
+  border-top: 1px solid var(--outline);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.footer-text {
+  color: inherit;
 }
 
 .modal[hidden] {
@@ -93,6 +175,27 @@ body {
   align-items: center;
   justify-content: center;
   z-index: 200;
+}
+
+/* Адаптивні налаштування канви та відступів під різні ширини */
+@media (max-width: 1023px) {
+  .pattern-area {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    padding: 16px 12px;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .pattern-area {
+    padding: 16px;
+  }
 }
 
 .modal__overlay {
