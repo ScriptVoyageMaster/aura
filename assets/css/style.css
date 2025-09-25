@@ -25,12 +25,13 @@
 }
 
 body {
-  /* Темний фон та приховування вертикальної прокрутки під час рендера */
+  /* Темний фон і дозвіл прокручування на всіх розмірах екрана, аби сторінка не обрізалась */
   background: var(--bg-body);
   color: var(--text-main);
   font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
   line-height: 1.4;
-  overflow: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Плавна інерційна прокрутка для iOS */
   min-height: 100vh;
 }
 
@@ -185,12 +186,6 @@ body {
 }
 
 @media (max-width: 767px) {
-  body {
-    /* На мобільних дозволяємо вертикальну прокрутку, щоб користувач міг дістатися всіх блоків */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Плавне прокручування на пристроях iOS */
-  }
-
   .header {
     padding: 16px 12px;
   }

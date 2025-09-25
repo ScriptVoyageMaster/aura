@@ -38,7 +38,7 @@
 /* Ліва колонка містить поля вводу, тому дозволяємо їм переноситися */
 .topbar-section--left {
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: flex-start; /* Вирівнюємо поля згори, щоб селект статі не провалювався вниз */
 }
 
 /* Центральна колонка завжди центрує кнопку запуску */
@@ -69,11 +69,6 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.field__hint {
-  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
@@ -177,43 +172,6 @@
 .generate-button:disabled {
   background: rgba(37, 99, 235, 0.3);
   cursor: not-allowed;
-}
-
-/* Перемикач режимів у вигляді сегментованої панелі */
-.mode-toggle {
-  display: inline-flex;
-  background: var(--bg-panel);
-  border: 1px solid var(--outline);
-  border-radius: 6px;
-  overflow: hidden;
-  height: 42px;
-  min-width: 0;
-}
-
-.mode-toggle__btn {
-  padding: 0 16px;
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease;
-  flex: 1;
-}
-
-.mode-toggle__btn + .mode-toggle__btn {
-  border-left: 1px solid var(--outline);
-}
-
-.mode-toggle__btn:hover {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.mode-toggle__btn[aria-pressed="true"] {
-  background: var(--accent);
-  color: #ffffff;
 }
 
 /* Кнопка підказки повторює стиль панелі, але має квадратну форму */
