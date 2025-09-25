@@ -263,39 +263,98 @@
   }
 
   .topbar-section--left {
+    /*
+      На телефонах організовуємо поля у вертикальний стек, але не розтягуємо їх
+      на всю ширину, аби керування виглядало акуратніше.
+    */
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     gap: 12px;
+  }
+
+  .topbar-section--right {
+    /*
+      Права колонка теж центрується, щоб усі компактні елементи виглядали
+      симетрично відносно середини екрану.
+    */
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   .field,
   .field--sm {
+    /*
+      Встановлюємо максимальну ширину полів і дозволяємо їм звужуватись,
+      щоб вони не займали весь екран на невеликих пристроях.
+    */
     width: 100%;
-    min-width: unset;
+    max-width: 320px;
+    min-width: 0;
   }
 
-  .date-input,
-  .field input[type="date"],
-  .select select {
-    width: 100%;
-  }
-
-  .topbar-section--right {
+  .field {
+    /*
+      На мобільних розташовуємо підпис та елемент вводу в один рядок, щоб
+      користувач одразу бачив, до якого поля належить текстова позначка.
+    */
     flex-direction: row;
     align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
+    gap: 10px;
   }
 
-  .mode-toggle {
-    flex: 1;
+  .field--button {
+    /*
+      Для блоку кнопки довідки повертаємо колоночний напрямок, інакше підпис
+      та іконка стануть поруч і втратять читабельність.
+    */
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    max-width: none;
+  }
+
+  .field__label {
+    /*
+      Підписи залишаємо компактними та забороняємо їм переноситись більше ніж на
+      два рядки, щоб верстка не "стрибала" при перекладі.
+    */
+    flex: 0 0 auto;
+    max-width: 120px;
+    text-align: left;
+    line-height: 1.3;
+  }
+
+  .field .select,
+  .field input[type="date"],
+  .field .select select,
+  .date-input,
+  .select select {
+    /*
+      Полю вводу дозволяємо займати весь вільний простір поруч із підписом,
+      тим самим зберігаючи компактну ширину без втрати зручності.
+    */
+    width: auto;
+    flex: 1 1 auto;
   }
 
   .generate-button {
-    width: 100%;
+    /*
+      Кнопку запуску звужуємо до зручного розміру та центруємо, щоб вона не
+      виглядала як повноширинна панель.
+    */
+    width: auto;
+    min-width: 220px;
+    align-self: center;
   }
 
   .help-button {
+    /*
+      Робимо кнопку довідки трохи меншою, аби вона гармонійно пасувала до
+      звужених полів та не забирала багато місця.
+    */
     width: 36px;
     flex-shrink: 0;
   }
