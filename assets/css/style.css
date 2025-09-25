@@ -185,6 +185,12 @@ body {
 }
 
 @media (max-width: 767px) {
+  body {
+    /* На мобільних дозволяємо вертикальну прокрутку, щоб користувач міг дістатися всіх блоків */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* Плавне прокручування на пристроях iOS */
+  }
+
   .header {
     padding: 16px 12px;
   }
