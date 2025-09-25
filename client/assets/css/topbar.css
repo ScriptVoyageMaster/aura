@@ -50,6 +50,7 @@
 .topbar-section--right {
   justify-content: flex-end;
   flex-wrap: wrap;
+  align-items: flex-start; /* Вирівнюємо всі елементи згори, щоб селекти зі своїми підписами стояли на одній лінії */
 }
 
 /* Підпис та інпут обгорнуті у label, щоб клік по тексту активував поле */
@@ -104,6 +105,13 @@
   position: relative;
   display: inline-flex;
   align-items: center; /* Вирівнюємо стрілку по центру незалежно від висоти елемента */
+
+}
+
+/* Розтягуємо селект всередині поля на всю доступну ширину, щоб стрілка гарантовано лишалася всередині рамки */
+.field .select {
+  width: 100%;
+
 }
 
 .select select {
@@ -119,6 +127,7 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  width: 100%; /* Змушуємо випадаючий список заповнювати обгортку, щоб не з'являлись «хвости» поза межами */
 }
 
 .select select:focus {
