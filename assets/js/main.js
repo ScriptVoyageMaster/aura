@@ -56,6 +56,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const scenes = {
     lissajous: window.lissajousScene,
     rune: window.runeScene,
+    maya: window.mayaScene,
   };
 
   const USER_INPUT_STORAGE_KEY = "aura_user_input";
@@ -539,6 +540,33 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     return dateStr;
   }
 
+  /**
+   * Формуємо контекст для сцени: нормалізовану дату народження (UTC) та вибрану стать.
+   * @param {string} seedStr - рядок виду YYYY-MM-DD.
+   * @returns {{ dob: Date | null, gender: string }}
+   */
+  function buildSceneContext(seedStr) {
+    const gender = getSelectedGender();
+    if (!seedStr || typeof seedStr !== "string") {
+      return { dob: null, gender };
+    }
+
+    const match = /^([0-9]{4})-([0-9]{2})-([0-9]{2})$/.exec(seedStr);
+    if (!match) {
+      return { dob: null, gender };
+    }
+
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    const day = Number(match[3]);
+    const dob = new Date(Date.UTC(year, month - 1, day));
+    if (Number.isNaN(dob.getTime())) {
+      return { dob: null, gender };
+    }
+
+    return { dob, gender };
+  }
+
   function readStateFromUrl() {
     const params = new URLSearchParams(location.search);
     const date = params.get("date");
@@ -618,6 +646,16 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   showCanvasPlaceholder();
   hydrateUIFromUrlOrToday();
   hydrateGenderFromStorage();
+  if (genderSelect) {
+    genderSelect.addEventListener("change", () => {
+      const dateStr = readDateFromUI();
+      const gender = getSelectedGender();
+      persistUserInput(dateStr, gender);
+      if (state.isRunning) {
+        restartActiveScene({ force: true });
+      }
+    });
+  }
   updateLaunchState();
   writeStateToUrl(readDateFromUI());
 
@@ -815,7 +853,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     if (typeof state.sceneInstance.resetModeLock === "function") {
       state.sceneInstance.resetModeLock();
     }
-    state.sceneInstance.init(seed, prng);
+    const context = buildSceneContext(seed);
+    state.sceneInstance.init(seed, prng, context);
     state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
     resetPerformanceTracker();
     state.currentSeed = seed;

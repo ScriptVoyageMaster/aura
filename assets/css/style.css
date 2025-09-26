@@ -14,7 +14,7 @@
   --accent: #2563eb;
   --accent-hover: #1d4ed8;
   --outline: #374151;
-  --overlay-bg: rgba(11, 11, 15, 0.85);
+  --overlay-bg: rgba(3, 7, 18, 0.5);
 }
 
 /* Скидання базових відступів для передбачуваного рендеру */
@@ -197,7 +197,7 @@ body {
   /* Півпрозорий фон, що акцентує увагу на розгорнутій канві */
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--overlay-bg);
   opacity: 0;
   pointer-events: none;
   transition: opacity 160ms ease;
