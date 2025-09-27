@@ -602,13 +602,28 @@
       if (!this.layout) {
         return;
       }
+
+      // Очищаємо канву у координатах сцени, щоб не залишалось артефактів від попередніх кадрів.
+      ctx.save();
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+      ctx.clearRect(0, 0, this.width, this.height);
+
       if (!this.isReady) {
+        // Якщо SVG ще не завантажено — показуємо легке повідомлення і припиняємо малювання на цьому кадрі.
         this.drawLoading(ctx);
+        ctx.restore();
         return;
       }
-      this.drawBackdrop(ctx);
+
       this.drawGlyph(ctx);
-      this.drawTone(ctx);
+
+      if (this.shouldReduceMotion || this.animation.elapsed >= this.animation.totalDuration) {
+        // Число Цолькін промальовуємо вже після завершення контурної анімації, щоб акцент не розсіювався.
+        this.drawTone(ctx);
+      }
+
+      ctx.restore();
     }
 
     drawLoading(ctx) {
@@ -620,19 +635,6 @@
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       ctx.fillText("Завантаження гліфа Майя…", this.width / 2, this.height / 2);
-      ctx.restore();
-    }
-
-    drawBackdrop(ctx) {
-      ctx.save();
-      const pad = this.strokeBase * 0.8;
-      ctx.fillStyle = this.palette.backdrop;
-      ctx.fillRect(
-        this.layout.glyphBox.x - pad,
-        this.layout.toneBox.y - pad,
-        this.layout.glyphBox.w + pad * 2,
-        this.layout.glyphBox.h + this.layout.toneBox.h + pad * 2
-      );
       ctx.restore();
     }
 
@@ -683,32 +685,31 @@
       if (typeof window.drawTzolkinNumber !== "function") {
         return;
       }
-      const options = {
-        strokeColor: this.palette.numberStroke,
-        accentColor: this.palette.numberAccent,
-        lineWidth: this.strokeBase * 0.9,
-        dotRadius: this.strokeBase * 0.7,
-        spacing: this.strokeBase * 0.8,
-        barLength: this.layout.toneBox.w * 0.72,
-      };
+
       ctx.save();
-      const toneHeight = window.drawTzolkinNumber(
-        ctx,
-        this.tone,
-        this.layout.toneBox.x,
-        this.layout.toneBox.y,
-        this.layout.toneBox.w,
-        options
+      const toneBox = this.layout.toneBox;
+      const estimatedNormalizedHeight = 24; // Сумарна висота двох барів і крапок у вихідному SVG (10.5..34.5).
+      // Оцінюємо масштаб, у якому буде рендеритись число, щоб підігнати товщину рисок під товщину контурів гліфа.
+      const baseScaleGuess = Math.min(
+        toneBox.w / 40,
+        toneBox.h / estimatedNormalizedHeight
       );
-      ctx.fillStyle = this.palette.numberStroke;
-      ctx.font = `${Math.max(28, this.strokeBase * 2.6)}px 'Inter', 'Segoe UI', sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "top";
-      ctx.fillText(
-        `${this.tone} • ${this.signName}`,
-        this.layout.toneBox.x + this.layout.toneBox.w / 2,
-        this.layout.toneBox.y + toneHeight + this.strokeBase * 0.6
-      );
+      const desiredLineWidth = Math.max(1.5, this.strokeBase * 0.85);
+      let lineWidthFactor = 1;
+      if (baseScaleGuess > 0) {
+        lineWidthFactor = desiredLineWidth / (4 * baseScaleGuess);
+      }
+      lineWidthFactor = Math.min(Math.max(lineWidthFactor, 0.6), 1.35);
+      // Крапки робимо трошки компактнішими за риски, але зберігаємо пропорційність.
+      const dotRadiusFactor = Math.min(Math.max(lineWidthFactor * 0.9, 0.75), 1.4);
+
+      // Передаємо у візерунок колір контуру гліфа, щоб композиція виглядала цілісно.
+      window.drawTzolkinNumber(ctx, this.tone, toneBox, {
+        strokeColor: this.palette.outline,
+        accentColor: this.palette.numberAccent || this.palette.outline,
+        lineWidthFactor,
+        dotRadiusFactor,
+      });
       ctx.restore();
     }
 
