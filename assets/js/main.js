@@ -20,7 +20,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   // --- 1. Збір посилань на DOM-елементи ---
   const canvas = document.getElementById("scene");
-  const ctx = canvas.getContext("2d");
+  // Просимо контекст одразу з підтримкою прозорості, аби фон задавався лише через CSS.
+  const ctx = canvas.getContext("2d", { alpha: true });
   if (!ctx) {
     console.error("Canvas 2D не підтримується в цьому браузері.");
     return;
@@ -692,8 +693,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     state.lastFrameTime = now - (elapsed % frameInterval);
 
     ctx.setTransform(state.effectiveDpr, 0, 0, state.effectiveDpr, 0, 0);
-    ctx.fillStyle = CONFIG.global.CANVAS_BG;
-    ctx.fillRect(0, 0, state.cssWidth, state.cssHeight);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = "source-over";
+    ctx.clearRect(0, 0, state.cssWidth, state.cssHeight);
 
     ctx.save();
     ctx.setTransform(
