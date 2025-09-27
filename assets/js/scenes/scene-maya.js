@@ -387,6 +387,43 @@
     }
 
     /**
+     * Акуратно оновлюємо тему кольорів без перезапуску таймлайну анімації.
+     */
+    updateTheme({ gender } = {}) {
+      const nextGender = gender === "male" || gender === "female" ? gender : "unspecified";
+      if (nextGender === this.gender && this.palette) {
+        return;
+      }
+      this.gender = nextGender;
+      this.palette = this.pickPalette(this.gender);
+
+      const recolorSegment = (segment) => {
+        if (!segment || typeof segment !== "object") {
+          return;
+        }
+        if (segment.groupName === "outline") {
+          segment.color = this.palette.outline;
+        } else if (segment.groupName === "details") {
+          segment.color = this.palette.details;
+        } else if (segment.groupName === "fills") {
+          segment.color = this.palette.fills;
+        }
+      };
+
+      if (this.animation && Array.isArray(this.animation.segments)) {
+        this.animation.segments.forEach(recolorSegment);
+      }
+
+      if (Array.isArray(this.cachedSegments) && this.cachedSegments !== this.animation.segments) {
+        this.cachedSegments.forEach(recolorSegment);
+      }
+
+      if (this.animation && typeof this.animation === "object") {
+        this.animation.easing = this.palette.easing || this.animation.easing;
+      }
+    }
+
+    /**
      * Основний метод ініціалізації сцени: готуємо дату, палітру та завантажуємо SVG.
      */
     init(seedStr, prng, context = {}) {
@@ -593,6 +630,7 @@
             kind: group.kind,
             color: group.color,
             widthFactor: group.widthFactor,
+            groupName: group.name,
           });
           if (!this.shouldReduceMotion) {
             currentTime += duration;

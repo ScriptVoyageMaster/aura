@@ -1,4 +1,5 @@
 import { TZOLKIN_GLYPHS, TZOLKIN_ORDER } from "./glyphs/index.js";
+import { initGenderTheme, setGenderTheme } from "../../client/assets/js/genderToggle.js";
 
 // Робимо мапу та впорядкований список гліфів доступними глобально для майбутніх сценаріїв.
 // Так інші скрипти можуть звернутися до даних без додаткових імпортів.
@@ -31,6 +32,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const pageHeader = document.querySelector(".header");
   const dateInput = document.getElementById("dateInput");
   const genderSelect = document.getElementById("gender");
+  const initialGenderTheme = initGenderTheme(genderSelect ? genderSelect.value : "unspecified");
   const btnRun = document.getElementById("btnRun");
   const btnHelp = document.getElementById("btnHelp");
   const langSelect = document.getElementById("langSelect");
@@ -158,11 +160,21 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   function getSelectedGender() {
     // Акуратно читаємо значення вибору статі. Якщо елемента немає або значення невідоме, повертаємо "unspecified".
     if (!genderSelect) {
-      return "unspecified";
+      const auraRoot = document.getElementById("aura");
+      const rootGender = auraRoot?.getAttribute("data-gender");
+      return rootGender === "male" || rootGender === "female" ? rootGender : "unspecified";
     }
     const value = genderSelect.value;
     if (value === "female" || value === "male") {
       return value;
+    }
+    if (value === "unspecified") {
+      return "unspecified";
+    }
+    const auraRoot = document.getElementById("aura");
+    const rootGender = auraRoot?.getAttribute("data-gender");
+    if (rootGender === "female" || rootGender === "male") {
+      return rootGender;
     }
     return "unspecified";
   }
@@ -196,18 +208,16 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   function hydrateGenderFromStorage() {
     // Під час завантаження сторінки намагаємося відновити попередньо обрану стать.
-    if (!genderSelect) {
-      return;
-    }
-    const stored = readStoredUserInput();
-    if (!stored || typeof stored.gender !== "string") {
-      return;
-    }
     const allowedValues = ["unspecified", "female", "male"];
-    if (!allowedValues.includes(stored.gender)) {
-      return;
+    const stored = readStoredUserInput();
+    let genderToApply = initialGenderTheme;
+    if (stored && typeof stored.gender === "string" && allowedValues.includes(stored.gender)) {
+      genderToApply = stored.gender;
     }
-    genderSelect.value = stored.gender;
+    const applied = setGenderTheme(genderToApply);
+    if (genderSelect) {
+      genderSelect.value = applied;
+    }
   }
 
   function detectInitialLang() {
@@ -632,8 +642,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     const dateStr = readDateFromUI();
     if (!dateStr) return;
     const gender = getSelectedGender();
+    const appliedGender = setGenderTheme(gender);
     // Записуємо введені користувачем дані, щоб легко повернутися до них у майбутньому.
-    persistUserInput(dateStr, gender);
+    persistUserInput(dateStr, appliedGender);
     hideCanvasPlaceholder();
     const seed = buildSeedFromDateStr(dateStr);
     writeStateToUrl(dateStr);
@@ -655,9 +666,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     genderSelect.addEventListener("change", () => {
       const dateStr = readDateFromUI();
       const gender = getSelectedGender();
-      persistUserInput(dateStr, gender);
-      if (state.isRunning) {
-        restartActiveScene({ force: true });
+      const appliedGender = setGenderTheme(gender);
+      persistUserInput(dateStr, appliedGender);
+      if (state.sceneInstance && typeof state.sceneInstance.updateTheme === "function") {
+        state.sceneInstance.updateTheme({ gender: appliedGender });
+      } else if (state.sceneInstance && typeof state.sceneInstance.setGender === "function") {
+        state.sceneInstance.setGender(appliedGender);
       }
     });
   }

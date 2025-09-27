@@ -1,0 +1,62 @@
+/*
+  Тематичні змінні для гліфа AURA.
+  Коментарі детально описують логіку українською мовою, аби навіть новачок розібрався.
+*/
+
+#aura {
+  /* Базові значення, що працюють як нейтральна тема до визначення статі користувачем */
+  --aura-bg: #0b0d10;
+  --aura-glyph-stroke: #79a8ff;
+  --aura-glyph-fill: transparent;
+  --aura-digit-color: #eaeef7;
+  --aura-accent: #79a8ff;
+}
+
+/* Чоловіча тема: холодні блакитні відтінки */
+#aura[data-gender="male"] {
+  --aura-glyph-stroke: #7aa6ff;
+  --aura-accent: #7aa6ff;
+  --aura-digit-color: #dfe9ff;
+}
+
+/* Жіноча тема: теплі рожеві тони */
+#aura[data-gender="female"] {
+  --aura-glyph-stroke: #ff7ad1;
+  --aura-accent: #ff7ad1;
+  --aura-digit-color: #ffe5f4;
+}
+
+/* Нейтральний режим (коли стать не вказана) злегка відрізняється від базового */
+#aura[data-gender="unspecified"] {
+  --aura-glyph-stroke: #9ac8ff;
+  --aura-accent: #9ac8ff;
+  --aura-digit-color: #f5f7ff;
+}
+
+/* Прив'язуємо колірні змінні до SVG-класів, якщо такі присутні в розмітці */
+#aura svg .stroke {
+  stroke: var(--aura-glyph-stroke);
+  transition: stroke 0.25s ease;
+}
+
+#aura svg .fill {
+  fill: var(--aura-glyph-fill);
+  transition: fill 0.25s ease;
+}
+
+/* Цифра над гліфом може бути реалізована як DOM-елемент із класом digit */
+#aura .digit {
+  color: var(--aura-digit-color);
+  transition: color 0.25s ease;
+}
+
+/* Допоміжний акцент для елементів інтерфейсу, що залежать від теми */
+#aura [data-accent="border"] {
+  border-color: var(--aura-accent);
+  transition: border-color 0.25s ease;
+}
+
+#aura [data-accent="color"] {
+  color: var(--aura-accent);
+  transition: color 0.25s ease;
+}
