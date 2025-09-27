@@ -14,6 +14,19 @@
   }
 
   /**
+   * Універсальний clamp, щоб обмежувати значення у заданому інтервалі.
+   */
+  function clamp(value, min, max) {
+    if (value < min) {
+      return min;
+    }
+    if (value > max) {
+      return max;
+    }
+    return value;
+  }
+
+  /**
    * Евристика сортування контурів залежно від статі: лінійне для чоловічої, вертикальне/центрове для жіночої.
    */
   function sortContours(contours, gender, center) {
@@ -274,6 +287,9 @@
       this.shouldReduceMotion = false;
       this.matchMediaQuery = null;
       this.loadingPromise = null;
+      this.state = "idle"; // Стейт-машина: idle → drawing → done.
+      this.cachedSegments = []; // Кешуємо сегменти анімації, щоб швидко перемальовувати фінальні кадри.
+      this.toneStrokeBase = 4; // Референтна товщина штрихів для числа (оновлюємо під час розкладки).
 
       this.handleVisibility = this.handleVisibility.bind(this);
       this.setupReducedMotionListener();
@@ -295,8 +311,12 @@
           const endTime = this.animation.segments.reduce((acc, segment) => Math.max(acc, segment.start + segment.duration), 0);
           this.animation.elapsed = endTime;
           this.animation.totalDuration = endTime;
+          this.state = "done";
         } else {
           this.animation.elapsed = 0;
+          if (this.cachedSegments.length > 0) {
+            this.state = "drawing";
+          }
         }
       };
       if (typeof this.matchMediaQuery.addEventListener === "function") {
@@ -402,6 +422,8 @@
       this.isLoading = true;
       this.isReady = false;
       this.animation = { segments: [], elapsed: 0, totalDuration: 0, easing: this.palette.easing };
+      this.cachedSegments = [];
+      this.state = "idle";
 
       const cached = svgCache.get(svgUrl);
       const loadPromise = cached
@@ -433,6 +455,7 @@
           console.error("Не вдалося опрацювати майянський гліф:", error);
           this.isReady = false;
           this.isLoading = false;
+          this.state = "idle";
         });
     }
 
@@ -458,18 +481,39 @@
         return;
       }
       const padding = Math.min(this.width, this.height) * 0.06;
-      const availableWidth = this.width - padding * 2;
-      const availableHeight = this.height - padding * 2;
-      const toneHeight = availableHeight * 0.14;
-      const glyphAreaHeight = availableHeight - toneHeight;
-      const glyphScale = Math.min(availableWidth / this.viewBox.width, glyphAreaHeight / this.viewBox.height);
+      const availableWidth = Math.max(this.width - padding * 2, 0);
+      const availableHeight = Math.max(this.height - padding * 2, 0);
+
+      const toneGap = clamp(this.height * 0.03, 6, 16); // Адаптивний проміжок між числом і гліфом.
+      const normalizedToneHeight = 24; // Нормалізована висота двох рисок і крапок у вихідному SVG.
+      const toneHeightFactor = this.viewBox.width * (normalizedToneHeight / 40);
+
+      // Обчислюємо масштаб гліфа так, щоб разом з числом він умістився в робочу область.
+      const heightWithoutGap = Math.max(availableHeight - toneGap, 0);
+      const scaleByWidth = this.viewBox.width > 0 ? availableWidth / this.viewBox.width : 1;
+      const scaleByHeight = this.viewBox.height + toneHeightFactor > 0 ? heightWithoutGap / (this.viewBox.height + toneHeightFactor) : scaleByWidth;
+      let glyphScale = Math.min(scaleByWidth, scaleByHeight);
+      if (!Number.isFinite(glyphScale) || glyphScale <= 0) {
+        glyphScale = Math.max(scaleByWidth, scaleByHeight, 0.001);
+      }
+
       const glyphWidth = this.viewBox.width * glyphScale;
       const glyphHeight = this.viewBox.height * glyphScale;
+      const toneHeight = toneHeightFactor * glyphScale;
+      const totalBlockHeight = toneHeight + toneGap + glyphHeight;
+      const remainingHeight = Math.max(availableHeight - totalBlockHeight, 0);
+      const blockTop = padding + remainingHeight / 2;
+
       const glyphX = (this.width - glyphWidth) / 2;
-      const glyphY = padding + toneHeight + (glyphAreaHeight - glyphHeight) / 2;
+      const toneCenterX = glyphX + glyphWidth / 2;
+      const toneX = toneCenterX - glyphWidth / 2;
+      const toneY = blockTop;
+      const toneBottom = toneY + toneHeight;
+      const glyphY = toneBottom + toneGap;
+
       const toneBox = {
-        x: (this.width - glyphWidth) / 2,
-        y: padding,
+        x: toneX,
+        y: toneY,
         w: glyphWidth,
         h: toneHeight,
       };
@@ -478,9 +522,11 @@
         padding,
         glyphBox: { x: glyphX, y: glyphY, w: glyphWidth, h: glyphHeight },
         toneBox,
+        toneGap,
         scale: glyphScale,
       };
-      this.strokeBase = Math.max(4, Math.min(glyphWidth, glyphHeight) * 0.014);
+      this.strokeBase = Math.max(4, glyphWidth * 0.014);
+      this.toneStrokeBase = Math.max(1.5, glyphWidth * 0.014);
     }
 
     /**
@@ -565,6 +611,12 @@
         totalDuration: finalTime,
         easing: this.palette.easing,
       };
+      this.cachedSegments = segments; // Зберігаємо чергу малювання, щоб можна було миттєво відновити фінальний кадр.
+      if (this.shouldReduceMotion || finalTime === 0) {
+        this.state = "done";
+      } else {
+        this.state = "drawing";
+      }
     }
 
     /**
@@ -585,17 +637,27 @@
     }
 
     update(dt) {
+      // Керуємо перебігом анімації через просту стейт-машину, щоб можна було зупинятися та відновлюватися без перезапуску.
       if (!this.isReady) {
+        return;
+      }
+      if (this.state === "done") {
+        this.animation.elapsed = this.animation.totalDuration;
         return;
       }
       if (this.shouldReduceMotion) {
         this.animation.elapsed = this.animation.totalDuration;
+        this.state = "done";
         return;
       }
-      if (!this.isInView) {
+      if (!this.isInView || this.state !== "drawing") {
         return;
       }
       this.animation.elapsed = Math.min(this.animation.elapsed + dt, this.animation.totalDuration);
+      if (this.animation.elapsed >= this.animation.totalDuration) {
+        this.animation.elapsed = this.animation.totalDuration;
+        this.state = "done";
+      }
     }
 
     draw(ctx) {
@@ -618,7 +680,7 @@
 
       this.drawGlyph(ctx);
 
-      if (this.shouldReduceMotion || this.animation.elapsed >= this.animation.totalDuration) {
+      if (this.state === "done") {
         // Число Цолькін промальовуємо вже після завершення контурної анімації, щоб акцент не розсіювався.
         this.drawTone(ctx);
       }
@@ -652,7 +714,8 @@
         const segment = this.animation.segments[i];
         const { item, start, duration, kind, color, widthFactor } = segment;
         const rawProgress = duration > 0 ? (elapsed - start) / duration : 1;
-        const progress = this.easeProgress(rawProgress);
+        const easedProgress = this.state === "done" ? 1 : this.easeProgress(rawProgress);
+        const progress = this.state === "done" ? 1 : easedProgress;
         if (progress <= 0) {
           continue;
         }
@@ -666,7 +729,7 @@
           ctx.lineWidth = (this.strokeBase * (widthFactor || 1)) * strokeScale;
           ctx.lineJoin = "round";
           ctx.lineCap = "round";
-          if (progress < 1 && !this.shouldReduceMotion) {
+          if (progress < 1 && !this.shouldReduceMotion && this.state === "drawing") {
             const dash = item.length || 1;
             ctx.setLineDash([dash, dash]);
             ctx.lineDashOffset = (1 - progress) * dash;
@@ -694,7 +757,7 @@
         toneBox.w / 40,
         toneBox.h / estimatedNormalizedHeight
       );
-      const desiredLineWidth = Math.max(1.5, this.strokeBase * 0.85);
+      const desiredLineWidth = Math.max(1.5, this.toneStrokeBase * 0.85);
       let lineWidthFactor = 1;
       if (baseScaleGuess > 0) {
         lineWidthFactor = desiredLineWidth / (4 * baseScaleGuess);
@@ -717,7 +780,11 @@
       this.width = Math.max(width, 200);
       this.height = Math.max(height, 200);
       this.computeLayout();
-      this.prepareAnimationPlan();
+    }
+
+    relayout(width, height) {
+      // Метод-зручність: дозволяє менеджеру сцен просто перерахувати геометрію без перезапуску анімації.
+      this.resize(width, height);
     }
 
     // Сцена повністю 2D, тож методи керування режимом стають заглушками.
