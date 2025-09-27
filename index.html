@@ -34,6 +34,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="client/assets/css/theme.css" />
     <link rel="stylesheet" href="client/assets/css/topbar.css" />
 
     <!-- Favicon (опційно) -->
@@ -52,7 +53,8 @@
     gtag("config", "G-R03TE5MZQ7");
   </script>
   <body>
-    <div class="app">
+    <div id="aura" data-gender="unspecified">
+      <div class="app">
       <header class="header">
         <h1 class="title">AURA</h1>
         <p class="subtitle" id="subtitle" data-i18n="subtitle">
@@ -225,27 +227,29 @@
           </span>
         </p>
       </footer>
+      </div>
     </div>
 
-    <!-- Модальне вікно з поясненням задуму сайту -->
-    <div
-      class="modal"
-      id="info-modal"
-      hidden
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="info-modal-title"
-    >
-      <div class="modal__overlay" id="modal-overlay"></div>
-      <div class="modal__dialog">
-        <div class="modal__content">
-          <h2 class="modal__title" id="info-modal-title" data-i18n="aboutTitle">Про проєкт</h2>
-          <p class="modal__text" data-i18n-html="modalText">
-            Цей сайт відкриває приховану геометрію вашого життя.<br />
-            На основі дати народження народжується унікальний візерунок — візуальний відбиток вашої присутності у Всесвіті.<br />
-            Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.
-          </p>
-          <button class="modal__close" id="modal-close" data-i18n="modalClose">Добре</button>
+      <!-- Модальне вікно з поясненням задуму сайту -->
+      <div
+        class="modal"
+        id="info-modal"
+        hidden
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="info-modal-title"
+      >
+        <div class="modal__overlay" id="modal-overlay"></div>
+        <div class="modal__dialog">
+          <div class="modal__content">
+            <h2 class="modal__title" id="info-modal-title" data-i18n="aboutTitle">Про проєкт</h2>
+            <p class="modal__text" data-i18n-html="modalText">
+              Цей сайт відкриває приховану геометрію вашого життя.<br />
+              На основі дати народження народжується унікальний візерунок — візуальний відбиток вашої присутності у Всесвіті.<br />
+              Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.
+            </p>
+            <button class="modal__close" id="modal-close" data-i18n="modalClose">Добре</button>
+          </div>
         </div>
       </div>
     </div>
