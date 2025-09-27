@@ -362,8 +362,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     setStored("scene", sceneKey);
     updateSceneControl();
 
-    if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
-      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    if (state.sceneInstance) {
+      if (typeof state.sceneInstance.relayout === "function") {
+        state.sceneInstance.relayout(scenesDesignWidth, scenesDesignHeight);
+      } else if (typeof state.sceneInstance.resize === "function") {
+        state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+      }
     }
 
     if (state.isRunning || forceRestart) {
@@ -838,12 +842,37 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
     ctx.setTransform(effectiveDpr, 0, 0, effectiveDpr, 0, 0);
 
-    if (state.sceneInstance && typeof state.sceneInstance.resize === "function") {
-      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    if (state.sceneInstance) {
+      if (typeof state.sceneInstance.relayout === "function") {
+        state.sceneInstance.relayout(scenesDesignWidth, scenesDesignHeight);
+      } else if (typeof state.sceneInstance.resize === "function") {
+        state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+      }
     }
   }
 
-  window.addEventListener("resize", updateCanvasSize);
+  // Проста дросельна логіка, щоб не перераховувати розкладку сотні разів за секунду під час resize.
+  const RESIZE_THROTTLE_MS = 130;
+  let lastResizeCall = 0;
+  let resizeTimeoutId = null;
+
+  function handleThrottledResize() {
+    // Чекаємо паузи між подіями resize, щоб не запускати перерахунок на кожний піксель руху вікна.
+    const now = performance.now();
+    const timeSinceLast = now - lastResizeCall;
+    if (timeSinceLast >= RESIZE_THROTTLE_MS) {
+      lastResizeCall = now;
+      updateCanvasSize();
+    } else {
+      clearTimeout(resizeTimeoutId);
+      resizeTimeoutId = setTimeout(() => {
+        lastResizeCall = performance.now();
+        updateCanvasSize();
+      }, RESIZE_THROTTLE_MS - timeSinceLast);
+    }
+  }
+
+  window.addEventListener("resize", handleThrottledResize);
   updateCanvasSize();
 
   // --- 11. Перезапуск сцени ---
@@ -857,7 +886,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
     const context = buildSceneContext(seed);
     state.sceneInstance.init(seed, prng, context);
-    state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    if (typeof state.sceneInstance.relayout === "function") {
+      state.sceneInstance.relayout(scenesDesignWidth, scenesDesignHeight);
+    } else if (typeof state.sceneInstance.resize === "function") {
+      state.sceneInstance.resize(scenesDesignWidth, scenesDesignHeight);
+    }
     resetPerformanceTracker();
     state.currentSeed = seed;
     state.runStartedAt = performance.now();
