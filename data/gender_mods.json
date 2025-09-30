@@ -1,0 +1,12 @@
+{
+  "male": {
+    "address": [],
+    "lex_shift": [],
+    "tone_style": []
+  },
+  "female": {
+    "address": [],
+    "lex_shift": [],
+    "tone_style": []
+  }
+}

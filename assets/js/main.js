@@ -1,5 +1,6 @@
 import { TZOLKIN_GLYPHS, TZOLKIN_ORDER } from "./glyphs/index.js";
 import { initGenderTheme, setGenderTheme } from "../../client/assets/js/genderToggle.js";
+import { generateDescription, preloadDictionaries } from "../../utils/generator.js";
 
 // Робимо мапу та впорядкований список гліфів доступними глобально для майбутніх сценаріїв.
 // Так інші скрипти можуть звернутися до даних без додаткових імпортів.
@@ -46,6 +47,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const canvasToggleLabel = document.getElementById("canvas-toggle-label");
   const canvasOverlay = document.getElementById("canvas-overlay");
 
+  const descRoot = document.getElementById("aura-desc");
+  const descSummary = descRoot?.querySelector('[data-role="desc-summary"]');
+  const descMeta = descRoot?.querySelector('[data-role="desc-meta"]');
+  const descBody = descRoot?.querySelector('[data-role="desc-body"]');
+
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
   const modalClose = document.getElementById("modal-close");
@@ -84,6 +90,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     currentSeed: "",
     isCanvasExpanded: false,
     originalBodyOverflow: undefined,
+    currentDob: null,
+    currentGlyphId: null,
+    currentToneId: null,
+    descriptionRequestId: 0,
+    descriptionSectionsState: Object.create(null),
+    currentDescription: null,
   };
 
   const performanceTracker = { samples: [] };
@@ -92,6 +104,53 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const frameInterval = 1000 / CONFIG.global.TARGET_FPS;
   const scenesDesignWidth = CONFIG.global.DESIGN_WIDTH;
   const scenesDesignHeight = CONFIG.global.DESIGN_HEIGHT;
+
+  preloadDictionaries().catch((error) => {
+    console.warn("Не вдалося попередньо завантажити словники опису:", error);
+  });
+
+  const DESCRIPTION_BLOCK_ORDER = [
+    "intro",
+    "glyph_core",
+    "tone_core",
+    "synergy",
+    "advice",
+    "shadow",
+    "conclusion",
+  ];
+
+  const DESCRIPTION_LABELS = {
+    intro: { ua: "Вступ", en: "Intro" },
+    glyph_core: { ua: "Сутність гліфа", en: "Glyph core" },
+    tone_core: { ua: "Сутність тону", en: "Tone core" },
+    synergy: { ua: "Синергія", en: "Synergy" },
+    advice: { ua: "Поради", en: "Advice" },
+    shadow: { ua: "Тінь", en: "Shadow" },
+    conclusion: { ua: "Заключне", en: "Conclusion" },
+  };
+
+  const SIGN_ID_MAP = [
+    "imix",
+    "ik",
+    "akbal",
+    "kan",
+    "chikchan",
+    "kimi",
+    "manik",
+    "lamat",
+    "muluk",
+    "ok",
+    "chuwen",
+    "eb",
+    "ben",
+    "ix",
+    "men",
+    "kib",
+    "kaban",
+    "etznab",
+    "kawak",
+    "ahau",
+  ];
 
   // --- 4. Допоміжні функції ---
 
@@ -177,6 +236,259 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       return rootGender;
     }
     return "unspecified";
+  }
+
+  /**
+   * Для текстового опису потрібне чітке двійкове значення статі. Якщо користувач не вибрав стать, беремо жіночу як базову.
+   */
+  function getAppliedGenderForDescription() {
+    const auraRoot = document.getElementById("aura");
+    const attr = auraRoot?.getAttribute("data-gender");
+    if (attr === "male") {
+      return "male";
+    }
+    if (attr === "female") {
+      return "female";
+    }
+    return "female";
+  }
+
+  /**
+   * Перетворюємо номер знаку (1..20) на snake_case ідентифікатор для словника описів.
+   */
+  function glyphIdFromSignIndex(signIndex) {
+    const numeric = Number(signIndex);
+    if (!Number.isFinite(numeric)) {
+      return null;
+    }
+    const normalized = Math.trunc(numeric) - 1;
+    if (normalized < 0 || normalized >= SIGN_ID_MAP.length) {
+      return null;
+    }
+    return SIGN_ID_MAP[normalized];
+  }
+
+  /**
+   * Обчислюємо ідентифікатори гліфа та тону на основі чистої дати народження.
+   */
+  function computeTzolkinFromDob(dob) {
+    if (!(dob instanceof Date) || Number.isNaN(dob.getTime())) {
+      return null;
+    }
+    if (typeof window.tzolkinFromDate !== "function") {
+      return null;
+    }
+    try {
+      const data = window.tzolkinFromDate(dob);
+      if (!data) {
+        return null;
+      }
+      const glyphId = glyphIdFromSignIndex(data.signIndex);
+      if (!glyphId) {
+        return null;
+      }
+      return {
+        glyphId,
+        toneId: String(data.tone || ""),
+      };
+    } catch (error) {
+      console.error("Не вдалося обчислити показники Цолькін для текстового опису:", error);
+      return null;
+    }
+  }
+
+  /**
+   * Відмалювуємо базове повідомлення, коли опис ще недоступний.
+   */
+  function renderDescriptionPlaceholder() {
+    if (!descRoot || !descBody || !descSummary || !descMeta) {
+      return;
+    }
+    descSummary.textContent = "Оберіть дату народження, щоб побачити інтерпретацію.";
+    descMeta.innerHTML = "";
+    const chip = document.createElement("span");
+    chip.className = "aura-desc__tag";
+    chip.textContent = "Очікування даних";
+    descMeta.append(chip);
+    descBody.innerHTML = "";
+    const paragraph = document.createElement("p");
+    paragraph.className = "aura-desc__placeholder";
+    paragraph.textContent = "Після запуску генерації тут з'явиться докладний опис комбінації гліфа та тону.";
+    descBody.append(paragraph);
+    state.currentDescription = null;
+  }
+
+  /**
+   * Показуємо коротке повідомлення про те, що зараз складаємо текст.
+   */
+  function renderDescriptionLoading() {
+    if (!descRoot || !descBody || !descSummary || !descMeta) {
+      return;
+    }
+    descSummary.textContent = "Готуємо опис…";
+    descMeta.innerHTML = "";
+    const chip = document.createElement("span");
+    chip.className = "aura-desc__tag";
+    chip.textContent = "Завантаження";
+    descMeta.append(chip);
+    descBody.innerHTML = "";
+    const paragraph = document.createElement("p");
+    paragraph.className = "aura-desc__placeholder";
+    paragraph.textContent = "Завантажуємо словники та вибудовуємо фрази зі словникових блоків.";
+    descBody.append(paragraph);
+  }
+
+  /**
+   * Формуємо та вставляємо структуровані секції опису відповідно до правил.
+   */
+  function renderDescription(description) {
+    if (!descRoot || !descBody || !descSummary || !descMeta) {
+      return;
+    }
+    if (!description) {
+      renderDescriptionPlaceholder();
+      return;
+    }
+
+    descSummary.textContent = description.metaDescription || "Опис комбінації готується.";
+    descMeta.innerHTML = "";
+
+    const titleChip = document.createElement("span");
+    titleChip.className = "aura-desc__tag";
+    titleChip.textContent = description.title || "Опис";
+    descMeta.append(titleChip);
+
+    if (Array.isArray(description.keywords)) {
+      description.keywords.forEach((keyword) => {
+        if (!keyword) return;
+        const keywordChip = document.createElement("span");
+        keywordChip.className = "aura-desc__tag";
+        keywordChip.textContent = keyword;
+        descMeta.append(keywordChip);
+      });
+    }
+
+    descBody.innerHTML = "";
+    const isDesktopView = window.matchMedia("(min-width: 1024px)").matches;
+
+    DESCRIPTION_BLOCK_ORDER.forEach((blockKey) => {
+      const block = description.blocks?.[blockKey];
+      const section = document.createElement("details");
+      section.className = "aura-desc__section";
+      section.dataset.block = blockKey;
+
+      const previousState = state.descriptionSectionsState?.[blockKey];
+      const shouldOpen = typeof previousState === "boolean" ? previousState : isDesktopView || blockKey === "intro";
+      section.open = shouldOpen;
+      section.addEventListener("toggle", () => {
+        state.descriptionSectionsState[blockKey] = section.open;
+      });
+
+      const summary = document.createElement("summary");
+      const labels = DESCRIPTION_LABELS[blockKey] || { ua: blockKey, en: blockKey };
+      const labelsWrapper = document.createElement("span");
+      labelsWrapper.className = "aura-desc__summary-labels";
+      const labelUa = document.createElement("span");
+      labelUa.textContent = labels.ua;
+      const labelEn = document.createElement("span");
+      labelEn.className = "aura-desc__label-en";
+      labelEn.textContent = labels.en;
+      labelsWrapper.append(labelUa, labelEn);
+      summary.append(labelsWrapper);
+      section.append(summary);
+
+      const content = document.createElement("div");
+      content.className = "aura-desc__content";
+      const paragraphs = Array.isArray(block?.paragraphs) ? block.paragraphs : [];
+      const listItems = Array.isArray(block?.list) ? block.list : [];
+
+      if (paragraphs.length === 0 && listItems.length === 0) {
+        const placeholder = document.createElement("p");
+        placeholder.className = "aura-desc__placeholder";
+        placeholder.textContent = "Матеріали для цього розділу ще готуються.";
+        content.append(placeholder);
+      } else {
+        paragraphs.forEach((text) => {
+          if (!text) return;
+          const p = document.createElement("p");
+          p.textContent = text;
+          content.append(p);
+        });
+        if (listItems.length > 0) {
+          const list = document.createElement("ul");
+          listItems.forEach((item) => {
+            if (!item) return;
+            const li = document.createElement("li");
+            li.textContent = item;
+            list.append(li);
+          });
+          content.append(list);
+        }
+      }
+
+      section.append(content);
+      descBody.append(section);
+    });
+
+    state.currentDescription = description;
+  }
+
+  /**
+   * Відправляємо запит до генератора опису та враховуємо асинхронність, щоб не затирати оновлення користувача.
+   */
+  async function requestDescriptionUpdate({ glyphId, toneId } = {}) {
+    if (!descRoot) {
+      return;
+    }
+
+    const effectiveGlyphId = glyphId || state.currentGlyphId;
+    const effectiveToneId = toneId || state.currentToneId;
+
+    if (!effectiveGlyphId || !effectiveToneId) {
+      renderDescriptionPlaceholder();
+      return;
+    }
+
+    state.descriptionRequestId += 1;
+    const requestId = state.descriptionRequestId;
+    renderDescriptionLoading();
+
+    try {
+      const description = await generateDescription({
+        glyphId: effectiveGlyphId,
+        toneId: effectiveToneId,
+        gender: getAppliedGenderForDescription(),
+        lang: state.lang || CONFIG.i18n.default,
+      });
+      if (requestId !== state.descriptionRequestId) {
+        return;
+      }
+      renderDescription(description);
+    } catch (error) {
+      console.error("Не вдалося згенерувати текстовий опис Цолькін:", error);
+      if (requestId === state.descriptionRequestId) {
+        renderDescriptionPlaceholder();
+      }
+    }
+  }
+
+  /**
+   * Оновлюємо опис, коли змінилися мова, стать або обрана дата.
+   */
+  function refreshDescriptionPanel({ forceRegenerate = false } = {}) {
+    if (!descRoot) {
+      return;
+    }
+    if (!state.currentGlyphId || !state.currentToneId) {
+      if (forceRegenerate) {
+        renderDescriptionPlaceholder();
+      }
+      return;
+    }
+    if (forceRegenerate) {
+      state.descriptionRequestId += 1;
+    }
+    requestDescriptionUpdate({});
   }
 
   function readStoredUserInput() {
@@ -326,6 +638,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     updateSceneControl();
     updateCanvasSize();
     updateLaunchState();
+    refreshDescriptionPanel({ forceRegenerate: true });
   }
 
   function updateCanvasToggleLabel() {
@@ -660,6 +973,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   showCanvasPlaceholder();
+  renderDescriptionPlaceholder();
   hydrateUIFromUrlOrToday();
   hydrateGenderFromStorage();
   if (genderSelect) {
@@ -673,6 +987,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       } else if (state.sceneInstance && typeof state.sceneInstance.setGender === "function") {
         state.sceneInstance.setGender(appliedGender);
       }
+      refreshDescriptionPanel({ forceRegenerate: true });
     });
   }
   updateLaunchState();
@@ -899,6 +1214,17 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       state.sceneInstance.resetModeLock();
     }
     const context = buildSceneContext(seed);
+    state.currentDob = context.dob instanceof Date && !Number.isNaN(context.dob?.getTime()) ? context.dob : null;
+    const tzolkinData = computeTzolkinFromDob(state.currentDob);
+    if (tzolkinData) {
+      state.currentGlyphId = tzolkinData.glyphId;
+      state.currentToneId = tzolkinData.toneId;
+      requestDescriptionUpdate({ glyphId: tzolkinData.glyphId, toneId: tzolkinData.toneId });
+    } else {
+      state.currentGlyphId = null;
+      state.currentToneId = null;
+      renderDescriptionPlaceholder();
+    }
     state.sceneInstance.init(seed, prng, context);
     if (typeof state.sceneInstance.relayout === "function") {
       state.sceneInstance.relayout(scenesDesignWidth, scenesDesignHeight);
