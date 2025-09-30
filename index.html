@@ -195,39 +195,41 @@
       </nav>
 
       <main class="pattern-area">
-        <div class="pattern-layout">
-          <div class="canvas-container" id="canvas-wrapper">
-            <canvas id="scene" aria-hidden="true"></canvas>
-            <div class="canvas-placeholder" id="canvas-placeholder" data-i18n="placeholderText">
-              Enter your birth date to generate your unique aura pattern
+        <div id="aura-page" class="pattern-layout">
+          <section id="aura-visual">
+            <div class="canvas-container" id="canvas-wrapper">
+              <canvas id="scene" aria-hidden="true"></canvas>
+              <div class="canvas-placeholder" id="canvas-placeholder" data-i18n="placeholderText">
+                Enter your birth date to generate your unique aura pattern
+              </div>
+              <button
+                class="canvas-toggle"
+                id="canvas-toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="scene"
+              >
+                <span class="canvas-toggle__icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 3 3 3 3 9"></polyline>
+                    <polyline points="15 21 21 21 21 15"></polyline>
+                    <line x1="3" y1="3" x2="10" y2="10"></line>
+                    <line x1="21" y1="21" x2="14" y2="14"></line>
+                  </svg>
+                </span>
+                <span class="canvas-toggle__label" id="canvas-toggle-label">Expand</span>
+              </button>
             </div>
-            <button
-              class="canvas-toggle"
-              id="canvas-toggle"
-              type="button"
-              aria-expanded="false"
-              aria-controls="scene"
-            >
-              <span class="canvas-toggle__icon" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="9 3 3 3 3 9"></polyline>
-                  <polyline points="15 21 21 21 21 15"></polyline>
-                  <line x1="3" y1="3" x2="10" y2="10"></line>
-                  <line x1="21" y1="21" x2="14" y2="14"></line>
-                </svg>
-              </span>
-              <span class="canvas-toggle__label" id="canvas-toggle-label">Expand</span>
-            </button>
-          </div>
+          </section>
           <aside
             class="description-panel"
             id="aura-desc"
             aria-live="polite"
-            aria-label="Опис комбінації Цолькіна"
+            aria-labelledby="aura-desc-title"
           >
             <div class="aura-desc__inner">
               <header class="aura-desc__header">
-                <h2 class="aura-desc__title">
+                <h2 class="aura-desc__title" id="aura-desc-title">
                   <span>Опис</span>
                   <span>Description</span>
                 </h2>

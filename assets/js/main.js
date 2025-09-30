@@ -46,6 +46,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const canvasToggle = document.getElementById("canvas-toggle");
   const canvasToggleLabel = document.getElementById("canvas-toggle-label");
   const canvasOverlay = document.getElementById("canvas-overlay");
+  // Зберігаємо посилання на секцію з канвою, щоб точніше вимірювати доступну ширину в макеті.
+  const auraVisualSection = document.getElementById("aura-visual");
 
   const descRoot = document.getElementById("aura-desc");
   const descSummary = descRoot?.querySelector('[data-role="desc-summary"]');
@@ -1137,17 +1139,39 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       const footerHeight = footer ? footer.offsetHeight : 0;
       availableHeight = Math.max(viewportHeight - headerHeight - footerHeight, 200);
 
-      // Вираховуємо доступну ширину з урахуванням горизонтальних відступів секції з канвою.
-      if (patternArea) {
+      // Вимірюємо ширину колонки з канвою, щоб опис завжди мав власне місце праворуч.
+      let measuredWidth = 0;
+      if (canvasWrapper) {
+        const previousInlineWidth = canvasWrapper.style.width;
+        canvasWrapper.style.width = "";
+        const visualContainer = auraVisualSection || canvasWrapper.parentElement;
+        if (visualContainer) {
+          measuredWidth = visualContainer.clientWidth;
+        }
+        if (!measuredWidth && patternArea) {
+          measuredWidth = patternArea.clientWidth;
+        }
+        canvasWrapper.style.width = previousInlineWidth;
+      } else if (patternArea) {
+        measuredWidth = patternArea.clientWidth;
+      }
+
+      if (!measuredWidth && patternArea) {
         const computed = window.getComputedStyle(patternArea);
         const paddingX = parseFloat(computed.paddingLeft || "0") + parseFloat(computed.paddingRight || "0");
-        containerWidth = Math.max(viewportWidth - paddingX, 320);
+        measuredWidth = viewportWidth - paddingX;
       }
+
+      containerWidth = Math.max(measuredWidth || 0, 320);
     }
 
     if (canvasWrapper) {
       canvasWrapper.style.height = `${availableHeight}px`;
-      canvasWrapper.style.width = `${containerWidth}px`;
+      if (state.isCanvasExpanded) {
+        canvasWrapper.style.width = `${containerWidth}px`;
+      } else {
+        canvasWrapper.style.width = "100%";
+      }
     }
 
     const effectiveDpr = Math.min(window.devicePixelRatio || 1, CONFIG.global.MAX_DEVICE_PIXEL_RATIO);

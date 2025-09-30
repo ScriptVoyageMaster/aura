@@ -28,9 +28,10 @@
 }
 
 /*
-  Головний контейнер для канви і опису. На десктопі показуємо їх поруч, а на мобільних — стовпчиком.
+  Головний контейнер із канвою та текстом. За замовчуванням елементи складаються вертикально,
+  щоб опис з'являвся під гліфом на мобільних.
 */
-.pattern-layout {
+#aura-page {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -38,13 +39,32 @@
   max-width: 1280px;
 }
 
+/*
+  Блок із візуалізацією тримаємо як окрему секцію, щоб у гріді він займав ліву колонку.
+  min-width: 0 дозволяє канві стискатися, не виштовхуючи опис за межі екрана.
+*/
+#aura-visual {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  min-width: 0;
+}
+
 @media (min-width: 1024px) {
-  .pattern-layout {
-    flex-direction: row;
-    align-items: stretch;
+  /*
+    На широких екранах вмикаємо дві колонки: канва зліва, текст праворуч.
+    Grid дозволяє краще контролювати ширину правої панелі та проміжок між блоками.
+  */
+  #aura-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 420px;
+    gap: 24px;
+    align-items: start;
   }
-  .pattern-layout .canvas-container {
-    flex: 1 1 auto;
+
+  #aura-visual {
+    grid-column: 1;
   }
 }
 
@@ -59,18 +79,19 @@
   color: var(--aura-desc-text);
   backdrop-filter: blur(18px);
   box-shadow: 0 24px 48px rgba(2, 6, 23, 0.45);
-  max-height: 80vh;
-  overflow-y: auto;
+  max-height: none;
+  overflow: visible;
   width: 100%;
 }
 
 @media (min-width: 1024px) {
   #aura-desc {
-    flex: 0 0 380px;
-    max-width: 420px;
+    grid-column: 2;
     position: sticky;
     top: 32px;
-    align-self: flex-start;
+    max-width: 420px;
+    max-height: calc(100dvh - 64px);
+    overflow-y: auto;
   }
 }
 
