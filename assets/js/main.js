@@ -49,6 +49,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   // Зберігаємо посилання на секцію з канвою, щоб точніше вимірювати доступну ширину в макеті.
   const auraVisualSection = document.getElementById("aura-visual");
 
+  const formControls = document.querySelector(".form-controls");
+  const settingsToggle = document.querySelector(".settings-toggle");
+
   const descRoot = document.getElementById("aura-desc");
   const descSummary = descRoot?.querySelector('[data-role="desc-summary"]');
   const descMeta = descRoot?.querySelector('[data-role="desc-meta"]');
@@ -62,6 +65,119 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const fallbackDay = document.getElementById("daySelect");
   const fallbackMonth = document.getElementById("monthSelect");
   const fallbackYear = document.getElementById("yearSelect");
+
+  // --- 1a. Адаптивний стан панелі налаштувань ---
+  const mobileMediaQuery = window.matchMedia("(max-width: 1023.98px)");
+  let manualFormState = null; // null — автоматичний режим, 'expanded' або 'collapsed' — ручний вибір користувача.
+
+  /**
+   * Допоміжна функція, щоб синхронізувати aria-атрибут кнопки зі станом панелі.
+   * Це робить інтерфейс зрозумілішим для користувачів зі скрінрідерами.
+   */
+  function setFormToggleAria(isExpanded) {
+    if (settingsToggle) {
+      settingsToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+    }
+  }
+
+  /**
+   * Згортаємо блок керування. Викликаємо як автоматично, так і за ініціативи користувача.
+   * @param {object} [options]
+   * @param {boolean} [options.fromUser=false] - true, якщо стан змінює сам користувач.
+   */
+  function collapseFormControls({ fromUser = false } = {}) {
+    if (!formControls) return;
+    formControls.classList.add("is-collapsed");
+    formControls.classList.remove("is-expanded");
+    if (mobileMediaQuery.matches) {
+      formControls.classList.add("compact");
+    }
+    setFormToggleAria(false);
+    if (fromUser) {
+      manualFormState = "collapsed";
+    }
+  }
+
+  /**
+   * Розгортаємо блок керування. Можемо робити це автоматично або після кліку користувача.
+   * @param {object} [options]
+   * @param {boolean} [options.fromUser=false] - true, якщо стан змінює сам користувач.
+   */
+  function expandFormControls({ fromUser = false } = {}) {
+    if (!formControls) return;
+    formControls.classList.remove("is-collapsed");
+    formControls.classList.add("is-expanded");
+    if (mobileMediaQuery.matches) {
+      formControls.classList.add("compact");
+    } else {
+      formControls.classList.remove("compact");
+    }
+    setFormToggleAria(true);
+    if (fromUser) {
+      manualFormState = "expanded";
+    }
+  }
+
+  /**
+   * Синхронізуємо стан панелі з поточною шириною вікна.
+   * Коли змінюється брейкпоінт, ми скидаємо ручний стан і повертаємо дефолтну поведінку.
+   * @param {object} [options]
+   * @param {boolean} [options.resetManual=false] - якщо true, забуваємо ручний вибір користувача.
+   */
+  function syncFormControlsToViewport({ resetManual = false } = {}) {
+    if (!formControls) return;
+
+    if (resetManual) {
+      manualFormState = null;
+    }
+
+    const isMobileViewport = mobileMediaQuery.matches;
+
+    if (isMobileViewport) {
+      formControls.classList.add("compact");
+
+      if (manualFormState === "expanded") {
+        expandFormControls();
+        return;
+      }
+
+      if (manualFormState === "collapsed") {
+        collapseFormControls();
+        return;
+      }
+
+      collapseFormControls();
+    } else {
+      manualFormState = null;
+      formControls.classList.remove("compact");
+      formControls.classList.remove("is-collapsed");
+      formControls.classList.add("is-expanded");
+      setFormToggleAria(true);
+    }
+  }
+
+  syncFormControlsToViewport({ resetManual: true });
+
+  if (settingsToggle && formControls) {
+    settingsToggle.addEventListener("click", () => {
+      const willExpand = formControls.classList.contains("is-collapsed");
+      if (willExpand) {
+        expandFormControls({ fromUser: true });
+      } else {
+        collapseFormControls({ fromUser: true });
+      }
+    });
+  }
+
+  if (typeof mobileMediaQuery.addEventListener === "function") {
+    mobileMediaQuery.addEventListener("change", () => {
+      syncFormControlsToViewport({ resetManual: true });
+    });
+  } else if (typeof mobileMediaQuery.addListener === "function") {
+    mobileMediaQuery.addListener(() => {
+      syncFormControlsToViewport({ resetManual: true });
+    });
+  }
 
   // --- 2. Дані сцен ---
   const scenes = {
@@ -1204,6 +1320,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
   }
 
+  function runResizeAdjustments() {
+    // На кожній зміні розміру синхронізуємо стан панелі та габарити канви без перезапуску сцен.
+    syncFormControlsToViewport();
+    updateCanvasSize();
+  }
+
   // Проста дросельна логіка, щоб не перераховувати розкладку сотні разів за секунду під час resize.
   const RESIZE_THROTTLE_MS = 130;
   let lastResizeCall = 0;
@@ -1215,18 +1337,28 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     const timeSinceLast = now - lastResizeCall;
     if (timeSinceLast >= RESIZE_THROTTLE_MS) {
       lastResizeCall = now;
-      updateCanvasSize();
+      runResizeAdjustments();
     } else {
       clearTimeout(resizeTimeoutId);
       resizeTimeoutId = setTimeout(() => {
         lastResizeCall = performance.now();
-        updateCanvasSize();
+        runResizeAdjustments();
       }, RESIZE_THROTTLE_MS - timeSinceLast);
     }
   }
 
   window.addEventListener("resize", handleThrottledResize);
-  updateCanvasSize();
+  runResizeAdjustments();
+
+  // Автоматично згортаємо панель на мобільних, якщо користувач прокрутився вниз і не розгортав її вручну.
+  window.addEventListener("scroll", () => {
+    if (!formControls) return;
+    if (!mobileMediaQuery.matches) return;
+    if (manualFormState === "expanded") return;
+    if (window.scrollY > 100 && !formControls.classList.contains("is-collapsed")) {
+      collapseFormControls();
+    }
+  });
 
   // --- 11. Перезапуск сцени ---
   function initializeScene(seed) {

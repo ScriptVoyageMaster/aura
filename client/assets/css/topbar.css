@@ -3,14 +3,11 @@
   Коментарі україномовні, щоб навіть новачок легко розібрався у верстці.
 */
 
-/* Основний контейнер топбару: темний фон, тонка межа та прилипання до верхнього краю */
+/* Основний контейнер топбару: темний фон та тонка межа */
 .topbar {
   background: #000000;
   border-bottom: 1px solid var(--outline);
   padding: 16px 0;
-  position: sticky;
-  top: 0;
-  z-index: 50;
 }
 
 /* Внутрішній контейнер обмежує ширину та дає горизонтальні відступи */
@@ -20,12 +17,43 @@
   padding: 0 16px;
 }
 
+/* Контейнер із формою та керуванням станами згортання */
+.form-controls {
+  display: block;
+  background: transparent;
+}
+
 /* Сітка з трьох колонок: ліворуч поля, у центрі кнопка, праворуч перемикачі */
 .topbar-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: 24px;
+}
+
+/* Кнопка-тоглер «Налаштування» для мобільних пристроїв */
+.settings-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--outline);
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.settings-toggle:hover {
+  border-color: var(--accent);
+  background-color: rgba(37, 99, 235, 0.15);
+}
+
+.settings-toggle span[aria-hidden="true"] {
+  font-size: 1rem;
 }
 
 /* Базовий вигляд секцій усередині сітки */
@@ -51,8 +79,8 @@
   justify-content: flex-end;
   flex-wrap: wrap;
   align-items: flex-start; /* Вирівнюємо всі елементи згори, щоб селекти зі своїми підписами стояли на одній лінії */
-  align-content: flex-start; /* Додаємо вирівнювання рядків флексу до верхнього краю, аби друга лінія елементів не "провисала" */
-  align-self: start; /* Примушуємо всю праву колонку стати по верхньому краю ґрід-рядка, як і ліву секцію */
+  align-content: flex-start; /* Додаємо вирівнювання рядків флексу до верхнього краю, аби друга лінія елементів не «провисала». */
+  align-self: start; /* Примушуємо всю праву колонку стати по верхньому краю ґрід-рядка, як і ліву секцію. */
 }
 
 /* Підпис та інпут обгорнуті у label, щоб клік по тексту активував поле */
@@ -231,6 +259,98 @@
 
 /* --- Адаптивність --- */
 
+/* Мобільний режим: панель налаштувань схована, поки користувач не розгорне її */
+@media (max-width: 1023.98px) {
+  /*
+    Пояснення: на мобільних вимикаємо будь-яке «прилипання» зверху, щоб панель
+    не перекривала канву. Завдяки цьому користувач одразу бачить гліф.
+  */
+  .topbar {
+    position: static;
+  }
+
+  /*
+    За замовчуванням приховуємо блок із полями та плавно керуємо висотою через
+    max-height. overflow: hidden гарантує, що вміст не вилізе за межі.
+  */
+  .form-controls {
+    overflow: hidden;
+    transition: max-height 220ms ease, opacity 180ms ease;
+  }
+
+  .form-controls.is-collapsed {
+    max-height: 0;
+    opacity: 0;
+    pointer-events: none;
+    margin-top: 0;
+  }
+
+  .form-controls.is-expanded {
+    max-height: 100vh;
+    opacity: 1;
+    pointer-events: auto;
+    margin-top: 12px;
+  }
+
+  /*
+    Компактний режим суттєво зменшує відступи та розмір шрифтів, щоб панель не
+    займала багато вертикального простору.
+  */
+  .form-controls.compact {
+    gap: 12px;
+  }
+
+  .form-controls.compact .field {
+    gap: 4px;
+    padding: 4px 0;
+  }
+
+  .form-controls.compact .field__label {
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
+  .form-controls.compact .date-input,
+  .form-controls.compact .field input[type="date"],
+  .form-controls.compact .select select {
+    padding: 6px 10px;
+    height: 38px;
+    font-size: 0.875rem;
+    line-height: 1.25;
+  }
+
+  .form-controls.compact .generate-button {
+    height: 44px;
+    padding: 0 18px;
+    font-size: 0.9rem;
+    line-height: 1.25;
+  }
+
+  .settings-toggle {
+    display: inline-flex;
+    margin: 4px auto 0;
+  }
+
+  .topbar-grid {
+    margin-top: 0;
+  }
+}
+
+/* Десктоп: повертаємо зручний прилипач для панелі, щоб вона завжди залишалась у полі зору */
+@media (min-width: 1024px) {
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .form-controls {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+}
+
 /* Планшети: елементи стають у два рядки, щоб зберегти читабельність */
 @media (max-width: 1023px) {
   .topbar {
@@ -342,12 +462,11 @@
 
   .generate-button {
     /*
-      Кнопку запуску звужуємо до зручного розміру та центруємо, щоб вона не
-      виглядала як повноширинна панель.
+      Кнопку запуску розтягуємо на всю ширину для впевненого натискання
+      великими пальцями, але завдяки compact-класу вона не виглядає громіздкою.
     */
-    width: auto;
-    min-width: 220px;
-    align-self: center;
+    width: 100%;
+    min-width: 0;
   }
 
   .help-button {
