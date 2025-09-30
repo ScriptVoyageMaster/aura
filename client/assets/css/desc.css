@@ -1,0 +1,246 @@
+/*
+  Стилі панелі текстового опису. Всі коментарі українською мовою, щоб навіть новачок розумів логіку оформлення.
+*/
+
+/*
+  Базові змінні для панелі опису. Підлаштовуємо кольори через data-атрибут статі на корені #aura.
+*/
+#aura {
+  --aura-desc-bg: rgba(15, 23, 42, 0.76);
+  --aura-desc-border: rgba(148, 163, 184, 0.24);
+  --aura-desc-heading: #f8fafc;
+  --aura-desc-text: #e2e8f0;
+  --aura-desc-muted: #94a3b8;
+  --aura-desc-accent: #7dd3fc;
+  --aura-desc-scrollbar: rgba(148, 163, 184, 0.4);
+}
+
+#aura[data-gender="male"] {
+  --aura-desc-accent: #60a5fa;
+  --aura-desc-border: rgba(96, 165, 250, 0.32);
+  --aura-desc-scrollbar: rgba(96, 165, 250, 0.4);
+}
+
+#aura[data-gender="female"] {
+  --aura-desc-accent: #f472b6;
+  --aura-desc-border: rgba(244, 114, 182, 0.32);
+  --aura-desc-scrollbar: rgba(244, 114, 182, 0.4);
+}
+
+/*
+  Головний контейнер для канви і опису. На десктопі показуємо їх поруч, а на мобільних — стовпчиком.
+*/
+.pattern-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1280px;
+}
+
+@media (min-width: 1024px) {
+  .pattern-layout {
+    flex-direction: row;
+    align-items: stretch;
+  }
+  .pattern-layout .canvas-container {
+    flex: 1 1 auto;
+  }
+}
+
+/*
+  Панель опису має власний скрол, тож задаємо максимальну висоту та округлення.
+*/
+#aura-desc {
+  background: var(--aura-desc-bg);
+  border: 1px solid var(--aura-desc-border);
+  border-radius: 18px;
+  padding: 20px;
+  color: var(--aura-desc-text);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.45);
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  #aura-desc {
+    flex: 0 0 380px;
+    max-width: 420px;
+    position: sticky;
+    top: 32px;
+    align-self: flex-start;
+  }
+}
+
+/*
+  Оформлення скролу для більш приємного вигляду.
+*/
+#aura-desc::-webkit-scrollbar {
+  width: 8px;
+}
+
+#aura-desc::-webkit-scrollbar-thumb {
+  background: var(--aura-desc-scrollbar);
+  border-radius: 999px;
+}
+
+#aura-desc::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/*
+  Внутрішні блоки панелі зберігаємо в колонковому макеті.
+*/
+.aura-desc__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.aura-desc__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--aura-desc-heading);
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.aura-desc__title span:last-child {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--aura-desc-muted);
+}
+
+.aura-desc__summary {
+  font-size: 0.9rem;
+  color: var(--aura-desc-muted);
+  line-height: 1.5;
+}
+
+.aura-desc__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.aura-desc__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--aura-desc-border);
+  color: var(--aura-desc-accent);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/*
+  Кожну секцію відображаємо через елемент <details>, щоб мати акордеон на мобільних.
+*/
+.aura-desc__section {
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  padding-top: 12px;
+}
+
+.aura-desc__section:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.aura-desc__section summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--aura-desc-heading);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.aura-desc__summary-labels {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.aura-desc__label-en {
+  font-size: 0.75rem;
+  color: var(--aura-desc-muted);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.aura-desc__section summary::-webkit-details-marker {
+  display: none;
+}
+
+.aura-desc__section summary::after {
+  content: "▾";
+  font-size: 0.75rem;
+  color: var(--aura-desc-accent);
+  transition: transform 0.2s ease;
+}
+
+.aura-desc__section[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.aura-desc__content {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.aura-desc__content ul {
+  list-style: disc;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.aura-desc__placeholder {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--aura-desc-muted);
+}
+
+@media (min-width: 1024px) {
+  .aura-desc__section {
+    border-top: 1px solid rgba(148, 163, 184, 0.16);
+    padding-top: 16px;
+  }
+  .aura-desc__section summary {
+    cursor: default;
+  }
+  .aura-desc__section summary::after {
+    display: none;
+  }
+}
+
+/*
+  На дуже малих екранах робимо відступи компактнішими, аби опис займав менше місця.
+*/
+@media (max-width: 600px) {
+  #aura-desc {
+    padding: 16px;
+    max-height: none;
+  }
+  .aura-desc__title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
