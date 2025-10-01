@@ -1,600 +1,574 @@
 {
   "1": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 1 — Намір",
+      "en": "Tone 1 — Intention"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "початок",
+        "фокус"
+      ],
+      "en": [
+        "beginning",
+        "focus"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "ініціація",
+        "єдність"
+      ],
+      "en": [
+        "initiation",
+        "unity"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "невпевненість",
+        "пасивність"
+      ],
+      "en": [
+        "uncertainty",
+        "passivity"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Сконцентруй намір і зафіксуй старт."
+      ],
+      "en": [
+        "Focus intention and mark the start."
+      ]
     }
   },
   "2": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 2 — Подвійність",
+      "en": "Tone 2 — Duality"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вибір",
+        "баланс"
+      ],
+      "en": [
+        "choice",
+        "balance"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "порівняння",
+        "полярність"
+      ],
+      "en": [
+        "comparison",
+        "polarity"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "сумніви",
+        "роздвоєність"
+      ],
+      "en": [
+        "doubt",
+        "indecision"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Обери одну дорогу і збережи рівновагу."
+      ],
+      "en": [
+        "Choose one path and keep balance."
+      ]
     }
   },
   "3": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 3 — Рух",
+      "en": "Tone 3 — Movement"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дія",
+        "спілкування"
+      ],
+      "en": [
+        "action",
+        "communication"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "вираження",
+        "динаміка"
+      ],
+      "en": [
+        "expression",
+        "dynamics"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "хаос",
+        "перевантаження"
+      ],
+      "en": [
+        "chaos",
+        "overload"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Дій малими кроками і висловлюй чітко."
+      ],
+      "en": [
+        "Act in small steps and express clearly."
+      ]
     }
   },
   "4": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 4 — Стабільність",
+      "en": "Tone 4 — Stability"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "структура",
+        "опора"
+      ],
+      "en": [
+        "structure",
+        "support"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "стабільність",
+        "рамки"
+      ],
+      "en": [
+        "stability",
+        "framework"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "жорсткість",
+        "обмеження"
+      ],
+      "en": [
+        "rigidity",
+        "limitation"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Створи основу і дотримуйся дисципліни."
+      ],
+      "en": [
+        "Build a base and keep discipline."
+      ]
     }
   },
   "5": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 5 — Сила",
+      "en": "Tone 5 — Power"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ресурси",
+        "сила"
+      ],
+      "en": [
+        "resources",
+        "power"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "упевненість",
+        "самодостатність"
+      ],
+      "en": [
+        "confidence",
+        "self-sufficiency"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "зарозумілість",
+        "контроль"
+      ],
+      "en": [
+        "arrogance",
+        "control"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Використовуй ресурси мудро."
+      ],
+      "en": [
+        "Use resources wisely."
+      ]
     }
   },
   "6": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 6 — Потік",
+      "en": "Tone 6 — Flow"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ритм",
+        "гармонія"
+      ],
+      "en": [
+        "rhythm",
+        "harmony"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "узгодженість",
+        "ефективність"
+      ],
+      "en": [
+        "coordination",
+        "efficiency"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "рутина",
+        "виснаження"
+      ],
+      "en": [
+        "routine",
+        "exhaustion"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Знайди ритм і підтримуй його."
+      ],
+      "en": [
+        "Find rhythm and maintain it."
+      ]
     }
   },
   "7": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 7 — Резонанс",
+      "en": "Tone 7 — Resonance"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "баланс",
+        "духовність"
+      ],
+      "en": [
+        "balance",
+        "spirituality"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "прозорливість",
+        "сприйнятливість"
+      ],
+      "en": [
+        "perceptiveness",
+        "receptivity"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "сумніви",
+        "відрив"
+      ],
+      "en": [
+        "doubt",
+        "detachment"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Слухай внутрішній резонанс."
+      ],
+      "en": [
+        "Listen to inner resonance."
+      ]
     }
   },
   "8": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 8 — Гармонія",
+      "en": "Tone 8 — Harmony"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "рівновага",
+        "справедливість"
+      ],
+      "en": [
+        "equilibrium",
+        "justice"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "балансування",
+        "миротворчість"
+      ],
+      "en": [
+        "balancing",
+        "peacemaking"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "нерішучість",
+        "компроміси"
+      ],
+      "en": [
+        "indecision",
+        "compromise"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Вирівняй внутрішні і зовнішні сторони."
+      ],
+      "en": [
+        "Align inner and outer sides."
+      ]
     }
   },
   "9": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 9 — Намір досягнення",
+      "en": "Tone 9 — Intention of Achievement"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "терпіння",
+        "завершення"
+      ],
+      "en": [
+        "patience",
+        "completion"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "стійкість",
+        "усвідомлення"
+      ],
+      "en": [
+        "perseverance",
+        "awareness"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "затримки",
+        "розчарування"
+      ],
+      "en": [
+        "delays",
+        "disappointment"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Терпи і доведи справу до кінця."
+      ],
+      "en": [
+        "Be patient and finish the task."
+      ]
     }
   },
   "10": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 10 — Прояв",
+      "en": "Tone 10 — Manifestation"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "результат",
+        "прояв"
+      ],
+      "en": [
+        "result",
+        "manifestation"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "матеріалізація",
+        "практичність"
+      ],
+      "en": [
+        "materialization",
+        "practicality"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "незадоволеність",
+        "надмірність"
+      ],
+      "en": [
+        "dissatisfaction",
+        "excess"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Зверни увагу на практичний результат."
+      ],
+      "en": [
+        "Pay attention to practical results."
+      ]
     }
   },
   "11": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 11 — Звільнення",
+      "en": "Tone 11 — Liberation"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "розпускання",
+        "простір"
+      ],
+      "en": [
+        "release",
+        "space"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "очищення",
+        "звільнення"
+      ],
+      "en": [
+        "cleansing",
+        "liberation"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "хаос",
+        "нестабільність"
+      ],
+      "en": [
+        "chaos",
+        "instability"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Відпусти зайве і спростюй."
+      ],
+      "en": [
+        "Let go of excess and simplify."
+      ]
     }
   },
   "12": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 12 — Розуміння",
+      "en": "Tone 12 — Understanding"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "узагальнення",
+        "спільність"
+      ],
+      "en": [
+        "integration",
+        "community"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "спілкування",
+        "з'єднання"
+      ],
+      "en": [
+        "communication",
+        "connection"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "непорозуміння",
+        "конфлікти"
+      ],
+      "en": [
+        "misunderstanding",
+        "conflicts"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "З'єднай знання і поділися ними."
+      ],
+      "en": [
+        "Integrate knowledge and share it."
+      ]
     }
   },
   "13": {
     "name": {
-      "ua": "",
-      "en": ""
-    },
-    "essence": {
-      "ua": "",
-      "en": ""
-    },
-    "symbol": {
-      "ua": "",
-      "en": ""
-    },
-    "gifts": {
-      "ua": [],
-      "en": []
-    },
-    "challenges": {
-      "ua": [],
-      "en": []
-    },
-    "imagery": {
-      "ua": [],
-      "en": []
-    },
-    "questions": {
-      "ua": [],
-      "en": []
-    },
-    "advice_short": {
-      "ua": [],
-      "en": []
-    },
-    "advice_long": {
-      "ua": [],
-      "en": []
-    },
-    "synergy_patterns": {
-      "ua": [],
-      "en": []
+      "ua": "Тон 13 — Трансформація",
+      "en": "Tone 13 — Transformation"
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "завершення",
+        "перехід"
+      ],
+      "en": [
+        "completion",
+        "transition"
+      ]
+    },
+    "qualities": {
+      "ua": [
+        "прозріння",
+        "переміна"
+      ],
+      "en": [
+        "insight",
+        "change"
+      ]
+    },
+    "challenges": {
+      "ua": [
+        "хаос",
+        "непередбачуваність"
+      ],
+      "en": [
+        "chaos",
+        "unpredictability"
+      ]
+    },
+    "advice": {
+      "ua": [
+        "Будь готовий до стрибка в нове."
+      ],
+      "en": [
+        "Be ready for a leap into the new."
+      ]
     }
   }
 }
