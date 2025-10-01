@@ -18,6 +18,12 @@ let dictionariesPromise = null;
 let overridesState = { loaded: false, data: null };
 let overridesPromise = null;
 
+// Запам'ятовуємо версію overrides, щоб контролювати очищення кешу описів під час змін.
+let overridesVersion = null;
+
+// Збираємо просту статистику використаних override, щоб у dev-режимі бачити загальну картину.
+const overrideUsageStats = new Map();
+
 // Кеш результатів генерації, щоб уникати повторних складань тексту для однакових параметрів.
 const descriptionCache = new Map();
 
@@ -34,6 +40,297 @@ const DEFAULT_BLOCK_ORDER = [
 ];
 
 const VALID_BLOCK_KEYS = new Set([...DEFAULT_BLOCK_ORDER, "meta"]);
+
+// Утиліта перевіряє, чи значення є простим об'єктом без масиву, щоби не натрапити на небажані типи.
+function isPlainObject(value) {
+  return Boolean(value) && typeof value === "object" && !Array.isArray(value);
+}
+
+// Перевіряємо, що назва блоку з overrides входить до дозволеного переліку.
+function isValidBlockName(name) {
+  return VALID_BLOCK_KEYS.has(name);
+}
+
+// Валідуємо ключ статі: приймаємо лише male/female/any.
+function isValidGender(gender) {
+  return gender === "male" || gender === "female" || gender === "any";
+}
+
+// Перевіряємо підтримувані локалі для overrides.
+function isValidLang(lang) {
+  return lang === "ua" || lang === "en";
+}
+
+// Акуратно формуємо шлях для логування, щоби легше шукати проблемне місце в overrides.json.
+function buildOverridePath(parts) {
+  return parts.filter(Boolean).join(".");
+}
+
+// Службовий логгер для валідатора: один стиснений рядок на відхилений вузол.
+function logInvalidOverrideNode(path, reason) {
+  logDev(`overrides: invalid node skipped ${path || "<root>"}: ${reason}`);
+}
+
+// Перетворюємо довільне значення в осмислений ключ (рядок без зайвих пробілів).
+function normalizeKeyCandidate(value) {
+  if (typeof value === "string") {
+    return value.trim();
+  }
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value).trim();
+  }
+  return "";
+}
+
+// Санітуємо локалізований об'єкт { ua: "...", en: "..." } і відкидаємо сторонні ключі чи невалідні значення.
+function sanitizeLangObject(raw, pathParts) {
+  if (!isPlainObject(raw)) {
+    logInvalidOverrideNode(buildOverridePath(pathParts), "очікувався об'єкт локалізацій");
+    return null;
+  }
+  const sanitized = {};
+  for (const [langKeyRaw, value] of Object.entries(raw)) {
+    const langKey = normalizeKeyCandidate(langKeyRaw);
+    if (!isValidLang(langKey)) {
+      logInvalidOverrideNode(
+        buildOverridePath([...pathParts, langKeyRaw]),
+        "непідтримувана мова"
+      );
+      continue;
+    }
+    const normalizedValue = normalizeOverrideStringCandidate(value);
+    if (normalizedValue === null) {
+      logInvalidOverrideNode(
+        buildOverridePath([...pathParts, langKey]),
+        "порожнє або некоректне значення перекладу"
+      );
+      continue;
+    }
+    sanitized[langKey] = normalizedValue;
+  }
+  if (Object.keys(sanitized).length === 0) {
+    logInvalidOverrideNode(buildOverridePath(pathParts), "відсутні валідні локалізовані значення");
+    return null;
+  }
+  return sanitized;
+}
+
+// Готуємо один елемент масиву advice: приймаємо рядок або локалізований об'єкт.
+function sanitizeAdviceItem(item, pathParts) {
+  if (item === null || typeof item === "undefined") {
+    logInvalidOverrideNode(buildOverridePath(pathParts), "порожній елемент списку");
+    return null;
+  }
+  if (typeof item === "string" || typeof item === "number" || typeof item === "boolean") {
+    const normalized = normalizeOverrideStringCandidate(item);
+    if (normalized === null || normalized.length === 0) {
+      logInvalidOverrideNode(buildOverridePath(pathParts), "порожній рядок у списку");
+      return null;
+    }
+    return normalized;
+  }
+  if (isPlainObject(item)) {
+    const sanitized = sanitizeLangObject(item, pathParts);
+    if (!sanitized) {
+      return null;
+    }
+    return sanitized;
+  }
+  logInvalidOverrideNode(buildOverridePath(pathParts), "очікувався рядок або об'єкт локалізацій");
+  return null;
+}
+
+// Повертаємо валідне значення блоку або null, якщо щось пішло не так.
+function sanitizeBlockValue(blockName, rawValue, pathParts) {
+  if (blockName === "advice") {
+    if (Array.isArray(rawValue)) {
+      const sanitizedList = [];
+      rawValue.forEach((item, index) => {
+        const sanitizedItem = sanitizeAdviceItem(item, [...pathParts, `[${index}]`]);
+        if (sanitizedItem !== null) {
+          sanitizedList.push(sanitizedItem);
+        }
+      });
+      if (sanitizedList.length === 0) {
+        logInvalidOverrideNode(buildOverridePath(pathParts), "список advice спорожнів після валідації");
+        return null;
+      }
+      return sanitizedList;
+    }
+    if (typeof rawValue === "string" || typeof rawValue === "number" || typeof rawValue === "boolean") {
+      const normalized = normalizeOverrideStringCandidate(rawValue);
+      if (normalized === null || normalized.length === 0) {
+        logInvalidOverrideNode(buildOverridePath(pathParts), "порожнє рядкове значення advice");
+        return null;
+      }
+      return normalized;
+    }
+    if (isPlainObject(rawValue)) {
+      const sanitized = sanitizeLangObject(rawValue, pathParts);
+      return sanitized;
+    }
+    logInvalidOverrideNode(buildOverridePath(pathParts), "невідомий тип даних для advice");
+    return null;
+  }
+
+  if (Array.isArray(rawValue)) {
+    logInvalidOverrideNode(buildOverridePath(pathParts), "масив не підтримується для цього блоку");
+    return null;
+  }
+
+  if (typeof rawValue === "string" || typeof rawValue === "number" || typeof rawValue === "boolean") {
+    const normalized = normalizeOverrideStringCandidate(rawValue);
+    if (normalized === null) {
+      logInvalidOverrideNode(buildOverridePath(pathParts), "порожнє рядкове значення");
+      return null;
+    }
+    return normalized;
+  }
+
+  if (isPlainObject(rawValue)) {
+    const sanitized = sanitizeLangObject(rawValue, pathParts);
+    return sanitized;
+  }
+
+  logInvalidOverrideNode(buildOverridePath(pathParts), "невідомий тип значення блоку");
+  return null;
+}
+
+// Повна валідація дерева overrides: фільтруємо все зайве та повертаємо лише коректні вузли.
+function validateOverridesStructure(rawOverrides) {
+  if (!isPlainObject(rawOverrides)) {
+    logInvalidOverrideNode("<root>", "очікувався об'єкт із календарями");
+    return { sanitized: {}, hasEntries: false };
+  }
+
+  const sanitizedCalendars = {};
+  let hasEntries = false;
+
+  for (const [calendarKeyRaw, glyphCollection] of Object.entries(rawOverrides)) {
+    const calendarKey = normalizeKeyCandidate(calendarKeyRaw);
+    const calendarPath = [calendarKey || calendarKeyRaw];
+    if (!calendarKey) {
+      logInvalidOverrideNode(calendarKeyRaw || "<empty_calendar>", "порожній ключ календаря");
+      continue;
+    }
+    if (!isPlainObject(glyphCollection)) {
+      logInvalidOverrideNode(buildOverridePath(calendarPath), "очікувався об'єкт із гліфами");
+      continue;
+    }
+
+    const sanitizedGlyphs = {};
+
+    for (const [glyphKeyRaw, toneCollection] of Object.entries(glyphCollection)) {
+      const glyphKey = normalizeKeyCandidate(glyphKeyRaw);
+      const glyphPath = [...calendarPath, glyphKey || glyphKeyRaw];
+      if (!glyphKey) {
+        logInvalidOverrideNode(buildOverridePath(glyphPath), "порожній ключ гліфа");
+        continue;
+      }
+      if (!isPlainObject(toneCollection)) {
+        logInvalidOverrideNode(buildOverridePath(glyphPath), "очікувався об'єкт із тонами");
+        continue;
+      }
+
+      const sanitizedTones = {};
+
+      for (const [toneKeyRaw, genderCollection] of Object.entries(toneCollection)) {
+        const toneKey = normalizeKeyCandidate(toneKeyRaw);
+        const tonePath = [...glyphPath, toneKey || toneKeyRaw];
+        if (!toneKey) {
+          logInvalidOverrideNode(buildOverridePath(tonePath), "порожній ключ тону");
+          continue;
+        }
+        if (!isPlainObject(genderCollection)) {
+          logInvalidOverrideNode(buildOverridePath(tonePath), "очікувався об'єкт зі статями");
+          continue;
+        }
+
+        const sanitizedGenders = {};
+
+        for (const [genderKeyRaw, blockCollection] of Object.entries(genderCollection)) {
+          const genderKey = normalizeKeyCandidate(genderKeyRaw);
+          const genderPath = [...tonePath, genderKey || genderKeyRaw];
+          if (!genderKey || !isValidGender(genderKey)) {
+            logInvalidOverrideNode(buildOverridePath(genderPath), "неприпустима стать");
+            continue;
+          }
+          if (!isPlainObject(blockCollection)) {
+            logInvalidOverrideNode(buildOverridePath(genderPath), "очікувався об'єкт із блоками");
+            continue;
+          }
+
+          const sanitizedBlocks = {};
+
+          for (const [blockKeyRaw, blockValue] of Object.entries(blockCollection)) {
+            const blockKey = normalizeKeyCandidate(blockKeyRaw);
+            const blockPath = [...genderPath, blockKey || blockKeyRaw];
+            if (!blockKey || !isValidBlockName(blockKey)) {
+              logInvalidOverrideNode(buildOverridePath(blockPath), "непідтримуваний блок");
+              continue;
+            }
+            const sanitizedValue = sanitizeBlockValue(blockKey, blockValue, blockPath);
+            if (sanitizedValue === null) {
+              continue;
+            }
+            sanitizedBlocks[blockKey] = sanitizedValue;
+          }
+
+          if (Object.keys(sanitizedBlocks).length === 0) {
+            logInvalidOverrideNode(buildOverridePath(genderPath), "усі блоки були відкинуті валідатором");
+            continue;
+          }
+
+          sanitizedGenders[genderKey] = sanitizedBlocks;
+        }
+
+        if (Object.keys(sanitizedGenders).length === 0) {
+          logInvalidOverrideNode(buildOverridePath(tonePath), "для тону не залишилося валідних статей");
+          continue;
+        }
+
+        sanitizedTones[toneKey] = sanitizedGenders;
+      }
+
+      if (Object.keys(sanitizedTones).length === 0) {
+        logInvalidOverrideNode(buildOverridePath(glyphPath), "для гліфа не залишилося валідних тонів");
+        continue;
+      }
+
+      sanitizedGlyphs[glyphKey] = sanitizedTones;
+    }
+
+    if (Object.keys(sanitizedGlyphs).length === 0) {
+      logInvalidOverrideNode(buildOverridePath(calendarPath), "для календаря не залишилося валідних гліфів");
+      continue;
+    }
+
+    sanitizedCalendars[calendarKey] = sanitizedGlyphs;
+    hasEntries = true;
+  }
+
+  return { sanitized: sanitizedCalendars, hasEntries };
+}
+
+// Обчислюємо просту сигнатуру версії overrides, використовуючи довжину та контрольну суму.
+function computeOverridesVersionSignature(text) {
+  const source = `${text ?? ""}`;
+  let checksum = 0;
+  for (let index = 0; index < source.length; index += 1) {
+    checksum = (checksum + source.charCodeAt(index) * (index + 1)) % 1_000_000_007;
+  }
+  return `${source.length}:${checksum}`;
+}
+
+// Оновлюємо версію overrides і очищуємо кеш описів, якщо дані змінилися.
+function updateOverridesVersion(newVersion) {
+  if (overridesVersion === newVersion) {
+    return;
+  }
+  overridesVersion = newVersion;
+  descriptionCache.clear();
+  logDev("overrides: version updated", { version: newVersion });
+}
 
 const FALLBACK_DESCRIPTION = {
   title: "Опис тимчасово недоступний",
@@ -122,11 +419,15 @@ async function loadOverrides() {
           return null;
         }
         const text = await response.text();
+        const versionSignature = computeOverridesVersionSignature(text);
+        updateOverridesVersion(versionSignature);
+
         if (!text || !text.trim()) {
           logDev("overrides: empty/disabled", { reason: "empty-file" });
           overridesState = { loaded: true, data: null };
           return null;
         }
+
         let parsed;
         try {
           parsed = JSON.parse(text);
@@ -135,20 +436,20 @@ async function loadOverrides() {
           overridesState = { loaded: true, data: null };
           return null;
         }
-        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-          logDev("overrides: empty/disabled", { reason: "unexpected-structure" });
+
+        const { sanitized, hasEntries } = validateOverridesStructure(parsed);
+        if (!hasEntries) {
+          logDev("overrides: empty/disabled", { reason: "no-valid-entries" });
           overridesState = { loaded: true, data: null };
           return null;
         }
-        const hasContent = Object.keys(parsed).length > 0;
-        if (!hasContent) {
-          logDev("overrides: empty/disabled", { reason: "no-entries" });
-          overridesState = { loaded: true, data: null };
-          return null;
-        }
-        overridesState = { loaded: true, data: parsed };
-        logDev("overrides: loaded", { calendars: Object.keys(parsed).length });
-        return parsed;
+
+        overridesState = { loaded: true, data: sanitized };
+        logDev("overrides: loaded", {
+          calendars: Object.keys(sanitized).length,
+          version: versionSignature,
+        });
+        return sanitized;
       } catch (error) {
         logDev("overrides: empty/disabled", { reason: "fetch-error", message: error?.message });
         overridesState = { loaded: true, data: null };
@@ -333,23 +634,36 @@ function getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang) {
   if (!toneBucket || typeof toneBucket !== "object") {
     return null;
   }
-  const genderBucket = toneBucket?.[normalizeGender(gender)];
+  const normalizedGender = normalizeGender(gender);
+  let genderBucket = toneBucket?.[normalizedGender];
+  let genderSource = normalizedGender;
+
   if (!genderBucket || typeof genderBucket !== "object") {
-    return null;
+    const anyBucket = toneBucket?.any;
+    if (!anyBucket || typeof anyBucket !== "object") {
+      return null;
+    }
+    genderBucket = anyBucket;
+    genderSource = "any";
   }
+
   if (!Object.prototype.hasOwnProperty.call(genderBucket, blockName)) {
     return null;
   }
   const rawValue = genderBucket[blockName];
   const fallbackLang = getFallbackLang(lang);
   if (blockName === "advice" && Array.isArray(rawValue)) {
-    return normalizeOverrideArrayValue(rawValue, { lang, fallbackLang });
+    const normalizedArray = normalizeOverrideArrayValue(rawValue, { lang, fallbackLang });
+    if (normalizedArray.length === 0) {
+      return null;
+    }
+    return { value: normalizedArray, genderSource };
   }
   const normalized = pickOverrideString(rawValue, { lang, fallbackLang });
   if (normalized === null) {
     return null;
   }
-  return normalized;
+  return { value: normalized, genderSource };
 }
 
 /**
@@ -361,6 +675,68 @@ function logBlockOverrideUsage(blockName, overrideUsed) {
   }
   console.info({ block: blockName, override: Boolean(overrideUsed) });
 }
+
+// Фіксуємо факт використання override у пам'яті, щоб зібрати агреговану статистику.
+function recordOverrideUsage({
+  calendar,
+  glyphId,
+  toneId,
+  requestedGender,
+  actualGender,
+  blockName,
+}) {
+  const calendarKey = normalizeKeyCandidate(calendar);
+  const glyphKey = normalizeKeyCandidate(glyphId);
+  const toneKey = normalizeKeyCandidate(toneId);
+  const blockKey = normalizeKeyCandidate(blockName);
+  const genderKey = normalizeKeyCandidate(actualGender || requestedGender);
+  if (!calendarKey || !glyphKey || !toneKey || !blockKey || !genderKey) {
+    return;
+  }
+  const statsKey = `${calendarKey}.${glyphKey}.${toneKey}.${genderKey}.${blockKey}`;
+  const current = overrideUsageStats.get(statsKey) || 0;
+  overrideUsageStats.set(statsKey, current + 1);
+}
+
+// Виводимо агреговану статистику в консоль, щоб швидко переглянути застосовані overrides.
+function printOverrideUsageStats() {
+  if (overrideUsageStats.size === 0) {
+    console.info("overrides: статистика поки порожня");
+    return;
+  }
+  const entries = [...overrideUsageStats.entries()]
+    .map(([key, count]) => {
+      const [calendar, glyph, tone, gender, block] = key.split(".");
+      return { calendar, glyph, tone, gender, block, count };
+    })
+    .sort((a, b) => b.count - a.count);
+  if (typeof console.table === "function") {
+    console.table(entries);
+  } else {
+    console.info("overrides usage", entries);
+  }
+}
+
+// Прокидаємо утиліту в глобальний простір у dev-режимі, щоб її можна було викликати вручну.
+function exposeOverrideStatsPrinter() {
+  if (!isDevLoggingEnabled()) {
+    return;
+  }
+  const globalTarget =
+    typeof window !== "undefined"
+      ? window
+      : typeof globalThis !== "undefined"
+      ? globalThis
+      : null;
+  if (!globalTarget) {
+    return;
+  }
+  globalTarget.__auraPrintOverrideStats = () => {
+    printOverrideUsageStats();
+  };
+}
+
+exposeOverrideStatsPrinter();
 
 /**
  * Робимо першу літеру великою, щоб акуратно показувати ID гліфа у fallback-фразах.
@@ -1020,16 +1396,32 @@ function composeDescription({
   });
 
   // Перевіряємо, чи є прямий override для заголовка сторінки.
-  const titleOverride = getOverrideBlock(calendar, glyphId, toneId, gender, "title", lang);
-  const hasTitleOverride = titleOverride !== null;
+  const titleOverrideResult = getOverrideBlock(calendar, glyphId, toneId, gender, "title", lang);
+  const hasTitleOverride = titleOverrideResult !== null;
   logBlockOverrideUsage("title", hasTitleOverride);
   if (hasTitleOverride) {
     overrideUsed = true;
-    const normalizedTitle = normalizeOverrideStringCandidate(titleOverride);
+    const normalizedTitle = normalizeOverrideStringCandidate(titleOverrideResult?.value);
     if (normalizedTitle !== null) {
       title = normalizedTitle;
-    } else if (typeof titleOverride !== "undefined") {
-      title = `${titleOverride}`.trim();
+      recordOverrideUsage({
+        calendar,
+        glyphId,
+        toneId: String(toneId),
+        requestedGender: gender,
+        actualGender: titleOverrideResult?.genderSource,
+        blockName: "title",
+      });
+    } else if (typeof titleOverrideResult?.value !== "undefined") {
+      title = `${titleOverrideResult.value}`.trim();
+      recordOverrideUsage({
+        calendar,
+        glyphId,
+        toneId: String(toneId),
+        requestedGender: gender,
+        actualGender: titleOverrideResult?.genderSource,
+        blockName: "title",
+      });
     }
   }
 
@@ -1480,16 +1872,32 @@ function composeDescription({
   let metaDescription = buildMetaDescription({ intro, synergy, limits, logContext });
 
   // Аналогічно даємо змогу вручну підмінити meta description.
-  const metaOverride = getOverrideBlock(calendar, glyphId, toneId, gender, "meta", lang);
-  const hasMetaOverride = metaOverride !== null;
+  const metaOverrideResult = getOverrideBlock(calendar, glyphId, toneId, gender, "meta", lang);
+  const hasMetaOverride = metaOverrideResult !== null;
   logBlockOverrideUsage("meta", hasMetaOverride);
   if (hasMetaOverride) {
     overrideUsed = true;
-    const normalizedMeta = normalizeOverrideStringCandidate(metaOverride);
+    const normalizedMeta = normalizeOverrideStringCandidate(metaOverrideResult?.value);
     if (normalizedMeta !== null) {
-      metaDescription = normalizedMeta;
-    } else if (typeof metaOverride !== "undefined") {
-      metaDescription = `${metaOverride}`.trim();
+      metaDescription = truncate(normalizedMeta, limits.meta);
+      recordOverrideUsage({
+        calendar,
+        glyphId,
+        toneId: String(toneId),
+        requestedGender: gender,
+        actualGender: metaOverrideResult?.genderSource,
+        blockName: "meta",
+      });
+    } else if (typeof metaOverrideResult?.value !== "undefined") {
+      metaDescription = truncate(`${metaOverrideResult.value}`.trim(), limits.meta);
+      recordOverrideUsage({
+        calendar,
+        glyphId,
+        toneId: String(toneId),
+        requestedGender: gender,
+        actualGender: metaOverrideResult?.genderSource,
+        blockName: "meta",
+      });
     }
   }
 
@@ -1533,14 +1941,15 @@ function composeDescription({
   // Формуємо фінальні блоки: якщо для них існують overrides — підставляємо їх без генерації.
   const blocks = {};
   for (const [blockName, baseBlock] of Object.entries(baseBlocks)) {
-    const overrideValue = getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang);
-    const hasOverride = overrideValue !== null;
+    const overrideResult = getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang);
+    const hasOverride = overrideResult !== null;
     logBlockOverrideUsage(blockName, hasOverride);
     if (!hasOverride) {
       blocks[blockName] = baseBlock;
       continue;
     }
     overrideUsed = true;
+    const overrideValue = overrideResult?.value;
     if (blockName === "advice") {
       if (Array.isArray(overrideValue)) {
         const sanitizedList = overrideValue
@@ -1557,6 +1966,14 @@ function composeDescription({
       const blockParagraph = normalizedBlock ? [normalizedBlock] : [];
       blocks[blockName] = { paragraphs: blockParagraph, list: [] };
     }
+    recordOverrideUsage({
+      calendar,
+      glyphId,
+      toneId: String(toneId),
+      requestedGender: gender,
+      actualGender: overrideResult?.genderSource,
+      blockName,
+    });
   }
 
   if (overrideUsed) {
@@ -1585,7 +2002,6 @@ export async function generateDescription({
   const normalizedGender = normalizeGender(gender);
   const normalizedLang = normalizeLang(lang);
   const normalizedCalendar = normalizeCalendarId(calendar);
-  const cacheKey = `${normalizedCalendar}-${glyphId || ""}-${toneId || ""}-${normalizedGender}-${normalizedLang}`;
 
   // Готуємо контекст для логування, щоб легко відстежувати звідки з’являються фрази та fallback-и.
   const logContext = {
@@ -1599,6 +2015,10 @@ export async function generateDescription({
     violations: [],
   };
 
+  await loadOverrides();
+  const versionSegment = overridesVersion || "no-overrides";
+  const cacheKey = `${normalizedCalendar}-${glyphId || ""}-${toneId || ""}-${normalizedGender}-${normalizedLang}-${versionSegment}`;
+
   if (descriptionCache.has(cacheKey)) {
     const cached = cloneResult(descriptionCache.get(cacheKey));
     const cacheLog = { ...logContext, cacheHit: true };
@@ -1607,7 +2027,6 @@ export async function generateDescription({
   }
 
   const dictionaries = await loadDictionaries();
-  await loadOverrides();
   if (!glyphId || !toneId) {
     logContext.violations.push("missing:ids");
     const message =
