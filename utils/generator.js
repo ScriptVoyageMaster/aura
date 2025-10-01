@@ -247,6 +247,206 @@ function readGenderList(genderEntry, key, { lang, fallbackLang, logContext }) {
 }
 
 /**
+ * Додаємо до звертання коротку тональну фразу, щоби уникнути буквального повтору.
+ */
+function decorateAddressWithToneStyle(address, toneStyleFragment) {
+  if (!address) {
+    return "";
+  }
+  if (!toneStyleFragment) {
+    return address;
+  }
+  if (address.includes(toneStyleFragment)) {
+    return address;
+  }
+  return `${address} — ${toneStyleFragment}`;
+}
+
+/**
+ * Рахуємо стабільну «сіль» із пари гліф-тон та статі, щоб обирати звертання детерміновано.
+ */
+function calculateAddressSalt(glyphId, toneId, gender) {
+  const source = `${glyphId || ""}|${toneId || ""}|${gender || ""}`;
+  let salt = 0;
+  for (let index = 0; index < source.length; index += 1) {
+    salt += source.charCodeAt(index) * (index + 1);
+  }
+  return Math.abs(salt);
+}
+
+/**
+ * Формуємо сигнатуру тижня у форматі YYYY-Wxx для режимів легкої ротації звертань.
+ */
+function getWeekSignature(date) {
+  const utcDate = new Date(
+    Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+  );
+  const startOfYear = new Date(Date.UTC(utcDate.getUTCFullYear(), 0, 1));
+  const diffInMs = utcDate.getTime() - startOfYear.getTime();
+  const dayOfYear = Math.floor(diffInMs / (24 * 60 * 60 * 1000));
+  const weekNumber = Math.floor(dayOfYear / 7) + 1;
+  return `${utcDate.getUTCFullYear()}-W${String(weekNumber).padStart(2, "0")}`;
+}
+
+/**
+ * Центральний помічник: визначаємо, які звертання використати у вступі, висновку та (опційно) у пораді.
+ */
+function selectAddressVariants({
+  addresses,
+  toneStyle,
+  rules,
+  glyphId,
+  toneId,
+  gender,
+  lang,
+  fallbackLang,
+  logContext,
+}) {
+  const selectionSettings = rules?.address_selection;
+  const hasAdvancedSelection = Boolean(selectionSettings);
+  const cleanedAddresses = Array.isArray(addresses)
+    ? addresses.map((item) => `${item}`.trim()).filter(Boolean)
+    : [];
+
+  if (!hasAdvancedSelection) {
+    // Якщо правила не задані — поводимось, як раніше: використовуємо перше доступне звертання тільки для вступу.
+    return {
+      enabled: false,
+      poolSize: cleanedAddresses.length,
+      intro: cleanedAddresses[0] || "",
+      conclusion: "",
+      advice: "",
+    };
+  }
+
+  const fallbackConfig = selectionSettings?.fallback || {};
+  const defaultFallbacks = { ua: "Твій шлях", en: "Your path" };
+  const fallbackFromRules = `${fallbackConfig[lang] || ""}`.trim();
+  const fallbackFromRulesAlt = `${fallbackConfig[fallbackLang] || ""}`.trim();
+  const effectiveFallback =
+    fallbackFromRules || fallbackFromRulesAlt || defaultFallbacks[lang] || defaultFallbacks.ua;
+
+  const pool = cleanedAddresses.length > 0 ? [...new Set(cleanedAddresses)] : [effectiveFallback];
+  if (pool.length === 0) {
+    pool.push(defaultFallbacks[lang] || defaultFallbacks.ua);
+  }
+  const poolSize = pool.length;
+
+  let baseIndex = 0;
+  if (poolSize > 0) {
+    baseIndex = calculateAddressSalt(glyphId, toneId, gender) % poolSize;
+  }
+
+  let usedToneMap = false;
+  const tonePriorities = Array.isArray(rules?.address_tone_map?.[lang]?.[toneId])
+    ? rules.address_tone_map[lang][toneId].filter(Boolean)
+    : [];
+  if (tonePriorities.length > 0) {
+    const matchingIndices = tonePriorities
+      .map((candidate) => pool.findIndex((item) => item === candidate))
+      .filter((index) => index >= 0);
+    if (matchingIndices.length > 0) {
+      const nearest = matchingIndices.reduce((closest, current) => {
+        if (closest === null) {
+          return current;
+        }
+        const currentDiff = Math.abs(current - baseIndex);
+        const closestDiff = Math.abs(closest - baseIndex);
+        if (currentDiff < closestDiff) {
+          return current;
+        }
+        if (currentDiff === closestDiff) {
+          return current < closest ? current : closest;
+        }
+        return closest;
+      }, null);
+      if (typeof nearest === "number") {
+        baseIndex = nearest;
+        usedToneMap = true;
+      }
+    }
+  }
+
+  const mode = selectionSettings.mode || "deterministic";
+  let introIndex = poolSize > 0 ? baseIndex : 0;
+
+  if (mode === "static") {
+    introIndex = 0;
+  } else if (mode === "mixed" && poolSize > 0) {
+    const rotationScope = selectionSettings.rotation_scope || "none";
+    const storageKey = `aura.addressIndex.${glyphId}-${toneId}-${gender}`;
+    const storage =
+      (typeof globalThis !== "undefined" && globalThis.localStorage)
+        ? globalThis.localStorage
+        : typeof window !== "undefined" && window.localStorage
+        ? window.localStorage
+        : null;
+    if (storage && (rotationScope === "day" || rotationScope === "week")) {
+      try {
+        const now = new Date();
+        const scopeSignature =
+          rotationScope === "day"
+            ? `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}-${String(now.getUTCDate()).padStart(2, "0")}`
+            : getWeekSignature(now);
+        const storedRaw = storage.getItem(storageKey);
+        if (storedRaw) {
+          const parsed = JSON.parse(storedRaw);
+          if (parsed && typeof parsed.index === "number" && parsed.scope === scopeSignature) {
+            introIndex = parsed.index % poolSize;
+          } else {
+            introIndex = (baseIndex + 1) % poolSize;
+            storage.setItem(storageKey, JSON.stringify({ index: introIndex, scope: scopeSignature }));
+          }
+        } else {
+          introIndex = (baseIndex + 1) % poolSize;
+          storage.setItem(storageKey, JSON.stringify({ index: introIndex, scope: scopeSignature }));
+        }
+      } catch (error) {
+        introIndex = baseIndex;
+      }
+    } else {
+      introIndex = baseIndex;
+    }
+  }
+
+  const conclusionIndex = poolSize > 0 ? (introIndex + 1) % poolSize : 0;
+  const adviceIndex = poolSize > 0 ? (introIndex + 2) % poolSize : 0;
+
+  const introAddress = poolSize > 0 ? pool[introIndex] : "";
+  let conclusionAddress = poolSize > 0 ? pool[conclusionIndex] : "";
+  let adviceAddress = poolSize > 0 ? pool[adviceIndex] : "";
+
+  if (poolSize < 3) {
+    const normalizedToneStyle = Array.isArray(toneStyle)
+      ? toneStyle.map((item) => `${item}`.trim()).filter(Boolean)
+      : [];
+    const toneStyleForConclusion = normalizedToneStyle[0] || normalizedToneStyle[1] || "";
+    const toneStyleForAdvice = normalizedToneStyle[1] || normalizedToneStyle[0] || "";
+    conclusionAddress = decorateAddressWithToneStyle(conclusionAddress || introAddress, toneStyleForConclusion);
+    adviceAddress = decorateAddressWithToneStyle(adviceAddress || introAddress, toneStyleForAdvice);
+  }
+
+  if (logContext) {
+    logContext.address = {
+      baseIndex,
+      usedToneMap,
+      finalIndexIntro: introIndex,
+      finalIndexConclusion: conclusionIndex,
+      finalIndexAdvice: adviceIndex,
+      mode,
+    };
+  }
+
+  return {
+    enabled: true,
+    poolSize,
+    intro: introAddress,
+    conclusion: conclusionAddress,
+    advice: adviceAddress,
+  };
+}
+
+/**
  * Збираємо усі значення зазначених полів для конкретної мови (з урахуванням fallback).
  */
 function collectLocalizedFields(entry, fields, options) {
@@ -534,6 +734,19 @@ function composeDescription({
   const genderConclusionClosers = readGenderList(genderEntry, "conclusion_closers", { lang, fallbackLang, logContext });
   const genderAcknowledgements = readGenderList(genderEntry, "acknowledgements", { lang, fallbackLang, logContext });
 
+  // Визначаємо, які звертання доречно підставити для цієї комбінації параметрів.
+  const addressPlan = selectAddressVariants({
+    addresses: genderAddresses,
+    toneStyle: genderToneStyle,
+    rules,
+    glyphId,
+    toneId,
+    gender,
+    lang,
+    fallbackLang,
+    logContext,
+  });
+
   const genderLabel =
     lang === "en"
       ? gender === "male"
@@ -555,10 +768,19 @@ function composeDescription({
 
   // --- Вступ ---
   const introSentences = [];
-  const addressPart = genderAddresses[0] ? `${genderAddresses[0]}. ` : "";
+  // Щоб звертання прозвучало лише на початку першого речення, готуємо префікс та прапорець використання.
+  const introAddressPrefix = addressPlan.intro ? `${addressPlan.intro}. ` : "";
+  let introAddressUsed = false;
+  const applyIntroAddress = (sentence) => {
+    if (introAddressUsed || !introAddressPrefix) {
+      return sentence;
+    }
+    introAddressUsed = true;
+    return `${introAddressPrefix}${sentence}`;
+  };
   if (glyphArchetype) {
     introSentences.push(
-      applyLexShifts(`${addressPart}${glyphName} — ${glyphArchetype}.`, genderLexShift)
+      applyLexShifts(applyIntroAddress(`${glyphName} — ${glyphArchetype}.`), genderLexShift)
     );
   }
   if (toneEssence) {
@@ -567,7 +789,9 @@ function composeDescription({
     );
   }
   if (introSentences.length === 0) {
-    const fallbackIntro = `${addressPart}Комбінація ${capitalizeWord(glyphId)} з тоном ${toneId} ще очікує на опис.`.trim();
+    const fallbackIntro = applyIntroAddress(
+      `Комбінація ${capitalizeWord(glyphId)} з тоном ${toneId} ще очікує на опис.`
+    ).trim();
     introSentences.push(fallbackIntro);
     logContext.violations.push("intro:fallback");
   }
@@ -760,8 +984,19 @@ function composeDescription({
   }
 
   const adviceParagraphs = [];
+  if (addressPlan.enabled && addressPlan.poolSize < 3 && addressPlan.advice) {
+    const adviceAddressPhrase = normalizeSpacing(
+      applyLexShifts(addressPlan.advice, genderLexShift)
+    );
+    if (adviceAddressPhrase) {
+      adviceParagraphs.push(adviceAddressPhrase);
+    }
+  }
   if (genderToneStyle.length > 0) {
-    adviceParagraphs.push(normalizeSpacing(applyLexShifts(genderToneStyle[0], genderLexShift)));
+    const toneStyleLead = normalizeSpacing(applyLexShifts(genderToneStyle[0], genderLexShift));
+    if (toneStyleLead && !adviceParagraphs.includes(toneStyleLead)) {
+      adviceParagraphs.push(toneStyleLead);
+    }
   }
 
   // --- Тінь ---
@@ -813,25 +1048,47 @@ function composeDescription({
     source: `tone.${toneId}`,
   });
   const conclusionSentences = [];
+  // Аналогічно для висновку: звертання звучить лише один раз на початку блоку.
+  const conclusionAddressPrefix = addressPlan.conclusion ? `${addressPlan.conclusion}. ` : "";
+  let conclusionAddressUsed = false;
+  const applyConclusionAddress = (sentence) => {
+    if (conclusionAddressUsed || !conclusionAddressPrefix) {
+      return sentence;
+    }
+    conclusionAddressUsed = true;
+    return `${conclusionAddressPrefix}${sentence}`;
+  };
   if (glyphArchetype) {
     conclusionSentences.push(
-      applyLexShifts(`${glyphName} підсумовує шлях як ${glyphArchetype}.`, genderLexShift)
+      applyLexShifts(
+        applyConclusionAddress(`${glyphName} підсумовує шлях як ${glyphArchetype}.`),
+        genderLexShift
+      )
     );
   }
   if (conclusionTone.length > 0 || toneSymbol) {
     const toneSummary = toneSymbol || formatList(conclusionTone);
     conclusionSentences.push(
-      applyLexShifts(`Тон ${toneId} закарбовує символ: ${toneSummary}.`, genderLexShift)
+      applyLexShifts(
+        applyConclusionAddress(`Тон ${toneId} закарбовує символ: ${toneSummary}.`),
+        genderLexShift
+      )
     );
   }
   if (genderConclusionClosers.length > 0) {
-    conclusionSentences.push(applyLexShifts(genderConclusionClosers[0], genderLexShift));
+    conclusionSentences.push(
+      applyLexShifts(applyConclusionAddress(genderConclusionClosers[0]), genderLexShift)
+    );
   }
   if (genderAcknowledgements.length > 0) {
-    conclusionSentences.push(applyLexShifts(genderAcknowledgements[0], genderLexShift));
+    conclusionSentences.push(
+      applyLexShifts(applyConclusionAddress(genderAcknowledgements[0]), genderLexShift)
+    );
   }
   if (conclusionSentences.length === 0) {
-    conclusionSentences.push("Завершальний абзац доповнимо, щойно з’являться дані.");
+    conclusionSentences.push(
+      applyConclusionAddress("Завершальний абзац доповнимо, щойно з’являться дані.")
+    );
     logContext.violations.push("conclusion:fallback");
   }
   const conclusionFragments = [
