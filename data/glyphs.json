@@ -1,1082 +1,2244 @@
 {
   "imix": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Іміш",
+      "en": "Imix"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "вода",
+      "en": "water"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "джерело життя, початок; крокодил/водяна лілія",
+      "en": "source of life, beginning; crocodile/water lily"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "народження",
+        "інтуїція",
+        "підсвідомість"
+      ],
+      "en": [
+        "birth",
+        "intuition",
+        "subconscious"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "турбота",
+        "здатність починати"
+      ],
+      "en": [
+        "nurturing",
+        "ability to start"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "хаос",
+        "емоційні хвилі"
+      ],
+      "en": [
+        "chaos",
+        "emotional tides"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "водяна лілія",
+        "крокодил у воді"
+      ],
+      "en": [
+        "water lily",
+        "crocodile in water"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "почни з тихого наміру"
+      ],
+      "en": [
+        "begin with a quiet intention"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дай почуттям місце і тільки тоді діюй"
+      ],
+      "en": [
+        "give feelings space, then act"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зароджує",
+        "оживляє"
+      ],
+      "en": [
+        "births",
+        "revitalizes"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "спокій",
+        "вразливість"
+      ],
+      "en": [
+        "calm",
+        "vulnerability"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "випий склянку води з наміром"
+      ],
+      "en": [
+        "drink a glass of water with intention"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "початок",
+        "вода",
+        "інтуїція"
+      ],
+      "en": [
+        "beginning",
+        "water",
+        "intuition"
+      ]
     }
   },
   "ik": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Ікʼ",
+      "en": "Ik"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "повітря",
+      "en": "air"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "подих, вітер, слово",
+      "en": "breath, wind, word"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "комунікація",
+        "ідеї",
+        "очищення"
+      ],
+      "en": [
+        "communication",
+        "ideas",
+        "clearing"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ясність слова",
+        "натхнення"
+      ],
+      "en": [
+        "clarity of speech",
+        "inspiration"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "балакучість",
+        "нестабільність"
+      ],
+      "en": [
+        "chatter",
+        "instability"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "перший подих",
+        "відчинене вікно"
+      ],
+      "en": [
+        "first breath",
+        "open window"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "говори простіше"
+      ],
+      "en": [
+        "speak more simply"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очисти інформаційні канали перед дією"
+      ],
+      "en": [
+        "clear information channels before acting"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "прояснює",
+        "прискорює"
+      ],
+      "en": [
+        "clarifies",
+        "accelerates"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "легкість",
+        "збудженість"
+      ],
+      "en": [
+        "lightness",
+        "agitation"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дихальна вправа 4-4-4-4"
+      ],
+      "en": [
+        "box breathing 4-4-4-4"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вітер",
+        "слово",
+        "дихання"
+      ],
+      "en": [
+        "wind",
+        "word",
+        "breath"
+      ]
     }
   },
   "akbal": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Акʼбаль",
+      "en": "Akbal"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "ніч",
+      "en": "night"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "печера сновидінь, таємниця",
+      "en": "cave of dreams, mystery"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сни",
+        "підсвідомість",
+        "тишина"
+      ],
+      "en": [
+        "dreams",
+        "subconscious",
+        "silence"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "глибина",
+        "уявлення"
+      ],
+      "en": [
+        "depth",
+        "imagination"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "страхи",
+        "самоізоляція"
+      ],
+      "en": [
+        "fears",
+        "self-isolation"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "свічка у темряві",
+        "зоряне небо"
+      ],
+      "en": [
+        "candle in darkness",
+        "starry sky"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "записуй сни"
+      ],
+      "en": [
+        "record your dreams"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "прийми невідоме як простір народження ідей"
+      ],
+      "en": [
+        "embrace the unknown as a cradle of ideas"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "заглиблює",
+        "заспокоює"
+      ],
+      "en": [
+        "deepens",
+        "soothes"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зосередженість",
+        "тривога"
+      ],
+      "en": [
+        "focus",
+        "anxiety"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "година без екранів перед сном"
+      ],
+      "en": [
+        "one hour screen-free before sleep"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сон",
+        "таємниця",
+        "ніч"
+      ],
+      "en": [
+        "dream",
+        "mystery",
+        "night"
+      ]
     }
   },
   "kan": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Кан",
+      "en": "Kan"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "земля",
+      "en": "earth"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "насіння і потенціал",
+      "en": "seed and potential"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "розвиток",
+        "родючість",
+        "дисципліна"
+      ],
+      "en": [
+        "growth",
+        "fertility",
+        "discipline"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "терпіння",
+        "послідовність"
+      ],
+      "en": [
+        "patience",
+        "consistency"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "нетерпіння",
+        "контроль"
+      ],
+      "en": [
+        "impatience",
+        "control"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зерно в долоні",
+        "сходи після дощу"
+      ],
+      "en": [
+        "seed in a palm",
+        "sprouts after rain"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "живи циклом: посів—догляд—збір"
+      ],
+      "en": [
+        "live the cycle: sow—tend—harvest"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сконцентруй ресурси на одному зерні і плекай"
+      ],
+      "en": [
+        "focus resources on one seed and cultivate"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вкорінює",
+        "дозріває"
+      ],
+      "en": [
+        "roots",
+        "matures"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "терпіння",
+        "надія"
+      ],
+      "en": [
+        "patience",
+        "hope"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "щоденник росту"
+      ],
+      "en": [
+        "growth journal"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "насіння",
+        "потенціал",
+        "зростання"
+      ],
+      "en": [
+        "seed",
+        "potential",
+        "growth"
+      ]
     }
   },
-  "chikchan": {
+  "chicchan": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Чікчан",
+      "en": "Chicchan"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "вогонь",
+      "en": "fire"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "змія життєвої сили",
+      "en": "serpent of life force"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "інстинкт",
+        "ерос",
+        "харизма"
+      ],
+      "en": [
+        "instinct",
+        "eros",
+        "charisma"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "енергія",
+        "сміливість"
+      ],
+      "en": [
+        "energy",
+        "boldness"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "агресія",
+        "вигоряння"
+      ],
+      "en": [
+        "aggression",
+        "burnout"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "іскра що розпалює полум’я",
+        "змія що линяє"
+      ],
+      "en": [
+        "spark igniting flame",
+        "shedding serpent"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "переведи жар у дію"
+      ],
+      "en": [
+        "channel heat into action"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "бережи межі та відновлення, щоб не згоріти"
+      ],
+      "en": [
+        "guard boundaries and recovery to avoid burnout"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "запалює",
+        "очищує"
+      ],
+      "en": [
+        "ignites",
+        "purifies"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "пристрасть",
+        "гнів"
+      ],
+      "en": [
+        "passion",
+        "anger"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дихання 4–7–8"
+      ],
+      "en": [
+        "4–7–8 breathing"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "життєва сила",
+        "змія",
+        "вогонь"
+      ],
+      "en": [
+        "life force",
+        "serpent",
+        "fire"
+      ]
     }
   },
-  "kimi": {
+  "cimi": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Кімі",
+      "en": "Cimi"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "перехід",
+      "en": "transition"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "смерть і відродження; ворота між світами",
+      "en": "death and rebirth; gateway between worlds"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "завершення",
+        "звільнення",
+        "оновлення"
+      ],
+      "en": [
+        "completion",
+        "release",
+        "renewal"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "прийняття",
+        "смирення"
+      ],
+      "en": [
+        "acceptance",
+        "humility"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "страх втрат",
+        "застій"
+      ],
+      "en": [
+        "fear of loss",
+        "stagnation"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "лист що опадає",
+        "двері що зачиняються/відчиняються"
+      ],
+      "en": [
+        "falling leaf",
+        "doors closing/opening"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "назви те, що час відпустити"
+      ],
+      "en": [
+        "name what is time to release"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "створи ритуал прощання і звільни простір"
+      ],
+      "en": [
+        "create a farewell ritual and free space"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "відсікає",
+        "переводить"
+      ],
+      "en": [
+        "cuts away",
+        "transitions"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "смуток",
+        "полегшення"
+      ],
+      "en": [
+        "grief",
+        "relief"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "лист подяки минулому"
+      ],
+      "en": [
+        "letter of gratitude to the past"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "смерть",
+        "перехід",
+        "оновлення"
+      ],
+      "en": [
+        "death",
+        "transition",
+        "renewal"
+      ]
     }
   },
   "manik": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Манікʼ",
+      "en": "Manik"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "земля",
+      "en": "earth"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "рука — дія та зцілення",
+      "en": "hand — action and healing"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "допомога",
+        "ремесло",
+        "завершення"
+      ],
+      "en": [
+        "help",
+        "craft",
+        "completion"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "практичність",
+        "зцілення"
+      ],
+      "en": [
+        "practicality",
+        "healing"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "перфекціонізм",
+        "надмірна турбота"
+      ],
+      "en": [
+        "perfectionism",
+        "overcare"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "теплий дотик",
+        "рука майстра"
+      ],
+      "en": [
+        "warm touch",
+        "artisan hand"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "допомагай із межами"
+      ],
+      "en": [
+        "help with boundaries"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "завершуй розпочате малими кроками"
+      ],
+      "en": [
+        "finish what’s started in small steps"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зцілює",
+        "закріплює"
+      ],
+      "en": [
+        "heals",
+        "secures"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "співчуття",
+        "втома"
+      ],
+      "en": [
+        "compassion",
+        "fatigue"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "масаж долонь",
+        "практика вдячності"
+      ],
+      "en": [
+        "palm massage",
+        "gratitude practice"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "рука",
+        "допомога",
+        "зцілення"
+      ],
+      "en": [
+        "hand",
+        "help",
+        "healing"
+      ]
     }
   },
   "lamat": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Ламат",
+      "en": "Lamat"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "зоря/венера",
+      "en": "star/venus"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "сяйво краси, примноження",
+      "en": "radiance of beauty, multiplication"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "естетика",
+        "родючість",
+        "гармонія"
+      ],
+      "en": [
+        "aesthetics",
+        "fertility",
+        "harmony"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "чарівність",
+        "творчість"
+      ],
+      "en": [
+        "charm",
+        "creativity"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "залежність від оцінки",
+        "марнославство"
+      ],
+      "en": [
+        "approval-seeking",
+        "vanity"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вечірня зоря",
+        "квітучий сад"
+      ],
+      "en": [
+        "evening star",
+        "blooming garden"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "світитися без перенапруги"
+      ],
+      "en": [
+        "shine without strain"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "твори красу у простих речах"
+      ],
+      "en": [
+        "create beauty in simple things"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "помножує",
+        "гармонізує"
+      ],
+      "en": [
+        "multiplies",
+        "harmonizes"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "радість",
+        "сором’язливість"
+      ],
+      "en": [
+        "joy",
+        "bashfulness"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "догляд за квітами/тілом"
+      ],
+      "en": [
+        "tend flowers/body care"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зоря",
+        "венера",
+        "краса"
+      ],
+      "en": [
+        "star",
+        "venus",
+        "beauty"
+      ]
     }
   },
   "muluk": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Мулук",
+      "en": "Muluk"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "вода",
+      "en": "water"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "крапля, жертва, очищення",
+      "en": "drop, offering, cleansing"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "емоції",
+        "очищення",
+        "відпускання"
+      ],
+      "en": [
+        "emotions",
+        "cleansing",
+        "letting go"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "співчуття",
+        "очищення"
+      ],
+      "en": [
+        "compassion",
+        "purification"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "жертовність",
+        "перенасичені емоції"
+      ],
+      "en": [
+        "self-sacrifice",
+        "over-sensitivity"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "крапля на воді",
+        "очисний дощ"
+      ],
+      "en": [
+        "drop on water",
+        "cleansing rain"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "звільни місце через воду"
+      ],
+      "en": [
+        "clear space through water"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ритуал подяки і відпускання"
+      ],
+      "en": [
+        "ritual of gratitude and release"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очищує",
+        "умиротворює"
+      ],
+      "en": [
+        "purifies",
+        "pacifies"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "смуток",
+        "полегшення"
+      ],
+      "en": [
+        "sadness",
+        "relief"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ванна/душ з наміром"
+      ],
+      "en": [
+        "intentional bath/shower"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вода",
+        "очищення",
+        "жертва"
+      ],
+      "en": [
+        "water",
+        "cleansing",
+        "offering"
+      ]
     }
   },
   "ok": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Ок",
+      "en": "Ok"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "вогонь",
+      "en": "fire"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "собака — відданість і любов",
+      "en": "dog — loyalty and love"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "серце",
+        "вірність",
+        "стосунки"
+      ],
+      "en": [
+        "heart",
+        "loyalty",
+        "relationships"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "відданість",
+        "щирість"
+      ],
+      "en": [
+        "devotion",
+        "sincerity"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ревнощі",
+        "залежність"
+      ],
+      "en": [
+        "jealousy",
+        "dependence"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "тепло вогнища",
+        "вірний пес"
+      ],
+      "en": [
+        "hearth warmth",
+        "faithful dog"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "плекайте довіру"
+      ],
+      "en": [
+        "cultivate trust"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "любов як дія, не лише почуття"
+      ],
+      "en": [
+        "love as action, not only feeling"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зігріває",
+        "єднає"
+      ],
+      "en": [
+        "warms",
+        "unites"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ніжність",
+        "ревнощі"
+      ],
+      "en": [
+        "tenderness",
+        "jealousy"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "лист вдячності близьким"
+      ],
+      "en": [
+        "gratitude note to loved ones"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "любов",
+        "вірність",
+        "серце"
+      ],
+      "en": [
+        "love",
+        "loyalty",
+        "heart"
+      ]
     }
   },
-  "chuwen": {
+  "chuen": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Чуʼен",
+      "en": "Chuen"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "магія/гра",
+      "en": "magic/play"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "творець-мистець, майстер гри",
+      "en": "artist-trickster, master of play"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "мистецтво",
+        "гра",
+        "креатив"
+      ],
+      "en": [
+        "art",
+        "play",
+        "creativity"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "радість",
+        "креативність"
+      ],
+      "en": [
+        "joy",
+        "creativity"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "легковажність",
+        "втеча у гру"
+      ],
+      "en": [
+        "frivolity",
+        "escapism into play"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "нитка творчості",
+        "блиск фарб"
+      ],
+      "en": [
+        "thread of creation",
+        "sparkling paints"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "додай гри до задач"
+      ],
+      "en": [
+        "add play to tasks"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "завершуй творче — малими сесіями"
+      ],
+      "en": [
+        "finish creative work via small sessions"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "оживляє",
+        "грає"
+      ],
+      "en": [
+        "enlivens",
+        "plays"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "радість",
+        "сором"
+      ],
+      "en": [
+        "joy",
+        "shame"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "5 хв мистецтва на день"
+      ],
+      "en": [
+        "5 minutes of art daily"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "гра",
+        "мистецтво",
+        "творчість"
+      ],
+      "en": [
+        "play",
+        "art",
+        "creativity"
+      ]
     }
   },
   "eb": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Ебʼ",
+      "en": "Eb"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "земля/шлях",
+      "en": "earth/road"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "людська дорога, служіння",
+      "en": "human road, service"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вибір",
+        "служіння",
+        "здоров'я"
+      ],
+      "en": [
+        "choice",
+        "service",
+        "health"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "гуманність",
+        "емпатія"
+      ],
+      "en": [
+        "humanity",
+        "empathy"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сумніви",
+        "апатія"
+      ],
+      "en": [
+        "doubt",
+        "apathy"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "стежка життя",
+        "перехрестя"
+      ],
+      "en": [
+        "path of life",
+        "crossroads"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "обери просту дорогу"
+      ],
+      "en": [
+        "choose the simple road"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "малими кроками йди в бік служіння"
+      ],
+      "en": [
+        "walk small steps toward service"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "спрямовує",
+        "вирівнює"
+      ],
+      "en": [
+        "directs",
+        "aligns"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "співчуття",
+        "розгубленість"
+      ],
+      "en": [
+        "compassion",
+        "confusion"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "добра справа дня"
+      ],
+      "en": [
+        "good deed of the day"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дорога",
+        "служіння",
+        "вибір"
+      ],
+      "en": [
+        "road",
+        "service",
+        "choice"
+      ]
     }
   },
   "ben": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Бен",
+      "en": "Ben"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "дерево/очерет",
+      "en": "reed/wood"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "опора роду, вертикаль",
+      "en": "pillar of the family, vertical axis"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "родина",
+        "лідерство",
+        "стійкість"
+      ],
+      "en": [
+        "family",
+        "leadership",
+        "stability"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "відповідальність",
+        "опора"
+      ],
+      "en": [
+        "responsibility",
+        "support"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "впертість",
+        "гординя"
+      ],
+      "en": [
+        "stubbornness",
+        "pride"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очерет у вітрі",
+        "стовбур-вісь"
+      ],
+      "en": [
+        "reed in wind",
+        "trunk-axis"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "лідерствуй без жорсткості"
+      ],
+      "en": [
+        "lead without harshness"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "будь опорою, не тисни"
+      ],
+      "en": [
+        "be a support, not a pressure"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зміцнює",
+        "вирівнює"
+      ],
+      "en": [
+        "strengthens",
+        "balances"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "гордість",
+        "стриманість"
+      ],
+      "en": [
+        "pride",
+        "restraint"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "родинний ритуал подяки"
+      ],
+      "en": [
+        "family gratitude ritual"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очерет",
+        "опора",
+        "родина"
+      ],
+      "en": [
+        "reed",
+        "support",
+        "family"
+      ]
     }
   },
   "ix": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Іш",
+      "en": "Ix"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "магія/земля",
+      "en": "magic/earth"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "ягуар — хранитель знань",
+      "en": "jaguar — keeper of wisdom"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "інтуїція",
+        "природа",
+        "чаклунство"
+      ],
+      "en": [
+        "intuition",
+        "nature",
+        "sorcery"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "мудрість",
+        "гармонія з лісом"
+      ],
+      "en": [
+        "wisdom",
+        "harmony with forest"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "маніпуляції",
+        "егоцентризм"
+      ],
+      "en": [
+        "manipulation",
+        "egocentrism"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "слід ягуара",
+        "печерні знаки"
+      ],
+      "en": [
+        "jaguar print",
+        "cave signs"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "слухай землю"
+      ],
+      "en": [
+        "listen to the earth"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "бережно користуйся силою впливу"
+      ],
+      "en": [
+        "use influence power with care"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очаровує",
+        "узгоджує"
+      ],
+      "en": [
+        "enchants",
+        "attunes"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "спокій",
+        "ревнощі"
+      ],
+      "en": [
+        "calm",
+        "jealousy"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "час у лісі"
+      ],
+      "en": [
+        "time in the forest"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ягуар",
+        "магія",
+        "природа"
+      ],
+      "en": [
+        "jaguar",
+        "magic",
+        "nature"
+      ]
     }
   },
   "men": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Мен",
+      "en": "Men"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "небо/орел",
+      "en": "sky/eagle"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "орел — далеке бачення",
+      "en": "eagle — far sight"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "бачення",
+        "свобода",
+        "стратегія"
+      ],
+      "en": [
+        "vision",
+        "freedom",
+        "strategy"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "прозорливість",
+        "широта"
+      ],
+      "en": [
+        "foresight",
+        "breadth"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "відрив від реальності",
+        "гординя"
+      ],
+      "en": [
+        "detachment",
+        "pride"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "політ над горами",
+        "широкий обрій"
+      ],
+      "en": [
+        "flight over mountains",
+        "wide horizon"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "з'єднай бачення з дією"
+      ],
+      "en": [
+        "link vision to action"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "приземляй ідеї метриками"
+      ],
+      "en": [
+        "ground ideas with metrics"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "підносить",
+        "прояснює"
+      ],
+      "en": [
+        "uplifts",
+        "clarifies"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "натхнення",
+        "самотність"
+      ],
+      "en": [
+        "inspiration",
+        "loneliness"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дивись у далечінь 3 хв"
+      ],
+      "en": [
+        "gaze into distance for 3 min"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "орел",
+        "бачення",
+        "свобода"
+      ],
+      "en": [
+        "eagle",
+        "vision",
+        "freedom"
+      ]
     }
   },
-  "kib": {
+  "cib": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Кіб",
+      "en": "Cib"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "вогонь/мудрість",
+      "en": "fire/wisdom"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "мудрець, традиція і прощення",
+      "en": "sage, tradition and forgiveness"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "досвід",
+        "етика",
+        "миротворчість"
+      ],
+      "en": [
+        "experience",
+        "ethics",
+        "peacemaking"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "мудрість",
+        "терпимість"
+      ],
+      "en": [
+        "wisdom",
+        "forbearance"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "жорсткість",
+        "самокритика"
+      ],
+      "en": [
+        "rigidity",
+        "self-criticism"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вогонь у колі старійшин",
+        "кам'яні сходи"
+      ],
+      "en": [
+        "elders' fire circle",
+        "stone steps"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "практикуй прощення"
+      ],
+      "en": [
+        "practice forgiveness"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "перевір рішення етичним компасом"
+      ],
+      "en": [
+        "check decisions with an ethical compass"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "умиротворює",
+        "навчає"
+      ],
+      "en": [
+        "pacifies",
+        "teaches"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "спокій",
+        "сором"
+      ],
+      "en": [
+        "calm",
+        "shame"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "медитація над вогнем"
+      ],
+      "en": [
+        "meditation by fire"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "мудрість",
+        "прощення",
+        "карма"
+      ],
+      "en": [
+        "wisdom",
+        "forgiveness",
+        "karma"
+      ]
     }
   },
-  "kaban": {
+  "caban": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Кабан",
+      "en": "Caban"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "земля/рух",
+      "en": "earth/movement"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "земля, що рухається — еволюція свідомості",
+      "en": "moving earth — evolution of consciousness"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зміни",
+        "свідомість",
+        "активність"
+      ],
+      "en": [
+        "change",
+        "consciousness",
+        "activity"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "проактивність",
+        "відкритість"
+      ],
+      "en": [
+        "proactivity",
+        "openness"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "поспіх",
+        "хаос"
+      ],
+      "en": [
+        "haste",
+        "chaos"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "хвиля що котиться",
+        "землетрус"
+      ],
+      "en": [
+        "rolling wave",
+        "earthquake"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "вирівняй темп змін"
+      ],
+      "en": [
+        "smooth the pace of change"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "спрямовуй енергію в одне русло"
+      ],
+      "en": [
+        "channel energy into one stream"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "рухає",
+        "вирівнює"
+      ],
+      "en": [
+        "moves",
+        "balances"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "збудження",
+        "виснаження"
+      ],
+      "en": [
+        "excitement",
+        "exhaustion"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "прогулянка босоніж землею"
+      ],
+      "en": [
+        "barefoot walk on earth"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "земля",
+        "рух",
+        "еволюція"
+      ],
+      "en": [
+        "earth",
+        "movement",
+        "evolution"
+      ]
     }
   },
   "etznab": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Ецʼнаб",
+      "en": "Etznab"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "камінь/кремінь",
+      "en": "stone/flint"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "дзеркало істини, різкий розріз",
+      "en": "mirror of truth, sharp cut"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "істина",
+        "судження",
+        "ясність"
+      ],
+      "en": [
+        "truth",
+        "discernment",
+        "clarity"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "точність",
+        "відвертість"
+      ],
+      "en": [
+        "precision",
+        "candor"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "критика",
+        "різкість"
+      ],
+      "en": [
+        "criticism",
+        "harshness"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "полірований кремінь",
+        "дзеркало"
+      ],
+      "en": [
+        "polished flint",
+        "mirror"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ріж те, що не служить"
+      ],
+      "en": [
+        "cut what doesn't serve"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "поєднуй правду з м’якістю"
+      ],
+      "en": [
+        "pair truth with softness"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "розтинає",
+        "прояснює"
+      ],
+      "en": [
+        "cuts through",
+        "clarifies"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "рішучість",
+        "роздратування"
+      ],
+      "en": [
+        "resolve",
+        "irritation"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очищення дзеркал/скла"
+      ],
+      "en": [
+        "cleanse mirrors/glass"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "кремінь",
+        "дзеркало",
+        "істина"
+      ],
+      "en": [
+        "flint",
+        "mirror",
+        "truth"
+      ]
     }
   },
-  "kawak": {
+  "cauac": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Кавак",
+      "en": "Cauac"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "грім/буря",
+      "en": "thunder/storm"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "буря очищення, блискавка",
+      "en": "storm of cleansing, lightning"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очищення",
+        "звільнення",
+        "зміни"
+      ],
+      "en": [
+        "cleansing",
+        "liberation",
+        "change"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сила трансформації",
+        "оновлення"
+      ],
+      "en": [
+        "power of transformation",
+        "renewal"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "нестабільність",
+        "руйнація"
+      ],
+      "en": [
+        "instability",
+        "destruction"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "грім над містом",
+        "злива"
+      ],
+      "en": [
+        "thunder over the city",
+        "downpour"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "дозволь бурі очистити"
+      ],
+      "en": [
+        "let the storm cleanse"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "зміни проводь усвідомлено й м’яко"
+      ],
+      "en": [
+        "conduct change consciously and gently"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "очищує",
+        "звільняє"
+      ],
+      "en": [
+        "purges",
+        "liberates"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "напруга",
+        "полегшення"
+      ],
+      "en": [
+        "tension",
+        "relief"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "душ після важкого дня"
+      ],
+      "en": [
+        "shower after a hard day"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "буря",
+        "очищення",
+        "блискавка"
+      ],
+      "en": [
+        "storm",
+        "cleansing",
+        "lightning"
+      ]
     }
   },
   "ahau": {
     "name": {
-      "ua": "",
-      "en": ""
+      "ua": "Ахау",
+      "en": "Ahau"
     },
     "element": {
-      "ua": "",
-      "en": ""
+      "ua": "сонце/світло",
+      "en": "sun/light"
     },
     "archetype": {
-      "ua": "",
-      "en": ""
+      "ua": "сонце — зрілість і свідомість",
+      "en": "sun — maturity and consciousness"
     },
     "domains": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "світло",
+        "радість",
+        "лідерство"
+      ],
+      "en": [
+        "light",
+        "joy",
+        "leadership"
+      ]
     },
     "strengths": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ясність",
+        "мудрість"
+      ],
+      "en": [
+        "clarity",
+        "wisdom"
+      ]
     },
     "shadows": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "егоцентризм",
+        "засліплення"
+      ],
+      "en": [
+        "egocentrism",
+        "blinding glare"
+      ]
     },
     "imagery": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сонце в зеніті",
+        "золоте коло"
+      ],
+      "en": [
+        "sun at zenith",
+        "golden circle"
+      ]
     },
     "advice_short": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "світи і грій, не пали"
+      ],
+      "en": [
+        "shine and warm, don't scorch"
+      ]
     },
     "advice_long": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ділися світлом, лишаючи місце іншим"
+      ],
+      "en": [
+        "share light while leaving room for others"
+      ]
     },
     "synergy_verbs": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "осяює",
+        "узгоджує"
+      ],
+      "en": [
+        "illuminates",
+        "harmonizes"
+      ]
     },
     "emotions": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "радість",
+        "гординя"
+      ],
+      "en": [
+        "joy",
+        "pride"
+      ]
     },
     "rituals": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "ранкове сонце на обличчі"
+      ],
+      "en": [
+        "morning sun on the face"
+      ]
     },
     "keywords": {
-      "ua": [],
-      "en": []
+      "ua": [
+        "сонце",
+        "світло",
+        "мудрість"
+      ],
+      "en": [
+        "sun",
+        "light",
+        "wisdom"
+      ]
     }
   }
 }
