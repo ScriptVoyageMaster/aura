@@ -1,87 +1,51 @@
 /*
-  Оновлений файл стилів для верхньої панелі керування.
-  Коментарі україномовні, щоб навіть новачок легко розібрався у верстці.
+  Оновлена система стилів для блоку керування (колишній topbar).
+  Коментарі україномовні, щоб навіть недосвідчений користувач розібрався у верстці.
 */
 
-/* Основний контейнер топбару: темний фон, тонка межа та прилипання до верхнього краю */
-.topbar {
+/* === 1. Базова організація контейнера === */
+.controls {
   background: #000000;
   border-bottom: 1px solid var(--outline);
   padding: 16px 0;
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  position: static; /* Шапка не прилипає та прокручується разом із контентом */
+  z-index: 1;
 }
 
-/* Внутрішній контейнер обмежує ширину та дає горизонтальні відступи */
-.topbar-container {
-  max-width: 1280px;
+.controls__container {
+  max-width: 1280px; /* Вирівнюємо блок за шириною з іншими секціями сайту */
   margin: 0 auto;
   padding: 0 16px;
 }
 
-/* Сітка з трьох колонок: ліворуч поля, у центрі кнопка, праворуч перемикачі */
-.topbar-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: 24px;
+.controls-grid {
+  display: grid; /* Гнучка сітка дає змогу легко керувати порядком елементів */
+  gap: 12px;
+  grid-template-columns: 1fr; /* За замовчуванням (мобільний вигляд) усі елементи в один стовпчик */
+  grid-template-areas:
+    "date"
+    "gender"
+    "calendar"
+    "mixed";
 }
 
-/* Базовий вигляд секцій усередині сітки */
-.topbar-section {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* Ліва колонка містить поля вводу, тому дозволяємо їм переноситися */
-.topbar-section--left {
-  flex-wrap: wrap;
-  align-items: flex-start; /* Вирівнюємо поля згори, щоб селект статі не провалювався вниз */
-}
-
-/* Центральна колонка завжди центрує кнопку запуску */
-.topbar-section--center {
-  justify-content: center;
-}
-
-/* Права колонка вирівнює елементи праворуч і дозволяє переносити їх на новий рядок */
-.topbar-section--right {
-  justify-content: flex-end;
-  flex-wrap: wrap;
-  align-items: flex-start; /* Вирівнюємо всі елементи згори, щоб селекти зі своїми підписами стояли на одній лінії */
-  align-content: flex-start; /* Додаємо вирівнювання рядків флексу до верхнього краю, аби друга лінія елементів не "провисала" */
-  align-self: start; /* Примушуємо всю праву колонку стати по верхньому краю ґрід-рядка, як і ліву секцію */
-}
-
-/* Підпис та інпут обгорнуті у label, щоб клік по тексту активував поле */
 .field {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-width: 220px;
+  width: 100%;
 }
 
-.field--sm {
-  min-width: 160px;
+.label-as-block,
+.field-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  position: relative; /* Потрібно для коректного приховування підписів на мобільному */
 }
 
-/*
-  Спеціальне поле для кнопки довідки: забираємо мінімальну ширину,
-  щоб елемент не розтягувався, та вирівнюємо кнопку під підписом.
-*/
-.field--button {
-  min-width: unset;
-  width: auto;
-  align-items: flex-start;
-}
-
-.field--button .help-button {
-  align-self: flex-start;
-}
-
-.field__label {
+.field-label {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -89,14 +53,31 @@
   color: var(--text-muted);
 }
 
-/* Оформлення інпуту дати у темному стилі */
+/* Вказуємо області ґрід-сітки для кожного поля */
+.field-date {
+  grid-area: date;
+}
+
+.field-gender {
+  grid-area: gender;
+}
+
+.field-calendar {
+  grid-area: calendar;
+}
+
+.controls-grid > .mixed-row {
+  grid-area: mixed;
+}
+
+/* === 2. Оформлення інпутів та селектів === */
 .date-input,
 .field input[type="date"] {
   background: var(--bg-panel);
   border: 1px solid var(--outline);
   color: var(--text-main);
   border-radius: 6px;
-  height: 40px;
+  height: 42px;
   padding: 8px 12px;
   font-size: 0.95rem;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
@@ -111,23 +92,15 @@
 }
 
 .field input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1);
+  filter: invert(1); /* Світла іконка календаря на темному тлі */
   cursor: pointer;
 }
 
-/* Базовий контейнер select з кастомною стрілкою */
-/* Обгортка селекта робимо флексом та центруємо вміст, щоб стрілка не зсувалася по вертикалі */
 .select {
   position: relative;
   display: inline-flex;
-  align-items: center; /* Вирівнюємо стрілку по центру незалежно від висоти елемента */
-
-}
-
-/* Розтягуємо селект всередині поля на всю доступну ширину, щоб стрілка гарантовано лишалася всередині рамки */
-.field .select {
+  align-items: center;
   width: 100%;
-
 }
 
 .select select {
@@ -138,12 +111,12 @@
   border: 1px solid var(--outline);
   color: var(--text-main);
   border-radius: 6px;
-  height: 40px;
+  height: 42px;
   padding: 8px 36px 8px 12px;
   font-size: 0.9rem;
   cursor: pointer;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  width: 100%; /* Змушуємо випадаючий список заповнювати обгортку, щоб не з'являлись «хвости» поза межами */
+  width: 100%;
 }
 
 .select select:focus {
@@ -152,20 +125,13 @@
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
 }
 
-.select select option {
-  background: var(--bg-panel);
-  color: var(--text-main);
-}
-
-/* Стрілка намальована SVG-іконкою та позиціонується праворуч */
-/* Стрілку фіксуємо з обох боків по вертикалі та центруємо флексом, щоб вона не вилізала за межі селекта */
 .select__arrow {
   position: absolute;
   right: 10px;
   top: 0;
   bottom: 0;
-  display: flex; /* Дозволяє вирівняти SVG по центру контейнера */
-  align-items: center; /* Тримай стрілку в центрі навіть при зміні висоти поля */
+  display: flex;
+  align-items: center;
   pointer-events: none;
   color: var(--text-muted);
 }
@@ -176,19 +142,37 @@
   font-weight: 600;
 }
 
-/* Кнопка запуску з плавною зміною кольору при наведенні */
+/* === 3. Додаткові службові блоки === */
+.field-fallback {
+  margin-top: 6px;
+}
+
+.fallback-inputs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.fallback-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* === 4. Кнопки та спеціальні елементи === */
 .generate-button {
   background: var(--accent);
   color: #ffffff;
   border: none;
   border-radius: 6px;
-  height: 42px;
+  height: 44px;
   padding: 0 32px;
   font-size: 0.95rem;
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 100%;
 }
 
 .generate-button:hover {
@@ -204,8 +188,8 @@
   cursor: not-allowed;
 }
 
-/* Кнопка підказки повторює стиль панелі, але має квадратну форму */
-.help-button {
+.help-button,
+.icon-btn {
   width: 42px;
   height: 42px;
   display: inline-flex;
@@ -219,143 +203,138 @@
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
-.help-button:hover {
+.help-button:hover,
+.icon-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: var(--accent);
 }
 
-/* Блок із фолбек-контролями займає всю ширину під полями */
-.topbar__fallback {
-  width: 100%;
+/* === 5. Мобільне компонування за замовчуванням === */
+.mixed-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-/* --- Адаптивність --- */
-
-/* Планшети: елементи стають у два рядки, щоб зберегти читабельність */
-@media (max-width: 1023px) {
-  .topbar {
-    padding: 14px 0;
-  }
-
-  .topbar-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .topbar-section--left,
-  .topbar-section--right {
-    justify-content: space-between;
-  }
-
-  .topbar-section--center {
-    order: 3;
-  }
-
-  .topbar-section--right {
-    order: 2;
-  }
+.mixed-row .field-run {
+  flex: 1 1 auto;
 }
 
-/* Мобільні пристрої: елементи стають у колонки із заповненням на всю ширину */
-@media (max-width: 767px) {
-  .topbar {
-    padding: 12px 0;
+.mixed-row .field-lang,
+.mixed-row .field-help {
+  flex: 0 0 auto;
+}
+
+.mixed-row .generate-button {
+  flex: 1 1 auto;
+  min-height: 44px;
+}
+
+.lang-select {
+  width: 3ch; /* Поміщаємо короткі значення типу UA або EN */
+  min-width: 3ch;
+  text-align: center;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+}
+
+/* Ховаємо підписи "Мова" та "Довідка" на мобільних, але залишаємо їх доступними для скрінрідерів */
+.field-lang .field-label,
+.field-help .field-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Вимикаємо будь-яке потенційне прилипання на мобільних */
+.controls,
+.controls-grid {
+  position: static !important;
+  top: auto !important;
+}
+
+/* === 6. Десктопна сітка (≥1024px) === */
+@media (min-width: 1024px) {
+  .controls {
+    padding: 20px 0;
   }
 
-  .topbar-section--left {
-    /*
-      На телефонах організовуємо поля у вертикальний стек, але не розтягуємо їх
-      на всю ширину, аби керування виглядало акуратніше.
-    */
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
+  .controls-grid {
+    grid-template-columns: 1fr 1fr 1.2fr auto auto auto;
+    grid-template-areas: "date gender calendar run lang help";
+    align-items: end;
   }
 
-  .topbar-section--right {
-    /*
-      Права колонка теж центрується, щоб усі компактні елементи виглядали
-      симетрично відносно середини екрану.
-    */
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
+  .controls-grid > .mixed-row {
+    display: contents; /* Дозволяємо окремим полям зайняти власні ґрід-комірки */
   }
 
-  .field,
-  .field--sm {
-    /*
-      Встановлюємо максимальну ширину полів і дозволяємо їм звужуватись,
-      щоб вони не займали весь екран на невеликих пристроях.
-    */
-    width: 100%;
-    max-width: 320px;
-    min-width: 0;
+  .controls-grid > .mixed-row > .field-run {
+    grid-area: run;
   }
 
-  .field {
-    /*
-      На мобільних розташовуємо підпис та елемент вводу в один рядок, щоб
-      користувач одразу бачив, до якого поля належить текстова позначка.
-    */
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
+  .controls-grid > .mixed-row > .field-lang {
+    grid-area: lang;
   }
 
-  .field--button {
-    /*
-      Для блоку кнопки довідки повертаємо колоночний напрямок, інакше підпис
-      та іконка стануть поруч і втратять читабельність.
-    */
-    flex-direction: column;
-    align-items: center;
+  .controls-grid > .mixed-row > .field-help {
+    grid-area: help;
+  }
+
+  .mixed-row .field {
+    align-items: flex-start;
+  }
+
+  .field-lang .field-label,
+  .field-help .field-label {
+    position: static;
     width: auto;
-    max-width: none;
+    height: auto;
+    padding: 0;
+    margin: 0 0 6px 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    border: 0;
   }
 
-  .field__label {
-    /*
-      Підписи залишаємо компактними та забороняємо їм переноситись більше ніж на
-      два рядки, щоб верстка не "стрибала" при перекладі.
-    */
-    flex: 0 0 auto;
-    max-width: 120px;
+  .lang-select {
+    width: auto;
+    min-width: 72px;
     text-align: left;
-    line-height: 1.3;
+    padding-left: 12px;
+    padding-right: 36px;
   }
 
-  .field .select,
-  .field input[type="date"],
-  .field .select select,
-  .date-input,
-  .select select {
-    /*
-      Полю вводу дозволяємо займати весь вільний простір поруч із підписом,
-      тим самим зберігаючи компактну ширину без втрати зручності.
-    */
-    width: auto;
-    flex: 1 1 auto;
+  .icon-btn {
+    width: 42px;
+    height: 42px;
   }
 
-  .generate-button {
-    /*
-      Кнопку запуску звужуємо до зручного розміру та центруємо, щоб вона не
-      виглядала як повноширинна панель.
-    */
-    width: auto;
-    min-width: 220px;
-    align-self: center;
+  .field-run {
+    align-items: flex-start;
+  }
+}
+
+/* === 7. Додаткові уточнення для дуже малих екранів (≤360px) === */
+@media (max-width: 360px) {
+  .mixed-row {
+    gap: 8px; /* Зменшуємо відступи, щоб елементи гарантовано вмістилися */
   }
 
-  .help-button {
-    /*
-      Робимо кнопку довідки трохи меншою, аби вона гармонійно пасувала до
-      звужених полів та не забирала багато місця.
-    */
-    width: 36px;
-    flex-shrink: 0;
+  .lang-select {
+    width: 2.8ch;
+    min-width: 2.8ch;
   }
 }
