@@ -66,11 +66,25 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const fallbackYear = document.getElementById("yearSelect");
 
   // --- 2. Дані сцен ---
+  // Оголошуємо перелік доступних сцен. Тепер підтримуємо лише "maya" та легку заглушку "druids".
   const scenes = {
-    lissajous: window.lissajousScene,
-    rune: window.runeScene,
     maya: window.mayaScene,
+    druids: window.druidsScene,
   };
+
+  // Готуємо множину дозволених ключів, щоб легко валідувати будь-який зовнішній ввід.
+  const ALLOWED_SCENES = new Set(Object.keys(scenes));
+
+  /**
+   * Нормалізуємо ключ сцени: якщо він невідомий або порожній, повертаємо безпечний "maya".
+   * Така перевірка гарантує, що навіть старі збережені значення не зламають застосунок.
+   */
+  function normalizeSceneKey(candidate) {
+    if (!candidate || !ALLOWED_SCENES.has(candidate)) {
+      return "maya";
+    }
+    return candidate;
+  }
 
   const USER_INPUT_STORAGE_KEY = "aura_user_input";
 
@@ -575,10 +589,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   function detectInitialScene() {
     const saved = getStored("scene");
-    if (saved && scenes[saved]) {
-      return saved;
-    }
-    return "lissajous";
+    return normalizeSceneKey(saved);
   }
 
   function resetPerformanceTracker() {
@@ -701,11 +712,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   function setActiveScene(sceneKey, { forceRestart = false } = {}) {
-    if (!scenes[sceneKey]) return;
-    state.activeSceneKey = sceneKey;
-    state.sceneInstance = scenes[sceneKey];
+    const normalizedKey = normalizeSceneKey(sceneKey);
+    state.activeSceneKey = normalizedKey;
+    state.sceneInstance = scenes[normalizedKey];
     window.activeScene = state.sceneInstance;
-    setStored("scene", sceneKey);
+    setStored("scene", normalizedKey);
     updateSceneControl();
 
     if (state.sceneInstance) {
@@ -846,7 +857,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   if (sceneSelect) {
     sceneSelect.addEventListener("change", () => {
-      const selectedScene = sceneSelect.value;
+      const selectedScene = normalizeSceneKey(sceneSelect.value);
       if (selectedScene && selectedScene !== state.activeSceneKey) {
         setActiveScene(selectedScene, { forceRestart: state.isRunning });
       }
