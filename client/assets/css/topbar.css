@@ -137,9 +137,13 @@
 }
 
 .select--sm select {
-  min-width: 72px;
   text-transform: uppercase;
   font-weight: 600;
+}
+
+/* Допоміжне правило: повністю ховаємо блок фолбек-контролів, якщо він позначений атрибутом hidden. */
+.field-fallback[hidden] {
+  display: none !important;
 }
 
 /* === 3. Додаткові службові блоки === */
@@ -223,6 +227,17 @@
 .mixed-row .field-lang,
 .mixed-row .field-help {
   flex: 0 0 auto;
+}
+
+/* Обмежуємо ширину блоку вибору мови на мобільних, щоб поряд залишалося місце для кнопки. */
+.mixed-row .field-lang .select {
+  width: auto;
+}
+
+.mixed-row .field-lang .select select {
+  width: auto;
+  min-width: 0;
+  padding-right: 28px; /* Трохи зменшуємо відступ під стрілку, аби вміщалися три символи. */
 }
 
 .mixed-row .generate-button {
@@ -315,6 +330,11 @@
     text-align: left;
     padding-left: 12px;
     padding-right: 36px;
+  }
+
+  /* На десктопах повертаємо мінімальну ширину компактним селектам, щоб підпис виглядав врівноважено. */
+  .select--sm select {
+    min-width: 72px;
   }
 
   .icon-btn {
