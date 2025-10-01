@@ -1,12 +1,322 @@
 {
   "male": {
-    "address": [],
-    "lex_shift": [],
-    "tone_style": []
+    "address": {
+      "ua": [
+        "Твій шлях",
+        "Твоя сила",
+        "Твій фокус",
+        "Твій намір",
+        "Твоє світло",
+        "Твій вибір",
+        "Твоя відповідальність",
+        "Твій ритм",
+        "Твоя опора",
+        "Твоя стратегія",
+        "Твій курс",
+        "Твій результат"
+      ],
+      "en": [
+        "Your path",
+        "Your strength",
+        "Your focus",
+        "Your intention",
+        "Your light",
+        "Your choice",
+        "Your responsibility",
+        "Your rhythm",
+        "Your anchor",
+        "Your strategy",
+        "Your course",
+        "Your result"
+      ]
+    },
+    "lex_shift": {
+      "ua": [
+        "ініціативність",
+        "дієвість",
+        "стійкість",
+        "відповідальність",
+        "лідерство",
+        "рішучість",
+        "самодисципліна",
+        "витримка",
+        "цілеспрямованість",
+        "структурність",
+        "конкретика",
+        "наполегливість",
+        "вплив",
+        "опора",
+        "ефективність",
+        "результативність",
+        "планування",
+        "контроль темпу"
+      ],
+      "en": [
+        "initiative",
+        "decisiveness",
+        "resilience",
+        "responsibility",
+        "leadership",
+        "resolve",
+        "self-discipline",
+        "endurance",
+        "goal-orientation",
+        "structure",
+        "specificity",
+        "persistence",
+        "influence",
+        "stability",
+        "efficiency",
+        "effectiveness",
+        "planning",
+        "pace control"
+      ]
+    },
+    "tone_style": {
+      "ua": [
+        "Зроби перший крок.",
+        "Дій зараз.",
+        "Сконцентруйся на одному рішенні.",
+        "Візьми відповідальність.",
+        "Познач дедлайн.",
+        "Визнач метрику успіху.",
+        "Скороти маршрут до дії.",
+        "Зафіксуй результат.",
+        "Плануй і тримай темп.",
+        "Захисти свої межі.",
+        "Переведи ідею у конкретний крок.",
+        "Прибери зайве — залиш головне.",
+        "Керуй енергією, не емоціями.",
+        "Попроси зворотний зв’язок по факту.",
+        "Підсиль те, що працює."
+      ],
+      "en": [
+        "Take the first step.",
+        "Act now.",
+        "Focus on a single decision.",
+        "Own the responsibility.",
+        "Set a deadline.",
+        "Define a success metric.",
+        "Shorten the path to action.",
+        "Record the result.",
+        "Plan and keep the pace.",
+        "Protect your boundaries.",
+        "Turn the idea into a concrete step.",
+        "Remove the excess—keep the core.",
+        "Drive energy, not emotions.",
+        "Ask for factual feedback.",
+        "Amplify what works."
+      ]
+    },
+    "advice_prefixes": {
+      "ua": [
+        "Зосередься на:",
+        "Сьогодні зроби:",
+        "Пріоритет:",
+        "Наступний крок:",
+        "Перевір себе:",
+        "Посили вплив через:",
+        "Зменш ризики за рахунок:",
+        "Оціни результат за:"
+      ],
+      "en": [
+        "Focus on:",
+        "Today do:",
+        "Priority:",
+        "Next step:",
+        "Check yourself:",
+        "Increase impact by:",
+        "Reduce risks by:",
+        "Assess outcome by:"
+      ]
+    },
+    "conclusion_closers": {
+      "ua": [
+        "Тримай курс.",
+        "Світло в деталях дії.",
+        "Сила — у послідовності.",
+        "Малий крок — реальний прогрес.",
+        "Твій вибір формує результат."
+      ],
+      "en": [
+        "Hold your course.",
+        "Light lives in decisive detail.",
+        "Strength is consistency.",
+        "Small step, real progress.",
+        "Your choice shapes the outcome."
+      ]
+    },
+    "acknowledgements": {
+      "ua": [
+        "Ти вже зробив більше, ніж вчора.",
+        "Помітно: є рух вперед.",
+        "Ти керуєш процесом — так тримати."
+      ],
+      "en": [
+        "You’ve already done more than yesterday.",
+        "Noticeable: there’s forward motion.",
+        "You’re in control — keep it up."
+      ]
+    }
   },
   "female": {
-    "address": [],
-    "lex_shift": [],
-    "tone_style": []
+    "address": {
+      "ua": [
+        "Твій простір",
+        "Твоя м’яка сила",
+        "Твоя енергія",
+        "Твоя інтуїція",
+        "Твоє світло",
+        "Твій ритм",
+        "Твоя турбота",
+        "Твоя рівновага",
+        "Твоя присутність",
+        "Твоя краса процесу",
+        "Твоя ніжність",
+        "Твоя мудрість серця"
+      ],
+      "en": [
+        "Your space",
+        "Your gentle strength",
+        "Your energy",
+        "Your intuition",
+        "Your light",
+        "Your rhythm",
+        "Your care",
+        "Your balance",
+        "Your presence",
+        "Your beauty of process",
+        "Your tenderness",
+        "Your heart’s wisdom"
+      ]
+    },
+    "lex_shift": {
+      "ua": [
+        "гармонія",
+        "інтуїція",
+        "чуттєвість",
+        "м’якість",
+        "гнучкість",
+        "турбота",
+        "плинність",
+        "прийняття",
+        "підтримка",
+        "натхнення",
+        "співтворчість",
+        "міра і баланс",
+        "уважність до тіла",
+        "бережність",
+        "мудрість серця",
+        "стійка ніжність",
+        "екологічність у діях",
+        "довіра процесу"
+      ],
+      "en": [
+        "harmony",
+        "intuition",
+        "sensitivity",
+        "softness",
+        "flexibility",
+        "care",
+        "fluidity",
+        "acceptance",
+        "support",
+        "inspiration",
+        "co-creation",
+        "measure and balance",
+        "body awareness",
+        "gentleness",
+        "heart wisdom",
+        "tender resilience",
+        "ecosystemic action",
+        "trust in the process"
+      ]
+    },
+    "tone_style": {
+      "ua": [
+        "Дозволь собі почати м’яко.",
+        "Обери те, що відгукується тілом.",
+        "Потурбуйся про свій ритм.",
+        "Налаштуй ніжний фокус.",
+        "Довірся процесу й інтуїції.",
+        "Збережи межі з теплом.",
+        "Попроси підтримку там, де це доречно.",
+        "Зроби крок із турботою про себе.",
+        "Подихай і прислухайся до серця.",
+        "Помічай маленькі перемоги.",
+        "Залиш простір для паузи та відновлення.",
+        "Плекати баланс важливіше за ідеал.",
+        "Відпусти зайве з повагою.",
+        "Ділися світлом без виснаження.",
+        "Роби повільно, але впевнено."
+      ],
+      "en": [
+        "Allow yourself to begin gently.",
+        "Choose what resonates with your body.",
+        "Care for your rhythm.",
+        "Tune a soft focus.",
+        "Trust the process and intuition.",
+        "Keep boundaries with warmth.",
+        "Ask for support where it fits.",
+        "Take a step with self-care.",
+        "Breathe and listen to your heart.",
+        "Notice the small wins.",
+        "Leave room for pause and recovery.",
+        "Nurture balance over perfection.",
+        "Release the excess with respect.",
+        "Share your light without depletion.",
+        "Move slowly, yet steadily."
+      ]
+    },
+    "advice_prefixes": {
+      "ua": [
+        "Зверни увагу на:",
+        "Сьогодні обери:",
+        "М’який крок:",
+        "Турбота про себе:",
+        "Відновлення через:",
+        "Що приносить відгук:",
+        "Баланс у дрібницях:",
+        "Налаштування ритму:"
+      ],
+      "en": [
+        "Notice:",
+        "Today choose:",
+        "Gentle step:",
+        "Self-care:",
+        "Recover by:",
+        "What resonates:",
+        "Balance in details:",
+        "Rhythm tuning:"
+      ]
+    },
+    "conclusion_closers": {
+      "ua": [
+        "Твоє світло помірне й цілісне.",
+        "Гармонія народжується з присутності.",
+        "Ніжність — це сила, що тримає форму.",
+        "Маленькі кроки плетуть великий шлях.",
+        "Твоя турбота про себе — основа для інших."
+      ],
+      "en": [
+        "Your light is measured and whole.",
+        "Harmony grows from presence.",
+        "Tenderness is a strength that holds form.",
+        "Small steps weave the larger path.",
+        "Your self-care is a ground for others."
+      ]
+    },
+    "acknowledgements": {
+      "ua": [
+        "Ти вже створила більше, ніж помічаєш.",
+        "Є відчутний відгук — це важливо.",
+        "Твоя м’яка сила працює."
+      ],
+      "en": [
+        "You’ve created more than you notice.",
+        "There is a palpable resonance—this matters.",
+        "Your gentle strength is working."
+      ]
+    }
   }
 }
