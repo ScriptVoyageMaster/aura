@@ -29,7 +29,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     return;
   }
 
-  const topBar = document.querySelector(".topbar");
+  const controlsSection = document.querySelector(".controls");
   const pageHeader = document.querySelector(".header");
   const dateInput = document.getElementById("dateInput");
   const genderSelect = document.getElementById("gender");
@@ -953,6 +953,22 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
   }
 
+  /**
+   * Плавно прокручуємо сторінку до початку секції з канвою після запуску генерації.
+   * Робимо подвійний requestAnimationFrame, щоб дочекатися оновлення DOM і коректних розмірів.
+   */
+  function scrollCanvasIntoView() {
+    const targetSection = auraVisualSection || canvasWrapper;
+    if (!targetSection) {
+      return;
+    }
+
+    const rect = targetSection.getBoundingClientRect();
+    const offset = window.pageYOffset + rect.top;
+
+    window.scrollTo({ top: offset, behavior: "smooth" });
+  }
+
   function runWithCurrentDate() {
     const dateStr = readDateFromUI();
     if (!dateStr) return;
@@ -972,6 +988,14 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     initializeScene(seed);
     state.isRunning = true;
     startAnimation();
+
+    if (typeof window.requestAnimationFrame === "function") {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(scrollCanvasIntoView);
+      });
+    } else {
+      scrollCanvasIntoView();
+    }
   }
 
   showCanvasPlaceholder();
@@ -1134,8 +1158,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       containerWidth = Math.max(viewportWidth - marginX * 2, 320);
       availableHeight = Math.max(viewportHeight - marginY * 2, 240);
     } else {
-      // Обчислюємо сумарну висоту шапки (брендовий заголовок + топбар).
-      const headerHeight = (pageHeader ? pageHeader.offsetHeight : 0) + (topBar ? topBar.offsetHeight : 0);
+      // Обчислюємо сумарну висоту верхніх блоків (брендовий заголовок + панель керування).
+      const headerHeight =
+        (pageHeader ? pageHeader.offsetHeight : 0) + (controlsSection ? controlsSection.offsetHeight : 0);
       const footerHeight = footer ? footer.offsetHeight : 0;
       availableHeight = Math.max(viewportHeight - headerHeight - footerHeight, 200);
 
