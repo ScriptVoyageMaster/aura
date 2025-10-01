@@ -1856,10 +1856,17 @@ function composeDescription({
     acknowledgement,
   ].filter(Boolean);
 
-  const intro = finalizeSection(introSentences, avoidRepeats, synonyms);
-  const glyphCore = finalizeSection(glyphCoreSentences, avoidRepeats, synonyms);
-  const toneCore = finalizeSection(toneCoreSentences, avoidRepeats, synonyms);
-  const synergy = finalizeSection(synergySentences, avoidRepeats, synonyms);
+  // Щоби блоки читалися щільно й не розтікалися на довгі абзаци, обрізаємо масиви
+  // речень до заданих лімітів ще до фіналізації тексту.
+  const introLimited = introSentences.slice(0, 2);
+  const glyphCoreLimited = glyphCoreSentences.slice(0, 3);
+  const toneCoreLimited = toneCoreSentences.slice(0, 3);
+  const synergyLimited = synergySentences.slice(0, 3);
+
+  const intro = finalizeSection(introLimited, avoidRepeats, synonyms);
+  const glyphCore = finalizeSection(glyphCoreLimited, avoidRepeats, synonyms);
+  const toneCore = finalizeSection(toneCoreLimited, avoidRepeats, synonyms);
+  const synergy = finalizeSection(synergyLimited, avoidRepeats, synonyms);
   const adviceListNormalized = [];
   const shadow = finalizeSection(shadowSentences, avoidRepeats, synonyms);
   const conclusion = finalizeSection(conclusionSentences, avoidRepeats, synonyms);
