@@ -1,322 +1,1082 @@
 {
   "imix": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "ik": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "akbal": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "kan": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "chikchan": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "kimi": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "manik": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "lamat": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "muluk": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "ok": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "chuwen": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "eb": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "ben": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "ix": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "men": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "kib": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "kaban": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "etznab": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "kawak": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "ahau": {
-    "name_ua": "",
-    "name_en": "",
-    "element": "",
-    "archetype": "",
-    "domains": [],
-    "strengths": [],
-    "shadows": [],
-    "imagery": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_verbs": [],
-    "emotions": [],
-    "rituals": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "element": {
+      "ua": "",
+      "en": ""
+    },
+    "archetype": {
+      "ua": "",
+      "en": ""
+    },
+    "domains": {
+      "ua": [],
+      "en": []
+    },
+    "strengths": {
+      "ua": [],
+      "en": []
+    },
+    "shadows": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_verbs": {
+      "ua": [],
+      "en": []
+    },
+    "emotions": {
+      "ua": [],
+      "en": []
+    },
+    "rituals": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   }
 }

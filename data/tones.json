@@ -1,171 +1,600 @@
 {
   "1": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "2": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "3": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "4": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "5": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "6": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "7": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "8": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "9": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "10": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "11": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "12": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   },
   "13": {
-    "name_ua": "",
-    "essence": "",
-    "symbol": "",
-    "gifts": [],
-    "challenges": [],
-    "imagery": [],
-    "questions": [],
-    "advice_short": [],
-    "advice_long": [],
-    "synergy_patterns": [],
-    "keywords": []
+    "name": {
+      "ua": "",
+      "en": ""
+    },
+    "essence": {
+      "ua": "",
+      "en": ""
+    },
+    "symbol": {
+      "ua": "",
+      "en": ""
+    },
+    "gifts": {
+      "ua": [],
+      "en": []
+    },
+    "challenges": {
+      "ua": [],
+      "en": []
+    },
+    "imagery": {
+      "ua": [],
+      "en": []
+    },
+    "questions": {
+      "ua": [],
+      "en": []
+    },
+    "advice_short": {
+      "ua": [],
+      "en": []
+    },
+    "advice_long": {
+      "ua": [],
+      "en": []
+    },
+    "synergy_patterns": {
+      "ua": [],
+      "en": []
+    },
+    "keywords": {
+      "ua": [],
+      "en": []
+    }
   }
 }

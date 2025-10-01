@@ -1,24 +1,67 @@
 {
-  "order": ["title", "intro", "glyph_core", "tone_core", "synergy", "advice", "shadow", "conclusion"],
+  "order": [
+    "title",
+    "intro",
+    "glyph_core",
+    "tone_core",
+    "synergy",
+    "advice",
+    "shadow",
+    "conclusion"
+  ],
   "composition": {
     "synergy": {
-      "glyph_fields": ["domains", "synergy_verbs", "imagery"],
-      "tone_fields": ["essence", "synergy_patterns", "imagery"]
+      "glyph_fields": [
+        "domains",
+        "synergy_verbs",
+        "imagery"
+      ],
+      "tone_fields": [
+        "essence",
+        "synergy_patterns",
+        "imagery"
+      ]
     },
     "advice": {
-      "glyph_fields": ["advice_short", "advice_long", "rituals"],
-      "tone_fields": ["advice_short", "advice_long", "questions"]
+      "glyph_fields": [
+        "advice_short",
+        "advice_long",
+        "rituals"
+      ],
+      "tone_fields": [
+        "advice_short",
+        "advice_long",
+        "questions"
+      ]
     },
     "shadow": {
-      "glyph_fields": ["shadows"],
-      "tone_fields": ["challenges"]
+      "glyph_fields": [
+        "shadows"
+      ],
+      "tone_fields": [
+        "challenges"
+      ]
     },
     "conclusion": {
-      "glyph_fields": ["archetype", "imagery"],
-      "tone_fields": ["symbol"]
+      "glyph_fields": [
+        "archetype",
+        "imagery"
+      ],
+      "tone_fields": [
+        "symbol"
+      ]
     }
   },
-  "limits": { "title": 70, "meta": 160 },
-  "avoid_repeats": [],
-  "synonyms": {}
+  "limits": {
+    "title": 70,
+    "meta": 160
+  },
+  "avoid_repeats": {
+    "ua": [],
+    "en": []
+  },
+  "synonyms": {
+    "ua": {},
+    "en": {}
+  }
 }

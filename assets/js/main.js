@@ -113,7 +113,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     console.warn("Не вдалося попередньо завантажити словники опису:", error);
   });
 
-  const DESCRIPTION_BLOCK_ORDER = [
+  const DEFAULT_DESCRIPTION_BLOCK_ORDER = [
     "intro",
     "glyph_core",
     "tone_core",
@@ -375,7 +375,26 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     descBody.innerHTML = "";
     const isDesktopView = window.matchMedia("(min-width: 1024px)").matches;
 
-    DESCRIPTION_BLOCK_ORDER.forEach((blockKey) => {
+    // Формуємо робочий порядок блоків: спочатку беремо послідовність із бекенду, а потім додаємо дефолт, щоб нічого не пропустити.
+    const combinedOrder = Array.isArray(description.order)
+      ? [...description.order]
+      : [];
+    const blockOrder = [];
+    const fallbackOrder = DEFAULT_DESCRIPTION_BLOCK_ORDER;
+    [...combinedOrder, ...fallbackOrder].forEach((key) => {
+      if (key === "title") {
+        return;
+      }
+      if (!DESCRIPTION_LABELS[key]) {
+        console.warn("Невідомий блок опису пропущено:", key);
+        return;
+      }
+      if (!blockOrder.includes(key)) {
+        blockOrder.push(key);
+      }
+    });
+
+    blockOrder.forEach((blockKey) => {
       const block = description.blocks?.[blockKey];
       const section = document.createElement("details");
       section.className = "aura-desc__section";
