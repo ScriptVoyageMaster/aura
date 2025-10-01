@@ -50,7 +50,6 @@ const I18N = {
     placeholderText: "Введи дату народження, щоб побачити свою унікальну ауру",
     canvasExpand: "Розгорнути",
     canvasCollapse: "Згорнути",
-    settingsToggle: "Налаштування",
   },
   en: {
     title: "Aura — generative graphics",
@@ -98,7 +97,6 @@ const I18N = {
     placeholderText: "Enter your birth date to generate your unique aura pattern",
     canvasExpand: "Expand",
     canvasCollapse: "Collapse",
-    settingsToggle: "Settings",
   },
 };
 
