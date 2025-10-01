@@ -14,6 +14,10 @@ const DATA_URLS = {
 // Кешуємо словники, аби не тягнути їх з мережі на кожен запит.
 let dictionariesPromise = null;
 
+// Окремий кеш для overrides, що підтягується лише за потреби.
+let overridesState = { loaded: false, data: null };
+let overridesPromise = null;
+
 // Кеш результатів генерації, щоб уникати повторних складань тексту для однакових параметрів.
 const descriptionCache = new Map();
 
@@ -29,7 +33,7 @@ const DEFAULT_BLOCK_ORDER = [
   "conclusion",
 ];
 
-const VALID_BLOCK_KEYS = new Set(DEFAULT_BLOCK_ORDER);
+const VALID_BLOCK_KEYS = new Set([...DEFAULT_BLOCK_ORDER, "meta"]);
 
 const FALLBACK_DESCRIPTION = {
   title: "Опис тимчасово недоступний",
@@ -73,6 +77,91 @@ function cloneResult(value) {
 }
 
 /**
+ * Визначаємо, чи варто вмикати докладне логування для розробки.
+ * Якщо середовище явно продакшн — мовчимо, інакше показуємо службові повідомлення.
+ */
+function isDevLoggingEnabled() {
+  if (typeof process !== "undefined" && process && process.env && typeof process.env.NODE_ENV === "string") {
+    return process.env.NODE_ENV !== "production";
+  }
+  if (typeof window !== "undefined" && window && typeof window.__AURA_ENV__ === "string") {
+    return window.__AURA_ENV__ !== "production";
+  }
+  return true;
+}
+
+/**
+ * Акуратне виведення dev-логів, щоб не засмічувати консоль у продакшні.
+ */
+function logDev(message, payload) {
+  if (!isDevLoggingEnabled()) {
+    return;
+  }
+  if (typeof payload === "undefined") {
+    console.info(message);
+  } else {
+    console.info(message, payload);
+  }
+}
+
+/**
+ * Ледаче завантаження overrides.json з кешуванням і м’яким поводженням з помилками.
+ * Якщо файл порожній або недоступний — запам’ятовуємо, що overrides відсутні.
+ */
+async function loadOverrides() {
+  if (overridesState.loaded) {
+    return overridesState.data;
+  }
+  if (!overridesPromise) {
+    overridesPromise = (async () => {
+      try {
+        const response = await fetch(DATA_URLS.overrides, { cache: "no-store" });
+        if (!response || !response.ok) {
+          logDev("overrides: empty/disabled", { reason: response ? response.status : "no-response" });
+          overridesState = { loaded: true, data: null };
+          return null;
+        }
+        const text = await response.text();
+        if (!text || !text.trim()) {
+          logDev("overrides: empty/disabled", { reason: "empty-file" });
+          overridesState = { loaded: true, data: null };
+          return null;
+        }
+        let parsed;
+        try {
+          parsed = JSON.parse(text);
+        } catch (parseError) {
+          logDev("overrides: empty/disabled", { reason: "invalid-json", message: parseError?.message });
+          overridesState = { loaded: true, data: null };
+          return null;
+        }
+        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
+          logDev("overrides: empty/disabled", { reason: "unexpected-structure" });
+          overridesState = { loaded: true, data: null };
+          return null;
+        }
+        const hasContent = Object.keys(parsed).length > 0;
+        if (!hasContent) {
+          logDev("overrides: empty/disabled", { reason: "no-entries" });
+          overridesState = { loaded: true, data: null };
+          return null;
+        }
+        overridesState = { loaded: true, data: parsed };
+        logDev("overrides: loaded", { calendars: Object.keys(parsed).length });
+        return parsed;
+      } catch (error) {
+        logDev("overrides: empty/disabled", { reason: "fetch-error", message: error?.message });
+        overridesState = { loaded: true, data: null };
+        return null;
+      } finally {
+        overridesPromise = null;
+      }
+    })();
+  }
+  return overridesPromise;
+}
+
+/**
  * Акуратно завантажуємо JSON. Для опціональних файлів (overrides) 404 не вважаємо помилкою.
  */
 async function fetchJson(path, { optional = false } = {}) {
@@ -103,12 +192,11 @@ async function loadDictionaries() {
   if (!dictionariesPromise) {
     dictionariesPromise = (async () => {
       try {
-        const [glyphs, tones, genderMods, rules, overrides] = await Promise.all([
+        const [glyphs, tones, genderMods, rules] = await Promise.all([
           fetchJson(DATA_URLS.glyphs),
           fetchJson(DATA_URLS.tones),
           fetchJson(DATA_URLS.genderMods),
           fetchJson(DATA_URLS.rules),
-          fetchJson(DATA_URLS.overrides, { optional: true }),
         ]);
 
         return {
@@ -116,7 +204,6 @@ async function loadDictionaries() {
           tones: tones || {},
           genderMods: genderMods || {},
           rules: rules || { limits: { title: 70, meta: 160 }, avoid_repeats: [], synonyms: {} },
-          overrides: overrides || {},
         };
       } catch (error) {
         console.error("Не вдалося завантажити словники описів Цолькін:", error);
@@ -125,7 +212,6 @@ async function loadDictionaries() {
           tones: {},
           genderMods: {},
           rules: { limits: { title: 70, meta: 160 }, avoid_repeats: [], synonyms: {} },
-          overrides: {},
         };
       }
     })();
@@ -141,6 +227,14 @@ function normalizeGender(gender) {
 }
 
 /**
+ * Нормалізуємо календар, аби ключ у overrides був послідовним.
+ */
+function normalizeCalendarId(calendar) {
+  const cleaned = `${calendar || ""}`.trim().toLowerCase();
+  return cleaned || "maya";
+}
+
+/**
  * Нормалізуємо мову. Поки підтримується українська (ua) та англійська (en). Будь-що інше згортаємо до ua.
  */
 function normalizeLang(lang) {
@@ -152,6 +246,120 @@ function normalizeLang(lang) {
  */
 function getFallbackLang(lang) {
   return lang === "en" ? "ua" : "en";
+}
+
+/**
+ * Нормалізуємо будь-яке значення до рядка або null, якщо перетворення некоректне.
+ */
+function normalizeOverrideStringCandidate(value) {
+  if (value === null || typeof value === "undefined") {
+    return null;
+  }
+  if (typeof value === "string") {
+    return value.trim();
+  }
+  if (typeof value === "number" || typeof value === "boolean") {
+    return String(value).trim();
+  }
+  return null;
+}
+
+/**
+ * Витягуємо рядкове значення override з урахуванням бажаної мови та fallback.
+ */
+function pickOverrideString(rawValue, { lang, fallbackLang }) {
+  if (rawValue === null || typeof rawValue === "undefined") {
+    return null;
+  }
+  if (Array.isArray(rawValue)) {
+    return null;
+  }
+  if (typeof rawValue === "object") {
+    const direct = normalizeOverrideStringCandidate(rawValue[lang]);
+    if (direct !== null) {
+      return direct;
+    }
+    const fallback = normalizeOverrideStringCandidate(rawValue[fallbackLang]);
+    if (fallback !== null) {
+      return fallback;
+    }
+    for (const candidate of Object.values(rawValue)) {
+      const normalized = normalizeOverrideStringCandidate(candidate);
+      if (normalized !== null) {
+        return normalized;
+      }
+    }
+    return "";
+  }
+  return normalizeOverrideStringCandidate(rawValue);
+}
+
+/**
+ * Перетворюємо масив override-пунктів (для advice) у чистий масив рядків.
+ */
+function normalizeOverrideArrayValue(items, { lang, fallbackLang }) {
+  if (!Array.isArray(items)) {
+    return [];
+  }
+  const normalizedItems = [];
+  for (const item of items) {
+    const normalized = pickOverrideString(item, { lang, fallbackLang });
+    if (normalized !== null && normalized.length > 0) {
+      normalizedItems.push(normalized);
+    }
+  }
+  return normalizedItems;
+}
+
+/**
+ * Шукаємо override для конкретного блоку. Якщо нічого не знайдено — повертаємо null.
+ */
+function getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang) {
+  if (!overridesState.loaded || !overridesState.data) {
+    return null;
+  }
+  if (!calendar || !glyphId || !toneId || !gender || !blockName || !lang) {
+    return null;
+  }
+  const calendarBucket = overridesState.data?.[calendar];
+  if (!calendarBucket || typeof calendarBucket !== "object") {
+    return null;
+  }
+  const glyphBucket = calendarBucket?.[glyphId];
+  if (!glyphBucket || typeof glyphBucket !== "object") {
+    return null;
+  }
+  const toneBucket = glyphBucket?.[String(toneId)];
+  if (!toneBucket || typeof toneBucket !== "object") {
+    return null;
+  }
+  const genderBucket = toneBucket?.[normalizeGender(gender)];
+  if (!genderBucket || typeof genderBucket !== "object") {
+    return null;
+  }
+  if (!Object.prototype.hasOwnProperty.call(genderBucket, blockName)) {
+    return null;
+  }
+  const rawValue = genderBucket[blockName];
+  const fallbackLang = getFallbackLang(lang);
+  if (blockName === "advice" && Array.isArray(rawValue)) {
+    return normalizeOverrideArrayValue(rawValue, { lang, fallbackLang });
+  }
+  const normalized = pickOverrideString(rawValue, { lang, fallbackLang });
+  if (normalized === null) {
+    return null;
+  }
+  return normalized;
+}
+
+/**
+ * Фіксуємо у dev-консолі, чи було застосовано override для конкретного блоку.
+ */
+function logBlockOverrideUsage(blockName, overrideUsed) {
+  if (!isDevLoggingEnabled()) {
+    return;
+  }
+  console.info({ block: blockName, override: Boolean(overrideUsed) });
 }
 
 /**
@@ -716,12 +924,14 @@ function composeDescription({
   toneId,
   gender,
   lang,
+  calendar,
   logContext,
 }) {
   const fallbackLang = getFallbackLang(lang);
   const limits = rules?.limits || { title: 70, meta: 160 };
   const avoidRepeats = Array.isArray(rules?.avoid_repeats?.[lang]) ? rules.avoid_repeats[lang] : [];
   const synonyms = rules?.synonyms?.[lang] || {};
+  let overrideUsed = false;
 
   const orderCandidate = Array.isArray(rules?.order) ? rules.order.filter((key) => typeof key === "string") : [];
   const filteredOrder = orderCandidate.filter((key) => {
@@ -799,7 +1009,7 @@ function composeDescription({
       ? "Чоловічий фокус"
       : "Жіночий фокус";
 
-  const title = buildTitle({
+  let title = buildTitle({
     glyphName,
     toneName,
     toneId,
@@ -808,6 +1018,20 @@ function composeDescription({
     limits,
     logContext,
   });
+
+  // Перевіряємо, чи є прямий override для заголовка сторінки.
+  const titleOverride = getOverrideBlock(calendar, glyphId, toneId, gender, "title", lang);
+  const hasTitleOverride = titleOverride !== null;
+  logBlockOverrideUsage("title", hasTitleOverride);
+  if (hasTitleOverride) {
+    overrideUsed = true;
+    const normalizedTitle = normalizeOverrideStringCandidate(titleOverride);
+    if (normalizedTitle !== null) {
+      title = normalizedTitle;
+    } else if (typeof titleOverride !== "undefined") {
+      title = `${titleOverride}`.trim();
+    }
+  }
 
   // --- Підготовка словникових даних для нового шаблону ---
   const glyphKeywords = readLocalizedList(glyphEntry, "keywords", {
@@ -1253,7 +1477,21 @@ function composeDescription({
   evaluateDictionaryDensity(shadow, shadowFragments, 0.8, "shadow", logContext);
   evaluateDictionaryDensity(conclusion, conclusionFragments, 0.6, "conclusion", logContext);
 
-  const metaDescription = buildMetaDescription({ intro, synergy, limits, logContext });
+  let metaDescription = buildMetaDescription({ intro, synergy, limits, logContext });
+
+  // Аналогічно даємо змогу вручну підмінити meta description.
+  const metaOverride = getOverrideBlock(calendar, glyphId, toneId, gender, "meta", lang);
+  const hasMetaOverride = metaOverride !== null;
+  logBlockOverrideUsage("meta", hasMetaOverride);
+  if (hasMetaOverride) {
+    overrideUsed = true;
+    const normalizedMeta = normalizeOverrideStringCandidate(metaOverride);
+    if (normalizedMeta !== null) {
+      metaDescription = normalizedMeta;
+    } else if (typeof metaOverride !== "undefined") {
+      metaDescription = `${metaOverride}`.trim();
+    }
+  }
 
   const keywords = buildKeywords(
     readLocalizedList(glyphEntry, "keywords", {
@@ -1282,7 +1520,7 @@ function composeDescription({
     });
   }
 
-  const blocks = {
+  const baseBlocks = {
     intro: { paragraphs: intro, list: [] },
     glyph_core: { paragraphs: glyphCore, list: [] },
     tone_core: { paragraphs: toneCore, list: [] },
@@ -1291,6 +1529,39 @@ function composeDescription({
     shadow: { paragraphs: shadow, list: [] },
     conclusion: { paragraphs: conclusion, list: [] },
   };
+
+  // Формуємо фінальні блоки: якщо для них існують overrides — підставляємо їх без генерації.
+  const blocks = {};
+  for (const [blockName, baseBlock] of Object.entries(baseBlocks)) {
+    const overrideValue = getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang);
+    const hasOverride = overrideValue !== null;
+    logBlockOverrideUsage(blockName, hasOverride);
+    if (!hasOverride) {
+      blocks[blockName] = baseBlock;
+      continue;
+    }
+    overrideUsed = true;
+    if (blockName === "advice") {
+      if (Array.isArray(overrideValue)) {
+        const sanitizedList = overrideValue
+          .map((item) => normalizeOverrideStringCandidate(item))
+          .filter((item) => item !== null && item.length > 0);
+        blocks[blockName] = { paragraphs: [], list: sanitizedList };
+      } else {
+        const normalizedAdvice = normalizeOverrideStringCandidate(overrideValue);
+        const adviceParagraph = normalizedAdvice ? [normalizedAdvice] : [];
+        blocks[blockName] = { paragraphs: adviceParagraph, list: [] };
+      }
+    } else {
+      const normalizedBlock = normalizeOverrideStringCandidate(overrideValue);
+      const blockParagraph = normalizedBlock ? [normalizedBlock] : [];
+      blocks[blockName] = { paragraphs: blockParagraph, list: [] };
+    }
+  }
+
+  if (overrideUsed) {
+    logContext.usedOverride = true;
+  }
 
   return {
     title,
@@ -1304,10 +1575,17 @@ function composeDescription({
 /**
  * Основна точка входу: генеруємо опис або повертаємо кешоване значення.
  */
-export async function generateDescription({ glyphId, toneId, gender = "female", lang = "ua" } = {}) {
+export async function generateDescription({
+  glyphId,
+  toneId,
+  gender = "female",
+  lang = "ua",
+  calendar = "maya",
+} = {}) {
   const normalizedGender = normalizeGender(gender);
   const normalizedLang = normalizeLang(lang);
-  const cacheKey = `${glyphId || ""}-${toneId || ""}-${normalizedGender}-${normalizedLang}`;
+  const normalizedCalendar = normalizeCalendarId(calendar);
+  const cacheKey = `${normalizedCalendar}-${glyphId || ""}-${toneId || ""}-${normalizedGender}-${normalizedLang}`;
 
   // Готуємо контекст для логування, щоб легко відстежувати звідки з’являються фрази та fallback-и.
   const logContext = {
@@ -1315,6 +1593,7 @@ export async function generateDescription({ glyphId, toneId, gender = "female", 
     toneId: toneId ? String(toneId) : "",
     gender: normalizedGender,
     lang: normalizedLang,
+    calendar: normalizedCalendar,
     usedOverride: false,
     fallbacks: [],
     violations: [],
@@ -1328,6 +1607,7 @@ export async function generateDescription({ glyphId, toneId, gender = "female", 
   }
 
   const dictionaries = await loadDictionaries();
+  await loadOverrides();
   if (!glyphId || !toneId) {
     logContext.violations.push("missing:ids");
     const message =
@@ -1338,15 +1618,6 @@ export async function generateDescription({ glyphId, toneId, gender = "female", 
     descriptionCache.set(cacheKey, fallback);
     console.error("Aura description service fallback", logContext);
     return cloneResult(fallback);
-  }
-
-  const overridesKey = `${glyphId}-${toneId}-${normalizedGender}`;
-  const override = dictionaries.overrides?.[overridesKey];
-  if (override) {
-    logContext.usedOverride = true;
-    descriptionCache.set(cacheKey, override);
-    console.info("Aura description override used", logContext);
-    return cloneResult(override);
   }
 
   const glyphEntry = dictionaries.glyphs?.[glyphId];
@@ -1374,6 +1645,7 @@ export async function generateDescription({ glyphId, toneId, gender = "female", 
     toneId: String(toneId),
     gender: normalizedGender,
     lang: normalizedLang,
+    calendar: normalizedCalendar,
     logContext,
   });
 
@@ -1384,7 +1656,8 @@ export async function generateDescription({ glyphId, toneId, gender = "female", 
 
 /**
  * Додаткова утиліта: дозволяє проактивно прогріти кеш словників ще до першого запиту.
+ * Одночасно підтягуємо overrides, аби уникнути затримки при першому зверненні.
  */
 export async function preloadDictionaries() {
-  await loadDictionaries();
+  await Promise.all([loadDictionaries(), loadOverrides()]);
 }
