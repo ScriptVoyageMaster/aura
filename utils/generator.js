@@ -507,6 +507,49 @@ function formatList(values) {
 }
 
 /**
+ * Забезпечуємо коректне завершення речення розділовим знаком.
+ * Якщо крапки немає — додаємо її самостійно.
+ */
+function ensureSentenceEnding(text) {
+  const normalized = normalizeSpacing(text || "");
+  if (!normalized) {
+    return "";
+  }
+  if (/[.!?…]$/.test(normalized)) {
+    return normalized;
+  }
+  return `${normalized}.`;
+}
+
+/**
+ * Переплітаємо архетип із образами, щоб вступ звучав образно, а не як сухий перелік.
+ */
+function buildArchetypeNarrative(archetypeText, imageryList = []) {
+  const base = normalizeSpacing(archetypeText || "");
+  if (!base) {
+    return "";
+  }
+  let transformed = base.replace(/\//g, ", ").replace(/;\s*/g, " — ");
+  if (imageryList.length > 0) {
+    const imagery = imageryList.find(Boolean);
+    if (imagery && !transformed.includes(imagery)) {
+      transformed = `${transformed}; образ ${imagery}`;
+    }
+  }
+  return transformed;
+}
+
+/**
+ * Обираємо ключові слова для короткого фокусу (1–2 значущих елементи).
+ */
+function pickKeywordSnippet(keywords = [], limit = 2) {
+  if (!Array.isArray(keywords)) {
+    return [];
+  }
+  return keywords.filter(Boolean).slice(0, limit);
+}
+
+/**
  * Обрізаємо рядок до зазначеної довжини, не обрізаючи слово посередині, якщо це можливо.
  */
 function truncate(text, limit) {
@@ -766,49 +809,25 @@ function composeDescription({
     logContext,
   });
 
-  // --- Вступ ---
-  const introSentences = [];
-  // Щоб звертання прозвучало лише на початку першого речення, готуємо префікс та прапорець використання.
-  const introAddressPrefix = addressPlan.intro ? `${addressPlan.intro}. ` : "";
-  let introAddressUsed = false;
-  const applyIntroAddress = (sentence) => {
-    if (introAddressUsed || !introAddressPrefix) {
-      return sentence;
-    }
-    introAddressUsed = true;
-    return `${introAddressPrefix}${sentence}`;
-  };
-  if (glyphArchetype) {
-    introSentences.push(
-      applyLexShifts(applyIntroAddress(`${glyphName} — ${glyphArchetype}.`), genderLexShift)
-    );
-  }
-  if (toneEssence) {
-    introSentences.push(
-      applyLexShifts(`Тон ${toneId} підсилює цю історію як ${toneEssence}.`, genderLexShift)
-    );
-  }
-  if (introSentences.length === 0) {
-    const fallbackIntro = applyIntroAddress(
-      `Комбінація ${capitalizeWord(glyphId)} з тоном ${toneId} ще очікує на опис.`
-    ).trim();
-    introSentences.push(fallbackIntro);
-    logContext.violations.push("intro:fallback");
-  }
-
-  // --- Блок гліфа ---
-  const glyphCoreSentences = [];
-  const glyphDomains = readLocalizedList(glyphEntry, "domains", {
+  // --- Підготовка словникових даних для нового шаблону ---
+  const glyphKeywords = readLocalizedList(glyphEntry, "keywords", {
     lang,
     fallbackLang,
     logContext,
-    source: `glyph.${glyphId}.domains`,
+    source: `glyph.${glyphId}.keywords`,
   });
+  const glyphKeywordSnippet = pickKeywordSnippet(glyphKeywords, 2);
   const glyphStrengths = readLocalizedList(glyphEntry, "strengths", {
     lang,
     fallbackLang,
     logContext,
     source: `glyph.${glyphId}.strengths`,
+  });
+  const glyphDomains = readLocalizedList(glyphEntry, "domains", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `glyph.${glyphId}.domains`,
   });
   const glyphImagery = readLocalizedList(glyphEntry, "imagery", {
     lang,
@@ -816,40 +835,26 @@ function composeDescription({
     logContext,
     source: `glyph.${glyphId}.imagery`,
   });
-  if (glyphArchetype) {
-    glyphCoreSentences.push(
-      applyLexShifts(`${glyphName} проживає архетип: ${glyphArchetype}.`, genderLexShift)
-    );
-  }
-  if (glyphStrengths.length > 0) {
-    glyphCoreSentences.push(
-      applyLexShifts(`Сильні сторони: ${formatList(glyphStrengths)}.`, genderLexShift)
-    );
-  }
-  if (glyphDomains.length > 0) {
-    glyphCoreSentences.push(
-      applyLexShifts(`Ключові сфери: ${formatList(glyphDomains)}.`, genderLexShift)
-    );
-  }
-  if (glyphImagery.length > 0) {
-    glyphCoreSentences.push(
-      applyLexShifts(`Образи, що підтримують: ${formatList(glyphImagery)}.`, genderLexShift)
-    );
-  }
-  if (glyphCoreSentences.length === 0) {
-    glyphCoreSentences.push(
-      applyLexShifts(`${glyphName} запрошує дослідити власний ритм і поступ.`, genderLexShift)
-    );
-    logContext.violations.push("glyph_core:fallback");
-  }
-
-  // --- Блок тону ---
-  const toneCoreSentences = [];
-  const toneGifts = readLocalizedList(toneEntry, "gifts", {
+  const glyphImagerySnippet = pickKeywordSnippet(glyphImagery, 2);
+  const glyphSynergyVerbs = readLocalizedList(glyphEntry, "synergy_verbs", {
     lang,
     fallbackLang,
     logContext,
-    source: `tone.${toneId}.gifts`,
+    source: `glyph.${glyphId}.synergy_verbs`,
+  });
+
+  const toneKeywords = readLocalizedList(toneEntry, "keywords", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `tone.${toneId}.keywords`,
+  });
+  const toneKeywordFocus = toneKeywords.find(Boolean);
+  const toneQualities = readLocalizedList(toneEntry, "qualities", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `tone.${toneId}.qualities`,
   });
   const toneChallenges = readLocalizedList(toneEntry, "challenges", {
     lang,
@@ -863,24 +868,13 @@ function composeDescription({
     logContext,
     source: `tone.${toneId}.imagery`,
   });
-  if (toneEssence) {
-    toneCoreSentences.push(`Суть тону ${toneId}: ${toneEssence}.`);
-  }
-  if (toneGifts.length > 0) {
-    toneCoreSentences.push(`Подарунки: ${formatList(toneGifts)}.`);
-  }
-  if (toneChallenges.length > 0) {
-    toneCoreSentences.push(`Виклики: ${formatList(toneChallenges)}.`);
-  }
-  if (toneImagery.length > 0) {
-    toneCoreSentences.push(`Образи тону: ${formatList(toneImagery)}.`);
-  }
-  if (toneCoreSentences.length === 0) {
-    toneCoreSentences.push(`Тон ${toneId} потребує додаткових матеріалів для розгорнутого опису.`);
-    logContext.violations.push("tone_core:fallback");
-  }
+  const toneAdvice = readLocalizedList(toneEntry, "advice", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `tone.${toneId}.advice`,
+  });
 
-  // --- Синергія ---
   const synergyPlan = rules?.composition?.synergy || { glyph_fields: [], tone_fields: [] };
   const synergyGlyphMap = collectFieldMap(glyphEntry, synergyPlan.glyph_fields || [], {
     lang,
@@ -894,59 +888,7 @@ function composeDescription({
     logContext,
     source: `tone.${toneId}`,
   });
-  const synergySentences = [];
-  const synergyFragments = [];
 
-  const synergyDomains = synergyGlyphMap.get("domains") || [];
-  const synergyVerbs = synergyGlyphMap.get("synergy_verbs") || [];
-  const synergyGlyphImagery = synergyGlyphMap.get("imagery") || [];
-  if (synergyDomains.length > 0 || synergyVerbs.length > 0) {
-    const domainPart = synergyDomains.length > 0 ? `сфери ${formatList(synergyDomains)}` : null;
-    const verbPart = synergyVerbs.length > 0 ? `спонукають до ${formatList(synergyVerbs)}` : null;
-    const combined = [domainPart, verbPart].filter(Boolean).join(", ");
-    if (combined) {
-      synergySentences.push(
-        applyLexShifts(`Гліф спрямовує у ${combined}.`, genderLexShift)
-      );
-      synergyFragments.push(...synergyDomains, ...synergyVerbs);
-    }
-  }
-
-  const synergyToneEssence = toneEssence;
-  const synergyPatterns = synergyToneMap.get("synergy_patterns") || [];
-  const synergyToneImagery = synergyToneMap.get("imagery") || [];
-  if (synergyToneEssence || synergyPatterns.length > 0) {
-    const patternPart = synergyPatterns.length > 0 ? `через ${formatList(synergyPatterns)}` : "";
-    const sentence = `Тон ${toneId} розкриває потенціал як ${synergyToneEssence || "живий ритм"} ${patternPart}`.trim();
-    synergySentences.push(applyLexShifts(`${sentence}.`, genderLexShift));
-    if (synergyToneEssence) synergyFragments.push(synergyToneEssence);
-    synergyFragments.push(...synergyPatterns);
-  }
-
-  if (synergyGlyphImagery.length > 0 || synergyToneImagery.length > 0) {
-    const imageryPhrase = [
-      synergyGlyphImagery.length > 0 ? `образи гліфа ${formatList(synergyGlyphImagery)}` : null,
-      synergyToneImagery.length > 0 ? `відгукуються з тоном як ${formatList(synergyToneImagery)}` : null,
-    ]
-      .filter(Boolean)
-      .join(", ");
-    if (imageryPhrase) {
-      synergySentences.push(applyLexShifts(`Разом це виглядає як ${imageryPhrase}.`, genderLexShift));
-      synergyFragments.push(...synergyGlyphImagery, ...synergyToneImagery);
-    }
-  }
-
-  if (synergySentences.length < 2) {
-    synergySentences.push(
-      applyLexShifts(
-        "Союз гліфа та тону поступово наповнюється новими сенсами — дочекайтеся оновлення опису.",
-        genderLexShift
-      )
-    );
-    logContext.violations.push("synergy:fallback");
-  }
-
-  // --- Поради ---
   const advicePlan = rules?.composition?.advice || { glyph_fields: [], tone_fields: [] };
   const adviceGlyphItems = collectLocalizedFields(glyphEntry, advicePlan.glyph_fields || [], {
     lang,
@@ -960,153 +902,349 @@ function composeDescription({
     logContext,
     source: `tone.${toneId}`,
   });
-  const adviceItems = [...adviceGlyphItems, ...adviceToneItems];
-  const adviceList = [];
-  if (adviceItems.length === 0) {
-    adviceItems.push("Поради для цієї комбінації наразі готуються.");
-    logContext.violations.push("advice:fallback");
+  const adviceItems = [...adviceGlyphItems, ...adviceToneItems, ...toneAdvice].filter(Boolean);
+
+  // --- Вступ ---
+  const introSentences = [];
+  if (addressPlan.intro) {
+    introSentences.push(
+      applyLexShifts(ensureSentenceEnding(addressPlan.intro), genderLexShift)
+    );
   }
-  const adviceFragments = [...adviceItems];
-  adviceItems.forEach((item, index) => {
-    const prefix = genderAdvicePrefixes[index % Math.max(genderAdvicePrefixes.length, 1)] ||
-      (lang === "en" ? "Focus on" : "Зверни увагу на");
-    const toneStylePart = genderToneStyle[index % Math.max(genderToneStyle.length, 1)] || "";
-    const combined = `${prefix} ${item}${toneStylePart ? ` (${toneStylePart})` : ""}`;
-    adviceList.push(applyLexShifts(normalizeSpacing(combined), genderLexShift));
-  });
-  if (adviceList.length < 3 && adviceList.length > 0) {
-    const duplicated = [...adviceList];
-    while (duplicated.length < 3) {
-      duplicated.push(adviceList[duplicated.length % adviceList.length]);
-    }
-    adviceList.splice(0, adviceList.length, ...duplicated);
-    logContext.violations.push("advice:duplicated_to_reach_minimum");
+  const archetypeNarrative = buildArchetypeNarrative(glyphArchetype, glyphImagerySnippet);
+  let glyphIntroSentence = "";
+  if (glyphName && archetypeNarrative) {
+    glyphIntroSentence = `${glyphName} — ${archetypeNarrative}`;
+  } else if (glyphName) {
+    glyphIntroSentence = `${glyphName} розкриває свій архетип`;
+  } else if (archetypeNarrative) {
+    glyphIntroSentence = `Гліф розкриває архетип як ${archetypeNarrative}`;
+  }
+  if (glyphIntroSentence) {
+    introSentences.push(
+      applyLexShifts(ensureSentenceEnding(glyphIntroSentence), genderLexShift)
+    );
+  }
+  if (glyphKeywordSnippet.length > 0) {
+    const keywordSentence = ensureSentenceEnding(glyphKeywordSnippet.join(", "));
+    introSentences.push(applyLexShifts(keywordSentence, genderLexShift));
+  }
+  if (introSentences.length === 0) {
+    const fallbackIntro = ensureSentenceEnding(
+      `Комбінація ${capitalizeWord(glyphId)} з тоном ${toneId} ще очікує на опис`
+    );
+    introSentences.push(applyLexShifts(fallbackIntro, genderLexShift));
+    logContext.violations.push("intro:fallback");
   }
 
-  const adviceParagraphs = [];
-  if (addressPlan.enabled && addressPlan.poolSize < 3 && addressPlan.advice) {
-    const adviceAddressPhrase = normalizeSpacing(
-      applyLexShifts(addressPlan.advice, genderLexShift)
+  // --- Блок гліфа ---
+  const glyphCoreSentences = [];
+  if (archetypeNarrative) {
+    glyphCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Архетип розкривається як ${archetypeNarrative}`),
+        genderLexShift
+      )
     );
-    if (adviceAddressPhrase) {
-      adviceParagraphs.push(adviceAddressPhrase);
+  }
+  if (glyphStrengths.length > 0) {
+    glyphCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Сильні сторони ведуть до ${formatList(glyphStrengths)}`),
+        genderLexShift
+      )
+    );
+  }
+  if (glyphDomains.length > 0) {
+    glyphCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Ці здібності оживають у сферах ${formatList(glyphDomains)}`),
+        genderLexShift
+      )
+    );
+  }
+  if (glyphImagerySnippet.length > 0) {
+    glyphCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(
+          `Уяви ${formatList(glyphImagerySnippet)} — ці образи підтримують твій шлях`
+        ),
+        genderLexShift
+      )
+    );
+  }
+  if (glyphCoreSentences.length === 0) {
+    glyphCoreSentences.push(
+      applyLexShifts("Гліф запрошує дослідити власний ритм і поступ.", genderLexShift)
+    );
+    logContext.violations.push("glyph_core:fallback");
+  }
+
+  // --- Блок тону ---
+  const toneCoreSentences = [];
+  const toneLabel = toneName || `Тон ${toneId}`;
+  const toneDescriptor = toneEssence || toneKeywordFocus || formatList(pickKeywordSnippet(toneQualities, 2));
+  if (toneDescriptor) {
+    toneCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`${toneLabel} звучить як ${toneDescriptor}`),
+        genderLexShift
+      )
+    );
+  }
+  const toneQualitiesSnippet = pickKeywordSnippet(toneQualities, 2);
+  if (toneQualitiesSnippet.length > 0) {
+    toneCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Він підтримує ${formatList(toneQualitiesSnippet)}`),
+        genderLexShift
+      )
+    );
+  }
+  const toneChallenge = toneChallenges.find(Boolean);
+  if (toneChallenge) {
+    const importance = toneKeywordFocus || toneEssence || toneQualitiesSnippet[0] || toneQualities[0] || "баланс";
+    toneCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Виклик — ${toneChallenge}. Це важливо, бо саме так тримається ${importance}`),
+        genderLexShift
+      )
+    );
+  }
+  const toneImagerySnippet = pickKeywordSnippet(toneImagery, 2);
+  if (toneImagerySnippet.length > 0) {
+    toneCoreSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Образи тону нагадують ${formatList(toneImagerySnippet)}`),
+        genderLexShift
+      )
+    );
+  }
+  if (toneCoreSentences.length === 0) {
+    toneCoreSentences.push(
+      applyLexShifts(`Тон ${toneId} потребує додаткових матеріалів для розгорнутого опису.`, genderLexShift)
+    );
+    logContext.violations.push("tone_core:fallback");
+  }
+
+  // --- Синергія ---
+  const synergySentences = [];
+  const synergyFragments = [];
+  const synergyVerbs = pickKeywordSnippet(
+    synergyGlyphMap.get("synergy_verbs") || glyphSynergyVerbs,
+    3
+  );
+  const synergyDomains = synergyGlyphMap.get("domains") || glyphDomains;
+  const synergyTonePatterns = synergyToneMap.get("synergy_patterns") || [];
+  const synergyGlyphImagery = synergyGlyphMap.get("imagery") || glyphImagery;
+  const synergyToneImagery = synergyToneMap.get("imagery") || toneImagery;
+
+  if (synergyVerbs.length > 0 || toneKeywordFocus) {
+    const verbPart = synergyVerbs.length > 0 ? `спонукає ${formatList(synergyVerbs)}` : "розкриває потенціал";
+    const tonePart = toneKeywordFocus ? ` і тримає курс на ${toneKeywordFocus}` : "";
+    synergySentences.push(
+      applyLexShifts(ensureSentenceEnding(`Поєднання гліфа й тону ${verbPart}${tonePart}`), genderLexShift)
+    );
+    synergyFragments.push(...synergyVerbs);
+    if (toneKeywordFocus) {
+      synergyFragments.push(toneKeywordFocus);
     }
   }
-  if (genderToneStyle.length > 0) {
-    const toneStyleLead = normalizeSpacing(applyLexShifts(genderToneStyle[0], genderLexShift));
-    if (toneStyleLead && !adviceParagraphs.includes(toneStyleLead)) {
-      adviceParagraphs.push(toneStyleLead);
+  if (synergyDomains.length > 0 || synergyTonePatterns.length > 0) {
+    const domainPart = synergyDomains.length > 0 ? `у сферах ${formatList(synergyDomains)}` : "";
+    const patternPart = synergyTonePatterns.length > 0 ? `через ${formatList(synergyTonePatterns)}` : "";
+    const combined = [domainPart, patternPart].filter(Boolean).join(" ");
+    if (combined) {
+      synergySentences.push(
+        applyLexShifts(ensureSentenceEnding(`Енергія розгортається ${combined}`), genderLexShift)
+      );
+      synergyFragments.push(...synergyDomains, ...synergyTonePatterns);
     }
+  }
+  const imageryFocus = (synergyGlyphImagery.length > 0 ? synergyGlyphImagery : glyphImagery).find(Boolean);
+  if (imageryFocus) {
+    const toneImage = (synergyToneImagery.length > 0 ? synergyToneImagery : toneImagery).find(Boolean);
+    const imagerySentence = toneImage
+      ? `Уяви ${imageryFocus} поруч із ${toneImage} — так проявляється їхня спільна дія`
+      : `Уяви ${imageryFocus} — цей образ проводить через взаємодію`;
+    synergySentences.push(
+      applyLexShifts(ensureSentenceEnding(imagerySentence), genderLexShift)
+    );
+    synergyFragments.push(imageryFocus);
+    if (toneImage) {
+      synergyFragments.push(toneImage);
+    }
+  }
+  if (synergySentences.length === 0) {
+    synergySentences.push(
+      applyLexShifts(
+        "Союз гліфа та тону поступово наповнюється новими сенсами — дочекайтеся оновлення опису.",
+        genderLexShift
+      )
+    );
+    logContext.violations.push("synergy:fallback");
+  }
+
+  // --- Поради ---
+  const enrichedAdvice = [...new Set(adviceItems)];
+  if (enrichedAdvice.length === 0) {
+    const fallbackAdvice =
+      lang === "en"
+        ? "Pause and observe while the team refines the guidance."
+        : "Зроби паузу й поспостерігай, поки команда допрацьовує рекомендації.";
+    enrichedAdvice.push(fallbackAdvice);
+    logContext.violations.push("advice:fallback");
+  }
+  if (enrichedAdvice.length < 3 && glyphStrengths.length > 0) {
+    enrichedAdvice.push(`розкривати ${glyphStrengths[0]}`);
+  }
+  if (enrichedAdvice.length < 3 && toneQualities.length > 0) {
+    enrichedAdvice.push(`плекати ${toneQualities[0]}`);
+  }
+  while (enrichedAdvice.length < 3) {
+    enrichedAdvice.push(
+      lang === "en"
+        ? "Notice how your breath gently steadies the rhythm."
+        : "Відчуй дихання і дозволь йому вирівняти ритм."
+    );
+    logContext.violations.push("advice:synthetic_support");
+  }
+  const adviceParagraphs = [];
+  const adviceFragments = [...enrichedAdvice];
+  const advicePrefixFallback = lang === "en" ? "Focus on" : "Зверни увагу на";
+  const toneStyleFallback = lang === "en" ? "gently and with self-respect" : "лагідно й з повагою до себе";
+  if (addressPlan.enabled && addressPlan.advice) {
+    adviceParagraphs.push(
+      applyLexShifts(ensureSentenceEnding(addressPlan.advice), genderLexShift)
+    );
+  }
+  const maxAdviceSentences = Math.min(4, enrichedAdvice.length);
+  for (let index = 0; index < maxAdviceSentences; index += 1) {
+    const idea = enrichedAdvice[index];
+    const prefix =
+      genderAdvicePrefixes[index % Math.max(genderAdvicePrefixes.length, 1)] || advicePrefixFallback;
+    const toneStyle =
+      genderToneStyle[index % Math.max(genderToneStyle.length, 1)] || toneStyleFallback;
+    const sentence = `${prefix} ${idea}, ${toneStyle}`;
+    adviceParagraphs.push(
+      applyLexShifts(ensureSentenceEnding(sentence), genderLexShift)
+    );
   }
 
   // --- Тінь ---
   const shadowPlan = rules?.composition?.shadow || { glyph_fields: [], tone_fields: [] };
-  const shadowGlyph = collectLocalizedFields(glyphEntry, shadowPlan.glyph_fields || [], {
+  const shadowGlyphRaw = collectLocalizedFields(glyphEntry, shadowPlan.glyph_fields || [], {
     lang,
     fallbackLang,
     logContext,
     source: `glyph.${glyphId}`,
   });
-  const shadowTone = collectLocalizedFields(toneEntry, shadowPlan.tone_fields || [], {
+  const shadowToneRaw = collectLocalizedFields(toneEntry, shadowPlan.tone_fields || [], {
     lang,
     fallbackLang,
     logContext,
     source: `tone.${toneId}`,
   });
+  const shadowGlyphSnippet = pickKeywordSnippet(shadowGlyphRaw, 2);
+  const toneShadowChallenge = shadowToneRaw.find(Boolean) || toneChallenges.find(Boolean);
+  const neutralizer =
+    (genderToneStyle && genderToneStyle[0]) ||
+    (enrichedAdvice && enrichedAdvice[0]) ||
+    toneKeywordFocus;
   const shadowSentences = [];
-  if (shadowGlyph.length > 0) {
-    shadowSentences.push(`Тінь гліфа проявляється через ${formatList(shadowGlyph)}.`);
+  if (shadowGlyphSnippet.length > 0 || toneShadowChallenge) {
+    const parts = [];
+    if (shadowGlyphSnippet.length > 0) {
+      parts.push(`тіні ${formatList(shadowGlyphSnippet)}`);
+    }
+    if (toneShadowChallenge) {
+      parts.push(`виклик ${toneShadowChallenge}`);
+    }
+    shadowSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Тінь проявляється через ${parts.join(" і ")}`),
+        genderLexShift
+      )
+    );
   }
-  if (shadowTone.length > 0) {
-    shadowSentences.push(`Ризики тону: ${formatList(shadowTone)}.`);
-  }
-  const neutralizer = adviceItems[0];
   if (neutralizer) {
-    shadowSentences.push(`Пом’якшити допоможе: ${neutralizer}.`);
+    shadowSentences.push(
+      applyLexShifts(
+        ensureSentenceEnding(`Збалансуй це через ${neutralizer}`),
+        genderLexShift
+      )
+    );
   }
-  const shadowFragments = [...shadowGlyph, ...shadowTone];
+  if (shadowSentences.length === 0) {
+    shadowSentences.push(
+      applyLexShifts("Тіньові аспекти ще уточнюються командою авторів.", genderLexShift)
+    );
+    logContext.violations.push("shadow:fallback");
+  }
+  const shadowFragments = [...shadowGlyphSnippet];
+  if (toneShadowChallenge) {
+    shadowFragments.push(toneShadowChallenge);
+  }
   if (neutralizer) {
     shadowFragments.push(neutralizer);
   }
-  if (shadowSentences.length === 0) {
-    shadowSentences.push("Тіньові аспекти ще уточнюються командою авторів.");
-    logContext.violations.push("shadow:fallback");
-  }
 
   // --- Висновок ---
-  const conclusionPlan = rules?.composition?.conclusion || { glyph_fields: [], tone_fields: [] };
-  const conclusionGlyph = collectLocalizedFields(glyphEntry, conclusionPlan.glyph_fields || [], {
-    lang,
-    fallbackLang,
-    logContext,
-    source: `glyph.${glyphId}`,
-  });
-  const conclusionTone = collectLocalizedFields(toneEntry, conclusionPlan.tone_fields || [], {
-    lang,
-    fallbackLang,
-    logContext,
-    source: `tone.${toneId}`,
-  });
   const conclusionSentences = [];
-  // Аналогічно для висновку: звертання звучить лише один раз на початку блоку.
-  const conclusionAddressPrefix = addressPlan.conclusion ? `${addressPlan.conclusion}. ` : "";
-  let conclusionAddressUsed = false;
-  const applyConclusionAddress = (sentence) => {
-    if (conclusionAddressUsed || !conclusionAddressPrefix) {
-      return sentence;
+  if (addressPlan.conclusion) {
+    conclusionSentences.push(
+      applyLexShifts(ensureSentenceEnding(addressPlan.conclusion), genderLexShift)
+    );
+  }
+  const glyphKeywordSummary = pickKeywordSnippet(glyphKeywords, 2);
+  const toneKeywordSummary =
+    toneKeywordFocus ||
+    toneKeywords.find((item) => item && item !== toneKeywordFocus) ||
+    toneSymbol;
+  if (glyphKeywordSummary.length > 0 || toneKeywordSummary) {
+    const glyphPart = glyphKeywordSummary.length > 0 ? formatList(glyphKeywordSummary) : "";
+    let summarySentence = "";
+    if (glyphPart && toneKeywordSummary) {
+      summarySentence = `Пам’ятай про ${glyphPart} разом із ${toneKeywordSummary}.`;
+    } else if (glyphPart) {
+      summarySentence = `Пам’ятай про ${glyphPart}.`;
+    } else if (toneKeywordSummary) {
+      summarySentence = `Пам’ятай про ${toneKeywordSummary}.`;
     }
-    conclusionAddressUsed = true;
-    return `${conclusionAddressPrefix}${sentence}`;
-  };
-  if (glyphArchetype) {
+    if (summarySentence) {
+      conclusionSentences.push(applyLexShifts(summarySentence, genderLexShift));
+    }
+  }
+  const conclusionCloser = genderConclusionClosers.find(Boolean);
+  const acknowledgement = genderAcknowledgements.find(Boolean);
+  if (conclusionCloser) {
     conclusionSentences.push(
-      applyLexShifts(
-        applyConclusionAddress(`${glyphName} підсумовує шлях як ${glyphArchetype}.`),
-        genderLexShift
-      )
+      applyLexShifts(ensureSentenceEnding(conclusionCloser), genderLexShift)
     );
   }
-  if (conclusionTone.length > 0 || toneSymbol) {
-    const toneSummary = toneSymbol || formatList(conclusionTone);
+  if (acknowledgement) {
     conclusionSentences.push(
-      applyLexShifts(
-        applyConclusionAddress(`Тон ${toneId} закарбовує символ: ${toneSummary}.`),
-        genderLexShift
-      )
-    );
-  }
-  if (genderConclusionClosers.length > 0) {
-    conclusionSentences.push(
-      applyLexShifts(applyConclusionAddress(genderConclusionClosers[0]), genderLexShift)
-    );
-  }
-  if (genderAcknowledgements.length > 0) {
-    conclusionSentences.push(
-      applyLexShifts(applyConclusionAddress(genderAcknowledgements[0]), genderLexShift)
+      applyLexShifts(ensureSentenceEnding(acknowledgement), genderLexShift)
     );
   }
   if (conclusionSentences.length === 0) {
     conclusionSentences.push(
-      applyConclusionAddress("Завершальний абзац доповнимо, щойно з’являться дані.")
+      applyLexShifts("Завершальний абзац доповнимо, щойно з’являться дані.", genderLexShift)
     );
     logContext.violations.push("conclusion:fallback");
   }
   const conclusionFragments = [
-    glyphArchetype,
-    ...conclusionGlyph,
-    toneSymbol,
-    ...conclusionTone,
-    ...genderConclusionClosers,
-    ...genderAcknowledgements,
+    ...glyphKeywordSummary,
+    toneKeywordSummary,
+    conclusionCloser,
+    acknowledgement,
   ].filter(Boolean);
 
   const intro = finalizeSection(introSentences, avoidRepeats, synonyms);
   const glyphCore = finalizeSection(glyphCoreSentences, avoidRepeats, synonyms);
   const toneCore = finalizeSection(toneCoreSentences, avoidRepeats, synonyms);
   const synergy = finalizeSection(synergySentences, avoidRepeats, synonyms);
-  const adviceListNormalized = adviceList
-    .filter(Boolean)
-    .map((item) => sanitizeRepeats(normalizeSpacing(item), avoidRepeats, synonyms));
+  const adviceListNormalized = [];
   const shadow = finalizeSection(shadowSentences, avoidRepeats, synonyms);
   const conclusion = finalizeSection(conclusionSentences, avoidRepeats, synonyms);
 

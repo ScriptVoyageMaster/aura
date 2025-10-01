@@ -40,9 +40,8 @@ const I18N = {
       "візуальний відбиток вашої присутності у Всесвіті.<br>" +
       "Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.",
     modalClose: "Добре",
-    sceneLissajous: "Ліссажу",
-    sceneRune: "Руни",
     sceneMaya: "Майя",
+    sceneDruids: "Друїди",
     help_label: "Довідка",
     infoAriaLabel: "Показати інформацію",
     sceneToggleAria: "Вибір календаря (гороскопу)",
@@ -87,9 +86,8 @@ const I18N = {
       "A unique pattern is born from your birth date — a visual fingerprint of your presence in the Universe.<br>" +
       "It is not just an animation, but a symbol of origin and mystery that will always remain yours.",
     modalClose: "Close",
-    sceneLissajous: "Lissajous",
-    sceneRune: "Runes",
     sceneMaya: "Maya",
+    sceneDruids: "Druids",
     help_label: "Help",
     infoAriaLabel: "Show information",
     sceneToggleAria: "Calendar selection (horoscope)",
@@ -126,34 +124,6 @@ const CONFIG = {
     FPS_FALLBACK_WINDOW_MS: 2000,
     MIN_SECONDS_BEFORE_CHECK: 3,
     FPS_RECOVER_THRESHOLD: 26, // На майбутнє, якщо знадобиться гістерезис.
-  },
-
-  // Плейсхолдер для сценоспецифічних налаштувань Ліссажу.
-  lissajous: {
-    // Наразі додаткових параметрів не маємо, але об'єкт залишаємо для розширення.
-  },
-
-  // Налаштування "рунної" сцени: кванти частот, симетрії та декоративні акценти.
-  rune: {
-    // Базові значення для побудови кривих Ліссажу
-    FREQ_SET: [1, 2, 3, 5, 7],
-    PHASE_DEG_STEP: 30,
-    RADIAL_SYMMETRY_OPTIONS: [2, 3, 4, 6],
-    LINE_WIDTH: [2, 4],
-
-    // Контроль щільності старих декорацій (використовується лише коли RUNIC_MODE = false)
-    DECORATION_DENSITY: 0.2,
-
-    // Нові прапорці та числові параметри для "рунічного" стилю
-    RUNIC_MODE: true, // головний перемикач — якщо true, активується строгий геометричний режим
-    SNAP_TO_GRID: true, // примусово прилипати до ґріда, щоб уникати дрібних люфтів координат
-    GRID_SIZE: 16, // крок ґріда у пікселях (після масштабування сцени)
-    SNAP_ANGLE_STEP_DEG: 45, // дозволені напрями сегментів у градусах (0°, 45°, 90° ...)
-    SIMPLIFY_TOLERANCE_PX: 6, // толеранс алгоритму Дугласа–Пейкера, що прибирає зайві точки
-    MIN_SEGMENT_PX: 18, // мінімальна довжина відрізка після спрощення, щоб не було "мікро-штрихів"
-    USE_DECORATIONS: false, // у рунічному режимі тримаємо вимкненими додаткові кружальця
-    USE_TICKS: false, // у рунічному режимі вимикаємо насічки
-    MAX_RADIAL_FOR_RUNIC: 4, // верхнє обмеження кількості повторів по колу для читабельності символів
   },
 
   // Усі текстові ресурси для інтерфейсу.
