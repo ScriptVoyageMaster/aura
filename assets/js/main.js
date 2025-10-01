@@ -58,6 +58,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const modalOverlay = document.getElementById("modal-overlay");
   const modalClose = document.getElementById("modal-close");
 
+  // Зберігаємо посилання на обгортку навколо фолбек-селектів, щоб можна було повністю прибрати її з потоку верстки.
+  const nativeDateControls = document.getElementById("native-date-controls");
   const fallbackInputsContainer = document.getElementById("fallback-inputs");
   const fallbackDay = document.getElementById("daySelect");
   const fallbackMonth = document.getElementById("monthSelect");
@@ -722,7 +724,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     dateInput.hidden = state.usingFallback;
     dateInput.disabled = state.usingFallback;
   }
+  if (nativeDateControls) {
+    nativeDateControls.hidden = !state.usingFallback;
+  }
   if (fallbackInputsContainer) {
+    // Ховаємо або показуємо обгортку з альтернативними селектами, щоб вона не впливала на висоту сітки.
     fallbackInputsContainer.hidden = !state.usingFallback;
   }
 
@@ -1212,7 +1218,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
     const scale = Math.min(containerWidth / scenesDesignWidth, availableHeight / scenesDesignHeight);
     const offsetX = (containerWidth - scenesDesignWidth * scale) / 2;
-    const offsetY = (availableHeight - scenesDesignHeight * scale) / 2;
+    const extraVerticalSpace = Math.max(availableHeight - scenesDesignHeight * scale, 0);
+    // На мобільних екранах прибираємо надмірне центроване вирівнювання, щоб символ знаходився ближче до верхнього краю.
+    const isNarrowViewport = viewportWidth <= 600;
+    const mobileOffsetCap = 48; // У пікселях: обмеження на верхній відступ, щоби символ не «сповзав» надто низько.
+    const centeredOffsetY = extraVerticalSpace / 2;
+    const offsetY = isNarrowViewport ? Math.min(centeredOffsetY, mobileOffsetCap) : centeredOffsetY;
 
     state.designScale = scale;
     state.designOffsetX = offsetX;
