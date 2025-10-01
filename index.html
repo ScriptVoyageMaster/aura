@@ -66,143 +66,130 @@
       <!-- Оновлена навігаційна панель у стилі AURA -->
       <nav class="topbar" role="banner" aria-label="Основна панель керування">
         <div class="topbar-container">
-          <button
-            class="settings-toggle"
-            type="button"
-            aria-expanded="true"
-            aria-controls="form-controls-panel"
-            data-i18n="settingsToggle"
-          >
-            <span aria-hidden="true">⚙️</span>
-            <span>Налаштування</span>
-          </button>
-          <div class="form-controls is-expanded" id="form-controls-panel">
-            <div class="topbar-grid">
-              <div class="topbar-section topbar-section--left">
-                <label class="field" for="dateInput">
-                  <span class="field__label" data-i18n="topBarLabel">Твоя дата народження</span>
-                  <input
-                    id="dateInput"
-                    type="date"
-                    class="date-input"
-                    inputmode="numeric"
-                    autocomplete="bday"
-                    required
-                  />
-                </label>
+          <div class="topbar-grid">
+            <div class="topbar-section topbar-section--left">
+              <label class="field" for="dateInput">
+                <span class="field__label" data-i18n="topBarLabel">Твоя дата народження</span>
+                <input
+                  id="dateInput"
+                  type="date"
+                  class="date-input"
+                  inputmode="numeric"
+                  autocomplete="bday"
+                  required
+                />
+              </label>
 
-                <label class="field field--sm" for="gender">
-                  <span class="field__label" data-i18n="gender_label">Стать</span>
-                  <div class="select select--enhanced">
-                    <select id="gender" name="gender" aria-label="Стать">
-                      <option value="unspecified" selected data-i18n="gender_unspecified">Не вказувати</option>
-                      <option value="female" data-i18n="gender_female">Жіноча</option>
-                      <option value="male" data-i18n="gender_male">Чоловіча</option>
-                    </select>
-                    <div class="select__arrow" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6,9 12,15 18,9"></polyline>
-                      </svg>
-                    </div>
-                  </div>
-                </label>
-
-                <div class="topbar__fallback" id="native-date-controls">
-                  <div class="fallback-inputs" id="fallback-inputs" hidden>
-                    <div class="fallback-group">
-                      <label for="daySelect" data-i18n="fallbackDayLabel">День</label>
-                      <select id="daySelect"></select>
-                    </div>
-                    <div class="fallback-group">
-                      <label for="monthSelect" data-i18n="fallbackMonthLabel">Місяць</label>
-                      <select id="monthSelect"></select>
-                    </div>
-                    <div class="fallback-group">
-                      <label for="yearSelect" data-i18n="fallbackYearLabel">Рік</label>
-                      <select id="yearSelect"></select>
-                    </div>
+              <label class="field field--sm" for="gender">
+                <span class="field__label" data-i18n="gender_label">Стать</span>
+                <div class="select select--enhanced">
+                  <select id="gender" name="gender" aria-label="Стать">
+                    <option value="unspecified" selected data-i18n="gender_unspecified">Не вказувати</option>
+                    <option value="female" data-i18n="gender_female">Жіноча</option>
+                    <option value="male" data-i18n="gender_male">Чоловіча</option>
+                  </select>
+                  <div class="select__arrow" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
                   </div>
                 </div>
-              </div>
+              </label>
 
-              <div class="topbar-section topbar-section--center">
-                <button id="btnRun" class="generate-button" type="button" data-i18n="run_btn" disabled>
-                  Запустити
-                </button>
-              </div>
-
-              <div class="topbar-section topbar-section--right">
-                <!--
-                  Для перемикача мови додаємо видимий підпис, щоб елемент вирівнювався
-                  з іншими селектами і був зрозумілий користувачу.
-                -->
-                <label class="field field--sm" for="langSelect">
-                  <span class="field__label" data-i18n="lang_label">Мова</span>
-                  <div class="select select--sm select--enhanced" aria-label="Мова інтерфейсу">
-                    <select
-                      id="langSelect"
-                      aria-label="Language"
-                      data-i18n-attr="aria-label"
-                      data-i18n="lang_label"
-                    >
-                      <option value="ua">UA</option>
-                      <option value="en">EN</option>
-                    </select>
-                    <div class="select__arrow" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6,9 12,15 18,9"></polyline>
-                      </svg>
-                    </div>
+              <div class="topbar__fallback" id="native-date-controls">
+                <div class="fallback-inputs" id="fallback-inputs" hidden>
+                  <div class="fallback-group">
+                    <label for="daySelect" data-i18n="fallbackDayLabel">День</label>
+                    <select id="daySelect"></select>
                   </div>
-                </label>
-
-                <label class="field field--sm" for="sceneSelect">
-                  <span class="field__label" data-i18n="sceneToggleAria">Вибір сцени</span>
-                  <div class="select select--enhanced">
-                    <select
-                      id="sceneSelect"
-                      name="scene"
-                      aria-label="Вибір сцени"
-                      data-i18n-attr="aria-label"
-                      data-i18n="sceneToggleAria"
-                    >
-                      <option value="lissajous" data-i18n="sceneLissajous">Ліссажу</option>
-                      <option value="rune" data-i18n="sceneRune">Руни</option>
-                      <option value="maya" data-i18n="sceneMaya">Майя</option>
-                    </select>
-                    <div class="select__arrow" aria-hidden="true">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <polyline points="6,9 12,15 18,9"></polyline>
-                      </svg>
-                    </div>
+                  <div class="fallback-group">
+                    <label for="monthSelect" data-i18n="fallbackMonthLabel">Місяць</label>
+                    <select id="monthSelect"></select>
                   </div>
-                </label>
-
-                <!--
-                  Для кнопки довідки створюємо окреме поле з підписом, аби уникнути
-                  візуального "просідання" і підвищити зрозумілість інтерфейсу.
-                -->
-                <div class="field field--button">
-                  <span class="field__label" data-i18n="help_label">Довідка</span>
-                  <button
-                    id="btnHelp"
-                    type="button"
-                    class="help-button"
-                    aria-haspopup="dialog"
-                    aria-controls="info-modal"
-                    data-i18n-attr="aria-label"
-                    data-i18n="infoAriaLabel"
-                  >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="m9,9a3,3,0,1,1,4,2.64v.36"></path>
-                      <circle cx="12" cy="19" r="1"></circle>
-                    </svg>
-                  </button>
+                  <div class="fallback-group">
+                    <label for="yearSelect" data-i18n="fallbackYearLabel">Рік</label>
+                    <select id="yearSelect"></select>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+
+            <div class="topbar-section topbar-section--center">
+              <button id="btnRun" class="generate-button" type="button" data-i18n="run_btn" disabled>
+                Запустити
+              </button>
+            </div>
+
+            <div class="topbar-section topbar-section--right">
+              <!--
+                Для перемикача мови додаємо видимий підпис, щоб елемент вирівнювався
+                з іншими селектами і був зрозумілий користувачу.
+              -->
+              <label class="field field--sm" for="langSelect">
+                <span class="field__label" data-i18n="lang_label">Мова</span>
+                <div class="select select--sm select--enhanced" aria-label="Мова інтерфейсу">
+                  <select
+                    id="langSelect"
+                    aria-label="Language"
+                    data-i18n-attr="aria-label"
+                    data-i18n="lang_label"
+                  >
+                    <option value="ua">UA</option>
+                    <option value="en">EN</option>
+                  </select>
+                  <div class="select__arrow" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </label>
+
+              <label class="field field--sm" for="sceneSelect">
+                <span class="field__label" data-i18n="sceneToggleAria">Вибір сцени</span>
+                <div class="select select--enhanced">
+                  <select
+                    id="sceneSelect"
+                    name="scene"
+                    aria-label="Вибір сцени"
+                    data-i18n-attr="aria-label"
+                    data-i18n="sceneToggleAria"
+                  >
+                    <option value="lissajous" data-i18n="sceneLissajous">Ліссажу</option>
+                    <option value="rune" data-i18n="sceneRune">Руни</option>
+                    <option value="maya" data-i18n="sceneMaya">Майя</option>
+                  </select>
+                  <div class="select__arrow" aria-hidden="true">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline points="6,9 12,15 18,9"></polyline>
+                    </svg>
+                  </div>
+                </div>
+              </label>
+
+              <!--
+                Для кнопки довідки створюємо окреме поле з підписом, аби уникнути
+                візуального "просідання" і підвищити зрозумілість інтерфейсу.
+              -->
+              <div class="field field--button">
+                <span class="field__label" data-i18n="help_label">Довідка</span>
+                <button
+                  id="btnHelp"
+                  type="button"
+                  class="help-button"
+                  aria-haspopup="dialog"
+                  aria-controls="info-modal"
+                  data-i18n-attr="aria-label"
+                  data-i18n="infoAriaLabel"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="m9,9a3,3,0,1,1,4,2.64v.36"></path>
+                    <circle cx="12" cy="19" r="1"></circle>
+                  </svg>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </nav>
