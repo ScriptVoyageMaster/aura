@@ -114,6 +114,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     descriptionRequestId: 0,
     descriptionSectionsState: Object.create(null),
     currentDescription: null,
+    isDirty: true,
+    isRendering: false,
+    currentJobToken: null,
   };
 
   const performanceTracker = { samples: [] };
@@ -234,6 +237,69 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     canvasPlaceholder.classList.add("hidden");
   }
 
+  /**
+   * Керуємо активністю кнопки «Запустити», щоб користувач одразу бачив, коли запуск можливий.
+   */
+  function setRunButtonEnabled(enabled) {
+    if (!btnRun) {
+      return;
+    }
+    btnRun.disabled = !enabled;
+    btnRun.classList.toggle("is-disabled", !enabled);
+  }
+
+  /**
+   * Миттєво очищаємо канву, щоб не залишалось попередніх мазків чи анімацій.
+   */
+  function clearCanvasImmediate() {
+    if (!ctx) {
+      return;
+    }
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+  }
+
+  /**
+   * Зупиняємо активний анімаційний цикл, щоб попередній гліф більше не перемальовувався.
+   */
+  function stopAnimationLoop() {
+    if (state.isRunning) {
+      state.isRunning = false;
+    }
+    state.animationScheduled = false;
+  }
+
+  /**
+   * Повністю очищаємо обчислені результати, аби наступний запуск стартував з «чистого аркуша».
+   */
+  function resetComputedResults() {
+    state.currentSeed = "";
+    state.currentDob = null;
+    state.currentGlyphId = null;
+    state.currentToneId = null;
+    state.currentDescription = null;
+    state.descriptionSectionsState = Object.create(null);
+  }
+
+  /**
+   * Уніфікований обробник будь-якої зміни параметрів користувача.
+   * Скасовуємо попередні задачі, очищаємо інтерфейс та активуємо кнопку запуску.
+   */
+  function onUserParamsChanged() {
+    state.currentJobToken = null;
+    state.isRendering = false;
+    state.descriptionRequestId += 1;
+    stopAnimationLoop();
+    clearCanvasImmediate();
+    showCanvasPlaceholder();
+    renderDescriptionPlaceholder();
+    resetComputedResults();
+    state.isDirty = true;
+    updateLaunchState();
+  }
+
   function getSelectedGender() {
     // Акуратно читаємо значення вибору статі. Якщо елемента немає або значення невідоме, повертаємо "unspecified".
     if (!genderSelect) {
@@ -322,16 +388,16 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     if (!descRoot || !descBody || !descSummary || !descMeta) {
       return;
     }
-    descSummary.textContent = "Оберіть дату народження, щоб побачити інтерпретацію.";
+    descSummary.textContent = "Параметри поки не згенеровані.";
     descMeta.innerHTML = "";
     const chip = document.createElement("span");
     chip.className = "aura-desc__tag";
-    chip.textContent = "Очікування даних";
+    chip.textContent = "Очікує запуск";
     descMeta.append(chip);
     descBody.innerHTML = "";
     const paragraph = document.createElement("p");
     paragraph.className = "aura-desc__placeholder";
-    paragraph.textContent = "Після запуску генерації тут з'явиться докладний опис комбінації гліфа та тону.";
+    paragraph.textContent = "Змініть параметри за потреби та натисніть «Запустити», щоб отримати новий опис.";
     descBody.append(paragraph);
     state.currentDescription = null;
   }
@@ -509,25 +575,6 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
   }
 
-  /**
-   * Оновлюємо опис, коли змінилися мова, стать або обрана дата.
-   */
-  function refreshDescriptionPanel({ forceRegenerate = false } = {}) {
-    if (!descRoot) {
-      return;
-    }
-    if (!state.currentGlyphId || !state.currentToneId) {
-      if (forceRegenerate) {
-        renderDescriptionPlaceholder();
-      }
-      return;
-    }
-    if (forceRegenerate) {
-      state.descriptionRequestId += 1;
-    }
-    requestDescriptionUpdate({});
-  }
-
   function readStoredUserInput() {
     // Прагнемо безпечно розпарсити попередньо збережені дані користувача.
     const raw = getStored(USER_INPUT_STORAGE_KEY);
@@ -671,8 +718,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     updateLanguageControl();
     updateSceneControl();
     updateCanvasSize();
-    updateLaunchState();
-    refreshDescriptionPanel({ forceRegenerate: true });
+    onUserParamsChanged();
   }
 
   function updateCanvasToggleLabel() {
@@ -727,11 +773,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       }
     }
 
-    if (state.isRunning || forceRestart) {
-      restartActiveScene({ force: true });
-    } else if (state.sceneInstance && typeof state.sceneInstance.resetModeLock === "function") {
+    if (state.sceneInstance && typeof state.sceneInstance.resetModeLock === "function") {
       state.sceneInstance.resetModeLock();
     }
+
+    onUserParamsChanged();
   }
 
   function getTodayParts() {
@@ -796,11 +842,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
         if (el === fallbackYear || el === fallbackMonth) {
           syncFallbackDayOptions();
         }
-        updateLaunchState();
         writeStateToUrl(readDateFromUI());
-        if (state.isRunning) {
-          restartActiveScene();
-        }
+        onUserParamsChanged();
       });
     });
   }
@@ -832,9 +875,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     dateInput.addEventListener("focus", () => addPauseReason("native-input"));
     dateInput.addEventListener("blur", () => removePauseReason("native-input"));
     dateInput.addEventListener("input", () => {
-      updateLaunchState();
       writeStateToUrl(readDateFromUI());
-      if (state.isRunning) restartActiveScene();
+      onUserParamsChanged();
     });
   }
 
@@ -984,9 +1026,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       dateValue = dateInput.value;
     }
 
+    const hasValidDate = Boolean(dateValue && isDateInRange(dateValue));
     if (btnRun) {
-      btnRun.disabled = !(dateValue && isDateInRange(dateValue));
+      setRunButtonEnabled(hasValidDate && !state.isRendering);
     }
+    return hasValidDate;
   }
 
   /**
@@ -1005,32 +1049,77 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     window.scrollTo({ top: offset, behavior: "smooth" });
   }
 
-  function runWithCurrentDate() {
-    const dateStr = readDateFromUI();
-    if (!dateStr) return;
-    const gender = getSelectedGender();
-    const appliedGender = setGenderTheme(gender);
-    // Записуємо введені користувачем дані, щоб легко повернутися до них у майбутньому.
-    persistUserInput(dateStr, appliedGender);
-    hideCanvasPlaceholder();
-    const seed = buildSeedFromDateStr(dateStr);
-    writeStateToUrl(dateStr);
-    if (window.activeScene && typeof window.activeScene.setSeed === "function") {
-      window.activeScene.setSeed(seed);
+  async function runWithCurrentDate() {
+    if (state.isRendering) {
+      return;
     }
-    if (typeof window.startRender === "function") {
-      window.startRender();
-    }
-    initializeScene(seed);
-    state.isRunning = true;
-    startAnimation();
 
-    if (typeof window.requestAnimationFrame === "function") {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(scrollCanvasIntoView);
-      });
-    } else {
-      scrollCanvasIntoView();
+    const dateStr = readDateFromUI();
+    if (!dateStr || !isDateInRange(dateStr)) {
+      updateLaunchState();
+      return;
+    }
+
+    const jobToken = {};
+    state.currentJobToken = jobToken;
+    state.isRendering = true;
+    setRunButtonEnabled(false);
+    state.descriptionRequestId += 1;
+    stopAnimationLoop();
+
+    try {
+      // Переконуємось, що словники описів завантажені перед стартом рендеру.
+      await preloadDictionaries();
+      if (state.currentJobToken !== jobToken) {
+        return;
+      }
+
+      const gender = getSelectedGender();
+      const appliedGender = setGenderTheme(gender);
+      // Записуємо введені користувачем дані, щоб легко повернутися до них у майбутньому.
+      persistUserInput(dateStr, appliedGender);
+
+      hideCanvasPlaceholder();
+      clearCanvasImmediate();
+
+      const seed = buildSeedFromDateStr(dateStr);
+      writeStateToUrl(dateStr);
+      if (window.activeScene && typeof window.activeScene.setSeed === "function") {
+        window.activeScene.setSeed(seed);
+      }
+      if (typeof window.startRender === "function") {
+        window.startRender();
+      }
+
+      initializeScene(seed);
+      if (state.currentJobToken !== jobToken) {
+        return;
+      }
+
+      state.isRunning = true;
+      state.isDirty = false;
+      startAnimation();
+
+      if (typeof window.requestAnimationFrame === "function") {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(scrollCanvasIntoView);
+        });
+      } else {
+        scrollCanvasIntoView();
+      }
+    } catch (error) {
+      console.error("Не вдалося запустити генерацію Цолькін:", error);
+      if (state.currentJobToken === jobToken) {
+        renderDescriptionPlaceholder();
+        showCanvasPlaceholder();
+        state.isDirty = true;
+      }
+    } finally {
+      if (state.currentJobToken === jobToken) {
+        state.isRendering = false;
+        state.currentJobToken = null;
+      }
+      updateLaunchState();
     }
   }
 
@@ -1044,12 +1133,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       const gender = getSelectedGender();
       const appliedGender = setGenderTheme(gender);
       persistUserInput(dateStr, appliedGender);
-      if (state.sceneInstance && typeof state.sceneInstance.updateTheme === "function") {
-        state.sceneInstance.updateTheme({ gender: appliedGender });
-      } else if (state.sceneInstance && typeof state.sceneInstance.setGender === "function") {
-        state.sceneInstance.setGender(appliedGender);
-      }
-      refreshDescriptionPanel({ forceRegenerate: true });
+      onUserParamsChanged();
     });
   }
   updateLaunchState();
@@ -1325,20 +1409,6 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     state.currentSeed = seed;
     state.runStartedAt = performance.now();
     state.lastFrameTime = state.runStartedAt;
-  }
-
-  function restartActiveScene({ force = false } = {}) {
-    const dateStr = readDateFromUI();
-    const seed = buildSeedFromDateStr(dateStr);
-    if (!force && seed === state.currentSeed) return;
-    writeStateToUrl(dateStr);
-    if (window.activeScene && typeof window.activeScene.setSeed === "function") {
-      window.activeScene.setSeed(seed);
-    }
-    if (typeof window.startRender === "function") {
-      window.startRender();
-    }
-    initializeScene(seed);
   }
 
   // --- 12. Обробник кнопки запуску ---
