@@ -8,6 +8,7 @@ const DATA_URLS = {
   tones: "data/tones.json",
   genderMods: "data/gender_mods.json",
   rules: "data/rules.json",
+  synergy: "data/synergy.json",
   overrides: "data/overrides.json",
 };
 
@@ -493,11 +494,12 @@ async function loadDictionaries() {
   if (!dictionariesPromise) {
     dictionariesPromise = (async () => {
       try {
-        const [glyphs, tones, genderMods, rules] = await Promise.all([
+        const [glyphs, tones, genderMods, rules, synergy] = await Promise.all([
           fetchJson(DATA_URLS.glyphs),
           fetchJson(DATA_URLS.tones),
           fetchJson(DATA_URLS.genderMods),
           fetchJson(DATA_URLS.rules),
+          fetchJson(DATA_URLS.synergy),
         ]);
 
         return {
@@ -505,6 +507,7 @@ async function loadDictionaries() {
           tones: tones || {},
           genderMods: genderMods || {},
           rules: rules || { limits: { title: 70, meta: 160 }, avoid_repeats: [], synonyms: {} },
+          synergy: synergy || {},
         };
       } catch (error) {
         console.error("Не вдалося завантажити словники описів Цолькін:", error);
@@ -513,6 +516,7 @@ async function loadDictionaries() {
           tones: {},
           genderMods: {},
           rules: { limits: { title: 70, meta: 160 }, avoid_repeats: [], synonyms: {} },
+          synergy: {},
         };
       }
     })();
@@ -1274,10 +1278,10 @@ function buildMetaDescription({ intro, synergy, limits, logContext }) {
 /**
  * Утиліта для формування списку ключових слів без повторів.
  */
-function buildKeywords(glyphKeywords = [], toneKeywords = []) {
+function buildKeywords(glyphKeywords = [], toneKeywords = [], synergyKeywords = []) {
   const seen = new Set();
   const unique = [];
-  [...glyphKeywords, ...toneKeywords].forEach((word) => {
+  [...glyphKeywords, ...toneKeywords, ...synergyKeywords].forEach((word) => {
     if (!word) return;
     const lowered = word.toLowerCase();
     if (!seen.has(lowered)) {
@@ -1302,6 +1306,7 @@ function composeDescription({
   lang,
   calendar,
   logContext,
+  synergyEntry = {},
 }) {
   const fallbackLang = getFallbackLang(lang);
   const limits = rules?.limits || { title: 70, meta: 160 };
@@ -1491,6 +1496,38 @@ function composeDescription({
     source: `tone.${toneId}.advice`,
   });
 
+  const pairSource = `pair.${glyphId}-${toneId}`;
+  const manualSynergySentences = readLocalizedList(synergyEntry, "synergy", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `${pairSource}.synergy`,
+  });
+  const manualWhereUnfolds = readLocalizedList(synergyEntry, "where_unfolds", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `${pairSource}.where_unfolds`,
+  });
+  const manualPractice = readLocalizedList(synergyEntry, "practice", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `${pairSource}.practice`,
+  });
+  const manualSummary = readLocalizedList(synergyEntry, "summary", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `${pairSource}.summary`,
+  });
+  const manualTags = readLocalizedList(synergyEntry, "tags", {
+    lang,
+    fallbackLang,
+    logContext,
+    source: `${pairSource}.tags`,
+  });
+
   const synergyPlan = rules?.composition?.synergy || { glyph_fields: [], tone_fields: [] };
   const synergyGlyphMap = collectFieldMap(glyphEntry, synergyPlan.glyph_fields || [], {
     lang,
@@ -1518,7 +1555,12 @@ function composeDescription({
     logContext,
     source: `tone.${toneId}`,
   });
-  const adviceItems = [...adviceGlyphItems, ...adviceToneItems, ...toneAdvice].filter(Boolean);
+  const adviceItems = [
+    ...adviceGlyphItems,
+    ...adviceToneItems,
+    ...toneAdvice,
+    ...manualPractice,
+  ].filter(Boolean);
 
   // --- Вступ ---
   const introSentences = [];
@@ -1691,6 +1733,25 @@ function composeDescription({
       synergyFragments.push(toneImage);
     }
   }
+  if (manualSynergySentences.length > 0) {
+    manualSynergySentences.forEach((sentence) => {
+      synergySentences.push(
+        applyLexShifts(ensureSentenceEnding(sentence), genderLexShift)
+      );
+    });
+    synergyFragments.push(...manualSynergySentences);
+  }
+  if (manualWhereUnfolds.length > 0) {
+    manualWhereUnfolds.forEach((area) => {
+      const sentence = lang === "en"
+        ? `It unfolds where ${area}`
+        : `Проявляється там, де ${area}`;
+      synergySentences.push(
+        applyLexShifts(ensureSentenceEnding(sentence), genderLexShift)
+      );
+    });
+    synergyFragments.push(...manualWhereUnfolds);
+  }
   if (synergySentences.length === 0) {
     synergySentences.push(
       applyLexShifts(
@@ -1831,6 +1892,13 @@ function composeDescription({
       conclusionSentences.push(applyLexShifts(summarySentence, genderLexShift));
     }
   }
+  if (manualSummary.length > 0) {
+    manualSummary.forEach((sentence) => {
+      conclusionSentences.push(
+        applyLexShifts(ensureSentenceEnding(sentence), genderLexShift)
+      );
+    });
+  }
   const conclusionCloser = genderConclusionClosers.find(Boolean);
   const acknowledgement = genderAcknowledgements.find(Boolean);
   if (conclusionCloser) {
@@ -1854,6 +1922,7 @@ function composeDescription({
     toneKeywordSummary,
     conclusionCloser,
     acknowledgement,
+    ...manualSummary,
   ].filter(Boolean);
 
   // Щоби блоки читалися щільно й не розтікалися на довгі абзаци, обрізаємо масиви
@@ -1867,7 +1936,7 @@ function composeDescription({
   const glyphCore = finalizeSection(glyphCoreLimited, avoidRepeats, synonyms);
   const toneCore = finalizeSection(toneCoreLimited, avoidRepeats, synonyms);
   const synergy = finalizeSection(synergyLimited, avoidRepeats, synonyms);
-  const adviceListNormalized = [];
+  const adviceListNormalized = [...new Set(manualPractice)];
   const shadow = finalizeSection(shadowSentences, avoidRepeats, synonyms);
   const conclusion = finalizeSection(conclusionSentences, avoidRepeats, synonyms);
 
@@ -1908,20 +1977,7 @@ function composeDescription({
     }
   }
 
-  const keywords = buildKeywords(
-    readLocalizedList(glyphEntry, "keywords", {
-      lang,
-      fallbackLang,
-      logContext,
-      source: `glyph.${glyphId}.keywords`,
-    }),
-    readLocalizedList(toneEntry, "keywords", {
-      lang,
-      fallbackLang,
-      logContext,
-      source: `tone.${toneId}.keywords`,
-    })
-  );
+  const keywords = buildKeywords(glyphKeywords, toneKeywords, manualTags);
 
   if (metaDescription) {
     const lowerMeta = metaDescription.slice(0, limits.meta || 160).toLowerCase();
@@ -2073,6 +2129,10 @@ export async function generateDescription({
     lang: normalizedLang,
     calendar: normalizedCalendar,
     logContext,
+    synergyEntry:
+      dictionaries.synergy?.[`${String(glyphId).toUpperCase()}-${String(toneId).toUpperCase()}`] ||
+      dictionaries.synergy?.[`${String(glyphId).toUpperCase()}-${String(toneId)}`] ||
+      null,
   });
 
   descriptionCache.set(cacheKey, description);
