@@ -734,7 +734,7 @@
   },
   "manik": {
     "name": {
-      "ua": "Манікʼ",
+      "ua": "Манік",
       "en": "Manik"
     },
     "element": {
@@ -742,30 +742,33 @@
       "en": "earth"
     },
     "archetype": {
-      "ua": "лагідний цілитель, рука, що приносить користь",
-      "en": "hand — action and healing"
+      "ua": "Манік — лагідна сила руки, що приносить користь і відновлює рівновагу. Архетип — рука цілителя та майстра: відбиток оленячої ноги нагадує про точність, уважність і вірність справі.",
+      "en": "Manik is the gentle power of the helping hand that restores balance. The archetype is a healer’s and craftsman’s hand; the deer hoofprint points to precision, attentiveness, and devotion."
     },
     "domains": {
       "ua": [
-        "служіння",
-        "навички рук",
-        "цілющі практики"
+        "служіння людям",
+        "ремесло та ручна майстерність",
+        "цілющі та відновлювальні практики"
       ],
       "en": [
-        "help",
-        "craft",
-        "completion"
+        "service to others",
+        "handcraft and applied skill",
+        "healing and restorative practices"
       ]
     },
     "strengths": {
       "ua": [
-        "акуратність",
-        "щедрість",
-        "здатність доводити справи"
+        "акуратність і точність",
+        "щедрість та підтримка інших",
+        "здатність завершувати почате",
+        "майстерність у практичних справах"
       ],
       "en": [
-        "practicality",
-        "healing"
+        "precision and neatness",
+        "generosity and support",
+        "ability to finish what you start",
+        "craftsmanship in practical matters"
       ]
     },
     "shadows": {
@@ -782,44 +785,49 @@
     "imagery": {
       "ua": [
         "відбиток оленячої ноги на землі",
-        "долоня з лікувальним символом",
-        "кошик із травами"
+        "долоня цілителя з м’яким світлом",
+        "акуратно складений набір інструментів"
       ],
       "en": [
-        "warm touch",
-        "artisan hand"
+        "deer hoofprint on soil",
+        "healer’s palm with soft light",
+        "neatly arranged toolkit"
       ]
     },
     "advice_short": {
       "ua": [
-        "заверши одну незакінчену дрібну справу",
-        "подякуй своїм рукам за працю",
-        "організуй простір інструментів",
-        "заплануй допомогу, яку реально дати"
+        "Перетвори турботу на дію: вибери одну конкретну допомогу і доведи її до кінця",
+        "Підтримай руки та спину короткою розтяжкою після роботи",
+        "Створи чіткий чекліст повторюваних кроків для майстерності"
       ],
       "en": [
-        "help with boundaries"
+        "Turn care into action by finishing one tangible help task",
+        "Support your hands and back with a short stretch after work",
+        "Build a clear checklist of repeatable craftsmanship steps"
       ]
     },
     "advice_long": {
       "ua": [
-        "Дозволь собі темп, у якому якість зберігається без виснаження.",
-        "Відзначай, як твоє служіння приносить користь тобі самому — це підтримує баланс."
+        "Плануй допомогу та ремесло через послідовні мікрокроки, щоб турбота ставала видимим результатом.",
+        "Відстежуй, як служіння підтримує і тебе: запиши два способи, якими рутина повертає сили."
       ],
       "en": [
-        "finish what’s started in small steps"
+        "Organise service and craft through consistent micro-steps so care turns into visible outcomes.",
+        "Notice how serving also sustains you: note two ways your routine restores strength."
       ]
     },
     "synergy_verbs": {
       "ua": [
-        "стабілізує",
+        "структурує",
         "зцілює",
-        "з’єднує",
-        "закріплює"
+        "закріплює",
+        "підтримує"
       ],
       "en": [
+        "structures",
         "heals",
-        "secures"
+        "grounds",
+        "supports"
       ]
     },
     "emotions": {
@@ -834,12 +842,12 @@
     },
     "rituals": {
       "ua": [
-        "масаж долонь",
-        "практика вдячності"
+        "масаж долонь із натуральною олією",
+        "вечірнє прибирання робочого столу для ясності"
       ],
       "en": [
-        "palm massage",
-        "gratitude practice"
+        "palm massage with natural oil",
+        "evening workspace reset for clarity"
       ]
     },
     "keywords": {
@@ -847,12 +855,17 @@
         "служіння",
         "майстерність",
         "зцілення",
-        "вірність"
+        "вірність",
+        "стабільність",
+        "структура"
       ],
       "en": [
-        "hand",
-        "help",
-        "healing"
+        "service",
+        "craft",
+        "healing",
+        "loyalty",
+        "stability",
+        "structure"
       ]
     }
   },

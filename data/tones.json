@@ -148,50 +148,57 @@
   },
   "4": {
     "name": {
-      "ua": "Тон 4 — Стабільність",
-      "en": "Tone 4 — Stability"
+      "ua": "Тон 4 — Структура",
+      "en": "Tone 4 — Structure"
     },
     "keywords": {
       "ua": [
-        "стабільність",
         "структура",
-        "опора"
+        "стабільність",
+        "порядок",
+        "системність"
       ],
       "en": [
         "structure",
-        "support"
+        "stability",
+        "order",
+        "system"
       ]
     },
     "qualities": {
       "ua": [
-        "структура",
-        "опора",
-        "передбачуваність"
+        "стабільність і структура, що надають формі межі",
+        "послідовність і опора, яка тримає курс",
+        "практична організація щоденних кроків"
       ],
       "en": [
-        "stability",
-        "framework"
+        "stability and structure that shape clear boundaries",
+        "sequence and support that keep the course",
+        "practical organization of everyday steps"
       ]
     },
     "challenges": {
       "ua": [
-        "ригідність правил",
-        "страх змінити план",
-        "перевтома від контролю"
+        "ригідність правил і перфекціонізм",
+        "надмірний контроль та страх змін",
+        "застиглі процеси без простору для гнучкості"
       ],
       "en": [
-        "rigidity",
-        "limitation"
+        "rigidity and perfectionism",
+        "overcontrol and fear of change",
+        "stalled processes that lack flexibility"
       ]
     },
     "advice": {
       "ua": [
-        "Визнач три ключові опори на день.",
-        "Залиши в графіку місце для короткої перерви.",
-        "Переглядай структуру наприкінці дня і м’яко коригуй."
+        "Працюй через прості повторювані ритуали, що тримають ритм.",
+        "Тримай межі, але залишай місце для коригувань у процесі.",
+        "Раз на день перевіряй, чи структура служить добру справи, і м’яко підлаштовуй."
       ],
       "en": [
-        "Build a base and keep discipline."
+        "Work through simple repeatable rituals that hold the rhythm.",
+        "Keep boundaries yet leave room for course corrections.",
+        "Check daily whether the structure serves the good work and adjust gently."
       ]
     }
   },
