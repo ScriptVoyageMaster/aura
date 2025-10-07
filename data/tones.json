@@ -498,50 +498,75 @@
   },
   "11": {
     "name": {
-      "ua": "Тон 11 — Звільнення",
-      "en": "Tone 11 — Liberation"
+      "ua": "Тон 11",
+      "en": "Tone 11"
+    },
+    "alias": {
+      "ua": "Звільнення",
+      "en": "Release"
+    },
+    "essence": {
+      "ua": "Тон 11 — звільнення і розчинення зайвого. Він скидає те, що віджило, розв’язує вузли та відкриває простір для оновлення. Його хід — розпаковувати напругу, прибирати перешкоди, полегшувати шлях.",
+      "en": "Tone 11 releases and dissolves the excess. It loosens knots and opens space for renewal. Its movement is to unpack tension, remove obstacles, and lighten the path."
     },
     "keywords": {
       "ua": [
         "звільнення",
-        "простір",
-        "оновлення"
+        "очищення",
+        "детокс",
+        "спрощення",
+        "простір"
       ],
       "en": [
         "release",
+        "cleansing",
+        "detox",
+        "simplification",
         "space"
       ]
     },
     "qualities": {
       "ua": [
-        "звільнення простору",
-        "свіжий подих",
-        "оновлення через простоту"
+        "вміння відпускати",
+        "детокс простору, стосунків і звичок",
+        "свіжий подих після очищення"
       ],
       "en": [
-        "cleansing",
-        "liberation"
+        "ability to let go",
+        "detox of space, ties and habits",
+        "fresh breath after cleansing"
       ]
     },
     "challenges": {
       "ua": [
-        "відчуття хаосу під час очищення",
-        "страх відпустити знайоме",
-        "непевність у новій структурі"
+        "відчуття хаосу під час розпаду старого",
+        "руйнування без структури, нетерплячість"
       ],
       "en": [
-        "chaos",
-        "instability"
+        "a sense of chaos while the old falls apart",
+        "destruction without structure, impatience"
+      ]
+    },
+    "fields": {
+      "ua": [
+        "ревізія і прибирання",
+        "спрощення процесів і навантажень",
+        "завершення/архівація незакритого"
+      ],
+      "en": [
+        "revision and clearing",
+        "simplifying processes and loads",
+        "closure/archiving of open loops"
       ]
     },
     "advice": {
       "ua": [
-        "Виділи речі чи ідеї, які вже не служать, і попрощайся з ними.",
-        "Залиши простір порожнім хоча б на день, щоб він наповнився новим.",
-        "Фіксуй, що приносить полегшення після відпускання."
+        "Сьогодні звільни місце: один обов’язок, одна річ або один рядок у списку.",
+        "Дихай глибоко, провітри простір і голову — дай місце новому."
       ],
       "en": [
-        "Let go of excess and simplify."
+        "Free some space today: one duty, one item, or one line from the list.",
+        "Breathe, air the room and mind — make room for the new."
       ]
     }
   },

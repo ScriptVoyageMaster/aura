@@ -742,25 +742,25 @@
       "en": "earth"
     },
     "archetype": {
-      "ua": "Манік — лагідна сила руки, що приносить користь і відновлює рівновагу. Архетип — рука цілителя та майстра: відбиток оленячої ноги нагадує про точність, уважність і вірність справі.",
-      "en": "Manik is the gentle power of the helping hand that restores balance. The archetype is a healer’s and craftsman’s hand; the deer hoofprint points to precision, attentiveness, and devotion."
+      "ua": "Манік — лагідна сила руки, що приносить користь і відновлює рівновагу. Це дія, яка з’єднує турботу з результатом. Архетип Манік — рука цілителя та майстра: відбиток оленячої ноги нагадує про точність, уважність і вірність справі. Сутність Манік — допомога через конкретні дії: лагідно, але рішуче; акуратно й послідовно.",
+      "en": "Manik is the gentle power of the helping hand that restores balance — care fused with results. The archetype is a healer’s and craftsman’s hand: the deer hoofprint points to precision, attentiveness, and devotion. Manik’s essence is practical help: gentle yet decisive; neat and consistent."
     },
     "domains": {
       "ua": [
         "служіння людям",
-        "ремесло та ручна майстерність",
-        "цілющі та відновлювальні практики"
+        "ремесло, ручна майстерність",
+        "цілющі/відновлювальні практики"
       ],
       "en": [
         "service to others",
-        "handcraft and applied skill",
-        "healing and restorative practices"
+        "handcraft, applied skill",
+        "healing/restorative practices"
       ]
     },
     "strengths": {
       "ua": [
         "акуратність і точність",
-        "щедрість та підтримка інших",
+        "щедрість, підтримка інших",
         "здатність завершувати почате",
         "майстерність у практичних справах"
       ],
@@ -796,24 +796,18 @@
     },
     "advice_short": {
       "ua": [
-        "Перетвори турботу на дію: вибери одну конкретну допомогу і доведи її до кінця",
-        "Підтримай руки та спину короткою розтяжкою після роботи",
-        "Створи чіткий чекліст повторюваних кроків для майстерності"
+        "Перетворюй турботу на дію: допомагає те, що зроблено, а не лише задумано."
       ],
       "en": [
-        "Turn care into action by finishing one tangible help task",
-        "Support your hands and back with a short stretch after work",
-        "Build a clear checklist of repeatable craftsmanship steps"
+        "Turn care into action: help is what’s done, not just intended."
       ]
     },
     "advice_long": {
       "ua": [
-        "Плануй допомогу та ремесло через послідовні мікрокроки, щоб турбота ставала видимим результатом.",
-        "Відстежуй, як служіння підтримує і тебе: запиши два способи, якими рутина повертає сили."
+        "Тренуй ритм і послідовність — вони підсилюють твій талан."
       ],
       "en": [
-        "Organise service and craft through consistent micro-steps so care turns into visible outcomes.",
-        "Notice how serving also sustains you: note two ways your routine restores strength."
+        "Train rhythm and consistency — they amplify your talent."
       ]
     },
     "synergy_verbs": {
