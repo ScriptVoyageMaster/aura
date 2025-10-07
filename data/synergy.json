@@ -60,5 +60,67 @@
         "support"
       ]
     }
+  },
+  "MANIK-T11": {
+    "synergy": {
+      "ua": [
+        "Манік + Тон 11 поєднують турботу з очищенням: рука, що допомагає, звільняє шлях і знімає зайве.",
+        "Добро стає полегшенням: ремонт, розв’язування вузлів, прибирання бар’єрів — підтримка, яку відчутно."
+      ],
+      "en": [
+        "Manik + Tone 11 marry care with clearing: the helping hand frees the path and removes the excess.",
+        "Kindness becomes relief: fixing, unknotting, removing barriers — support you can feel."
+      ]
+    },
+    "where_unfolds": {
+      "ua": [
+        "детокс-процеси руками: сортування, лагодження, спрощення",
+        "масаж/техніки, що знімають напругу",
+        "сервіс, який полегшує життя іншим"
+      ],
+      "en": [
+        "hands-on detox: sorting, repair, simplification",
+        "massage/techniques that release tension",
+        "service that lightens others’ load"
+      ]
+    },
+    "practice": {
+      "ua": [
+        "Правило 11: щодня звільни 11 хвилин або 11 предметів.",
+        "Завершуй → відпускай: закрий дрібні «хвости», щоб звільнити енергію.",
+        "Розрядка для рук і спини: розтяжки, масаж, теплі ванни."
+      ],
+      "en": [
+        "Rule of 11: free 11 minutes or 11 items daily.",
+        "Close → release: finish small loops to free energy.",
+        "Discharge for hands/back: stretches, massage, warm baths."
+      ]
+    },
+    "summary": {
+      "ua": [
+        "Суть пари — звільняти через корисну дію. Манік надає дотик, Тон 11 — простір."
+      ],
+      "en": [
+        "Essence: liberate through useful action. Manik gives the touch, Tone 11 gives the space."
+      ]
+    },
+    "tags": {
+      "ua": [
+        "служіння",
+        "звільнення",
+        "очищення",
+        "майстерність",
+        "полегшення",
+        "простір"
+      ],
+      "en": [
+        "service",
+        "release",
+        "clearing",
+        "craft",
+        "relief",
+        "space"
+      ]
+    }
   }
 }
