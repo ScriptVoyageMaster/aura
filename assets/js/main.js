@@ -53,6 +53,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const descSummary = descRoot?.querySelector('[data-role="desc-summary"]');
   const descMeta = descRoot?.querySelector('[data-role="desc-meta"]');
   const descBody = descRoot?.querySelector('[data-role="desc-body"]');
+  const descTitleLabel = descRoot?.querySelector('[data-role="desc-title-label"]');
 
   const modal = document.getElementById("info-modal");
   const modalOverlay = document.getElementById("modal-overlay");
@@ -142,12 +143,17 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   const DESCRIPTION_LABELS = {
     intro: { ua: "Вступ", en: "Intro" },
-    glyph_core: { ua: "Сутність гліфа", en: "Glyph core" },
-    tone_core: { ua: "Сутність тону", en: "Tone core" },
+    glyph_core: { ua: "Сутність гліфа", en: "Glyph Core" },
+    tone_core: { ua: "Сутність тону", en: "Tone Core" },
     synergy: { ua: "Синергія", en: "Synergy" },
     advice: { ua: "Поради", en: "Advice" },
     shadow: { ua: "Тінь", en: "Shadow" },
     conclusion: { ua: "Заключне", en: "Conclusion" },
+  };
+
+  const DESCRIPTION_TITLE_BY_LANG = {
+    ua: "Опис",
+    en: "Description",
   };
 
   const SIGN_ID_MAP = [
@@ -390,10 +396,14 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
     descSummary.textContent = "Параметри поки не згенеровані.";
     descMeta.innerHTML = "";
+    // Відновлюємо контейнер для тегів, щоби службовий статус виглядав як чип.
+    const tagsContainer = document.createElement("div");
+    tagsContainer.className = "desc-tags";
     const chip = document.createElement("span");
-    chip.className = "aura-desc__tag";
+    chip.className = "desc-chip";
     chip.textContent = "Очікує запуск";
-    descMeta.append(chip);
+    tagsContainer.append(chip);
+    descMeta.append(tagsContainer);
     descBody.innerHTML = "";
     const paragraph = document.createElement("p");
     paragraph.className = "aura-desc__placeholder";
@@ -411,10 +421,14 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
     descSummary.textContent = "Готуємо опис…";
     descMeta.innerHTML = "";
+    // Показуємо користувачу, що текст готується, через знайоме оформлення чипів.
+    const tagsContainer = document.createElement("div");
+    tagsContainer.className = "desc-tags";
     const chip = document.createElement("span");
-    chip.className = "aura-desc__tag";
+    chip.className = "desc-chip";
     chip.textContent = "Завантаження";
-    descMeta.append(chip);
+    tagsContainer.append(chip);
+    descMeta.append(tagsContainer);
     descBody.innerHTML = "";
     const paragraph = document.createElement("p");
     paragraph.className = "aura-desc__placeholder";
@@ -434,23 +448,32 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       return;
     }
 
+    // Перед формуванням вмісту синхронізуємо заголовок панелі з активною мовою.
+    updateDescriptionTitleLabel();
+
     descSummary.textContent = description.metaDescription || "Опис комбінації готується.";
     descMeta.innerHTML = "";
 
+    // Будуємо оновлений список тегів (назва + ключові слова) з охайним оформленням.
+    const tagsContainer = document.createElement("div");
+    tagsContainer.className = "desc-tags";
+
     const titleChip = document.createElement("span");
-    titleChip.className = "aura-desc__tag";
+    titleChip.className = "desc-chip";
     titleChip.textContent = description.title || "Опис";
-    descMeta.append(titleChip);
+    tagsContainer.append(titleChip);
 
     if (Array.isArray(description.keywords)) {
       description.keywords.forEach((keyword) => {
         if (!keyword) return;
         const keywordChip = document.createElement("span");
-        keywordChip.className = "aura-desc__tag";
+        keywordChip.className = "desc-chip";
         keywordChip.textContent = keyword;
-        descMeta.append(keywordChip);
+        tagsContainer.append(keywordChip);
       });
     }
+
+    descMeta.append(tagsContainer);
 
     descBody.innerHTML = "";
     const isDesktopView = window.matchMedia("(min-width: 1024px)").matches;
@@ -489,15 +512,11 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
       const summary = document.createElement("summary");
       const labels = DESCRIPTION_LABELS[blockKey] || { ua: blockKey, en: blockKey };
-      const labelsWrapper = document.createElement("span");
-      labelsWrapper.className = "aura-desc__summary-labels";
-      const labelUa = document.createElement("span");
-      labelUa.textContent = labels.ua;
-      const labelEn = document.createElement("span");
-      labelEn.className = "aura-desc__label-en";
-      labelEn.textContent = labels.en;
-      labelsWrapper.append(labelUa, labelEn);
-      summary.append(labelsWrapper);
+      const lang = state.lang || CONFIG.i18n.default;
+      const fallbackLang = CONFIG.i18n.default;
+      const labelText = labels[lang] || labels[fallbackLang] || blockKey;
+      // У summary тепер потрапляє лише один локалізований заголовок без дублювання мов.
+      summary.textContent = labelText;
       section.append(summary);
 
       const content = document.createElement("div");
@@ -514,6 +533,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
         paragraphs.forEach((text) => {
           if (!text) return;
           const p = document.createElement("p");
+          // Клас desc-text забезпечує єдині відступи та міжряддя для абзаців.
+          p.className = "desc-text";
           p.textContent = text;
           content.append(p);
         });
@@ -522,6 +543,8 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
           listItems.forEach((item) => {
             if (!item) return;
             const li = document.createElement("li");
+            // Клас desc-sub вирівнює додаткові рядки (наприклад, поради) під загальний стиль.
+            li.className = "desc-sub";
             li.textContent = item;
             list.append(li);
           });
@@ -534,6 +557,23 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     });
 
     state.currentDescription = description;
+  }
+
+  /**
+   * Оновлюємо заголовок панелі опису відповідно до активної мови.
+   * Так користувач одразу бачить лише один варіант («Опис» або «Description»).
+   */
+  function updateDescriptionTitleLabel() {
+    if (!descTitleLabel) {
+      return;
+    }
+    const currentLang = state.lang || CONFIG.i18n.default;
+    const fallbackLang = CONFIG.i18n.default;
+    const label =
+      DESCRIPTION_TITLE_BY_LANG[currentLang] ||
+      DESCRIPTION_TITLE_BY_LANG[fallbackLang] ||
+      "";
+    descTitleLabel.textContent = label;
   }
 
   /**
@@ -718,6 +758,7 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     updateLanguageControl();
     updateSceneControl();
     updateCanvasSize();
+    updateDescriptionTitleLabel();
     onUserParamsChanged();
   }
 

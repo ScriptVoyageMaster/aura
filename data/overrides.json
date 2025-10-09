@@ -80,6 +80,62 @@
           }
         }
       }
+    },
+    "manik": {
+      "11": {
+        "any": {
+          "title": {
+            "ua": "Манік • Тон 11 — Звільнення і розчинення",
+            "en": "Manik • Tone 11 — Release and Dissolution"
+          },
+          "meta": {
+            "ua": "Манік (рука цілителя і майстра) у поєднанні з Тоном 11, що звільняє і розчиняє зайве. Служіння, майстерність, зцілення, структура.",
+            "en": "Manik (the healer/craftsman hand) with Tone 11 that releases and dissolves the excess. Service, craft, healing, structure."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Архетип розкривається як Манік — лагідна сила руки, що приносить користь і відновлює рівновагу. Це дія, яка поєднує турботу з результатом. Архетип Манік — рука цілителя та майстра. Відбиток оленячої ноги нагадує про точність, уважність і відданість справі. Сутність Манік — допомога через конкретні дії: лагідно, але рішуче — акуратно й послідовно. Образ — відбиток оленячої ноги на землі.",
+            "en": "The archetype reveals itself as Manik — the gentle power of the helping hand that restores balance. It is care fused with results. The archetype of Manik is the hand of the healer and craftsman. The deer hoofprint reminds of precision, attentiveness, and devotion. The essence of Manik is practical help: gentle yet decisive — neat and consistent. Image — a deer hoofprint on the soil."
+          },
+          "tone_core": {
+            "ua": "Тон 11 — це звільнення і розчинення зайвого. Він скидає те, що віджило, розв’язує вузли та відкриває простір для оновлення. Його хід — розпаковувати напругу, прибирати перешкоди, полегшувати шлях. Він підтримує вміння відпускати та очищати простір, стосунки й звички. Виклик — відчуття хаосу під час розпаду старого, але саме через це приходить звільнення.",
+            "en": "Tone 11 is the tone of release and dissolution. It sheds what has served its time, unties knots, and opens space for renewal. Its motion is to unpack tension, remove obstacles, and lighten the path. It supports the ability to let go and detox spaces, relationships, and habits. The challenge is a sense of chaos as the old dissolves — yet this is the passage to freedom."
+          },
+          "synergy": {
+            "ua": "Поєднання гліфа й тону спонукає, структурує, зцілює та закріплює — і тримає курс на звільнення. Енергія розгортається у сферах служіння людям, ремесла, ручної праці та цілющих/відновлювальних практик. Уяви відбиток оленячої ноги на землі — цей образ проводить через взаємодію.",
+            "en": "The fusion of glyph and tone inspires, structures, heals, and grounds — while maintaining the course toward release. The energy unfolds in service, craftsmanship, and healing work. Imagine a deer hoofprint in the soil — this image guides your interactions."
+          },
+          "advice": [
+            {
+              "ua": "Фокус: Перетворюй турботу на дію: допомагає те, що зроблено, а не лише задумано. Зроби перший крок.",
+              "en": "Focus: Turn care into action: help is what’s done, not just intended. Take the first step."
+            },
+            {
+              "ua": "Сьогодні: Тренуй ритм і послідовність — вони підсилюють твій талант. Дій зараз.",
+              "en": "Today: Train rhythm and consistency — they amplify your talent. Act now."
+            },
+            {
+              "ua": "Пріоритет: Масаж долонь із натуральною олією. Сконцентруйся на одному рішенні.",
+              "en": "Priority: Palm massage with natural oil. Focus on a single decision."
+            },
+            {
+              "ua": "Далі: Вечірнє прибирання робочого столу для ясності. Візьми відповідальність.",
+              "en": "Next: Evening workspace reset for clarity. Own the responsibility."
+            }
+          ],
+          "shadow": {
+            "ua": "Тінь проявляється через перенавантаження обов’язками та скромність, що знецінює талант, а також через відчуття хаосу під час розпаду старого. Збалансуй це, зробивши перший крок.",
+            "en": "The shadow appears as over-responsibility, humility that hides your skill, and the feeling of chaos during the breakdown of the old. Balance this by taking the first step."
+          },
+          "conclusion": {
+            "ua": "Твоя відповідальність. Пам’ятай про служіння й майстерність разом зі звільненням. Тримай курс. Ти вже зробив більше, ніж учора.",
+            "en": "Your responsibility. Remember service and craftsmanship together with release. Hold your course. You’ve already done more than yesterday."
+          }
+        }
+      }
     }
   }
 }
