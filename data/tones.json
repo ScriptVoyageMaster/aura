@@ -1,671 +1,314 @@
 {
   "1": {
-    "name": {
-      "ua": "Тон 1 — Намір",
-      "en": "Tone 1 — Intention"
+    "name": { "ua": "Тон 1 — Магнітний", "en": "Tone 1 — Magnetic" },
+    "alias": { "ua": "Призначення", "en": "Purpose" },
+    "essence": {
+      "ua": "Магнітний тон збирає намір у єдину точку тяжіння. Він об’єднує розфокусовані сили довкола ядра сенсу і задає напрямок циклу.",
+      "en": "The Magnetic tone gathers intention into a single point of gravity. It unifies dispersed forces around a core meaning and sets the cycle’s direction."
     },
-    "keywords": {
-      "ua": [
-        "початок",
-        "намір",
-        "фокус"
-      ],
-      "en": [
-        "beginning",
-        "focus"
-      ]
+    "fields": {
+      "ua": ["формування наміру", "початок циклу", "визначення фокусу"],
+      "en": ["intention setting", "cycle initiation", "focus definition"]
     },
     "qualities": {
-      "ua": [
-        "свіжий старт",
-        "сфокусований імпульс",
-        "цілісність бачення"
-      ],
-      "en": [
-        "initiation",
-        "unity"
-      ]
+      "ua": ["єдність", "притягнення", "зосередження"],
+      "en": ["unity", "attraction", "focus"]
     },
     "challenges": {
-      "ua": [
-        "розгубленість перед першим кроком",
-        "страх виділитися",
-        "відкладання старту"
-      ],
-      "en": [
-        "uncertainty",
-        "passivity"
-      ]
+      "ua": ["розмитість наміру", "блукання між варіантами"],
+      "en": ["blurred intention", "wandering among options"]
     },
     "advice": {
-      "ua": [
-        "Назви головну мету дня і запиши її одним реченням.",
-        "Почни з символічної дії, що підтверджує намір.",
-        "Поділися планом з людиною, якій довіряєш для підтримки."
-      ],
-      "en": [
-        "Focus intention and mark the start."
-      ]
+      "ua": ["Назви головне однією фразою.", "Обери одне ядро і притягни довкола нього дії."],
+      "en": ["Name the core in one phrase.", "Choose one nucleus and pull actions around it."]
     }
   },
   "2": {
-    "name": {
-      "ua": "Тон 2 — Подвійність",
-      "en": "Tone 2 — Duality"
+    "name": { "ua": "Тон 2 — Лунарний", "en": "Tone 2 — Lunar" },
+    "alias": { "ua": "Виклик", "en": "Challenge" },
+    "essence": {
+      "ua": "Лунарний тон показує полярності і тертя. Контраст виявляє слабкі місця системи і уточнює вибір.",
+      "en": "The Lunar tone reveals polarities and friction. Contrast exposes system weak spots and refines the choice."
     },
-    "keywords": {
-      "ua": [
-        "вибір",
-        "баланс",
-        "партнерство"
-      ],
-      "en": [
-        "choice",
-        "balance"
-      ]
+    "fields": {
+      "ua": ["тестування рішення", "робота з полярностями", "розв’язання протиріч"],
+      "en": ["testing decisions", "working with polarities", "resolving contradictions"]
     },
     "qualities": {
-      "ua": [
-        "усвідомлений вибір",
-        "баланс протилежностей",
-        "партнерство"
-      ],
-      "en": [
-        "comparison",
-        "polarity"
-      ]
+      "ua": ["усвідомлення дуальності", "чесність до ризиків"],
+      "en": ["duality awareness", "honesty about risks"]
     },
     "challenges": {
-      "ua": [
-        "вагання між сценаріями",
-        "порівняння себе з іншими",
-        "пошук схвалення"
-      ],
-      "en": [
-        "doubt",
-        "indecision"
-      ]
+      "ua": ["коливання між крайнощами", "застрягання в сумнівах"],
+      "en": ["swinging between extremes", "stalling in doubts"]
     },
     "advice": {
-      "ua": [
-        "Визнач два варіанти і пропиши плюси кожного.",
-        "Обери те, що підтримує твою енергію зараз.",
-        "Узгодь рішення з партнером чи командою, щоб закріпити баланс."
-      ],
-      "en": [
-        "Choose one path and keep balance."
-      ]
+      "ua": ["Назви дві крайності і знайди робочу середину.", "Сформулюй критерій, що переважує."],
+      "en": ["Name the two extremes and find a working middle.", "Formulate the deciding criterion."]
     }
   },
   "3": {
-    "name": {
-      "ua": "Тон 3 — Рух",
-      "en": "Tone 3 — Movement"
+    "name": { "ua": "Тон 3 — Електричний", "en": "Tone 3 — Electric" },
+    "alias": { "ua": "Служіння", "en": "Service" },
+    "essence": {
+      "ua": "Електричний тон запускає рух через взаємодію і корисність. Енергія тече, коли є адресат дії.",
+      "en": "The Electric tone starts motion through interaction and usefulness. Energy flows when action has a recipient."
     },
-    "keywords": {
-      "ua": [
-        "рух",
-        "дія",
-        "комунікація"
-      ],
-      "en": [
-        "action",
-        "communication"
-      ]
+    "fields": {
+      "ua": ["співпраця", "користь/сервіс", "старт дій"],
+      "en": ["collaboration", "usefulness/service", "action start"]
     },
     "qualities": {
-      "ua": [
-        "динаміка",
-        "живе спілкування",
-        "ритм дії"
-      ],
-      "en": [
-        "expression",
-        "dynamics"
-      ]
+      "ua": ["залученість", "динаміка", "зв’язність"],
+      "en": ["engagement", "dynamics", "connectedness"]
     },
     "challenges": {
-      "ua": [
-        "хаотичні стрибки між задачами",
-        "перевантаження контактами",
-        "непослідовні повідомлення"
-      ],
-      "en": [
-        "chaos",
-        "overload"
-      ]
+      "ua": ["розпорошення на дрібниці", "активність без адресата"],
+      "en": ["dilution on trivia", "activity without a target"]
     },
     "advice": {
-      "ua": [
-        "Розбий день на короткі ривки з конкретною дією.",
-        "Говори просто та слухай відповідь, щоб не губити ритм.",
-        "Завершуй розмови підсумком, аби рух залишався ясним."
-      ],
-      "en": [
-        "Act in small steps and express clearly."
-      ]
+      "ua": ["Обери, кому саме допомагає твоя дія.", "Зроби перший малий жест корисності."],
+      "en": ["Choose the exact beneficiary of your action.", "Make a small first gesture of service."]
     }
   },
   "4": {
-    "name": {
-      "ua": "Тон 4 — Структура",
-      "en": "Tone 4 — Structure"
+    "name": { "ua": "Тон 4 — Самовизначальний", "en": "Tone 4 — Self-Existing" },
+    "alias": { "ua": "Форма", "en": "Definition" },
+    "essence": {
+      "ua": "Самовизначальний тон дає форму і структуру. Обмеження стають рамкою, в якій проявляється суть.",
+      "en": "The Self-Existing tone gives form and structure. Constraints become a frame where essence takes shape."
     },
-    "keywords": {
-      "ua": [
-        "структура",
-        "стабільність",
-        "порядок",
-        "системність"
-      ],
-      "en": [
-        "structure",
-        "stability",
-        "order",
-        "system"
-      ]
+    "fields": {
+      "ua": ["структурування", "правила і критерії", "макет/схема"],
+      "en": ["structuring", "rules and criteria", "layout/schema"]
     },
     "qualities": {
-      "ua": [
-        "стабільність і структура, що надають формі межі",
-        "послідовність і опора, яка тримає курс",
-        "практична організація щоденних кроків"
-      ],
-      "en": [
-        "stability and structure that shape clear boundaries",
-        "sequence and support that keep the course",
-        "practical organization of everyday steps"
-      ]
+      "ua": ["чіткість", "каркас", "методичність"],
+      "en": ["clarity", "framework", "method"]
     },
     "challenges": {
-      "ua": [
-        "ригідність правил і перфекціонізм",
-        "надмірний контроль та страх змін",
-        "застиглі процеси без простору для гнучкості"
-      ],
-      "en": [
-        "rigidity and perfectionism",
-        "overcontrol and fear of change",
-        "stalled processes that lack flexibility"
-      ]
+      "ua": ["заригіднення у формах", "перевантаження правилами"],
+      "en": ["rigidity of forms", "overloading with rules"]
     },
     "advice": {
-      "ua": [
-        "Працюй через прості повторювані ритуали, що тримають ритм.",
-        "Тримай межі, але залишай місце для коригувань у процесі.",
-        "Раз на день перевіряй, чи структура служить добру справи, і м’яко підлаштовуй."
-      ],
-      "en": [
-        "Work through simple repeatable rituals that hold the rhythm.",
-        "Keep boundaries yet leave room for course corrections.",
-        "Check daily whether the structure serves the good work and adjust gently."
-      ]
+      "ua": ["Опиши мінімальний каркас у 3–5 пунктах.", "Вистав обмеження, які допомагають, а не душать."],
+      "en": ["Outline a minimal 3–5 point frame.", "Set constraints that help, not choke."]
     }
   },
   "5": {
-    "name": {
-      "ua": "Тон 5 — Сила",
-      "en": "Tone 5 — Power"
+    "name": { "ua": "Тон 5 — Обертонний", "en": "Tone 5 — Overtone" },
+    "alias": { "ua": "Підсилення", "en": "Empowerment" },
+    "essence": {
+      "ua": "Обертонний тон підсилює ядро і надає ресурсу. Він робить важливе помітним і живить його.",
+      "en": "The Overtone tone amplifies the core and provides resource. It makes the essential visible and nourishes it."
     },
-    "keywords": {
-      "ua": [
-        "ресурси",
-        "сила",
-        "опора"
-      ],
-      "en": [
-        "resources",
-        "power"
-      ]
+    "fields": {
+      "ua": ["ресурсування", "виділення головного", "підтримка системи"],
+      "en": ["resourcing", "highlighting the essential", "system support"]
     },
     "qualities": {
-      "ua": [
-        "внутрішня опора",
-        "підсилення ресурсів",
-        "вміння мобілізувати команду"
-      ],
-      "en": [
-        "confidence",
-        "self-sufficiency"
-      ]
+      "ua": ["сила", "самоповага", "щедрість"],
+      "en": ["strength", "self-respect", "generosity"]
     },
     "challenges": {
-      "ua": [
-        "надмірний контроль",
-        "спокуса робити все самостійно",
-        "витрачання сил на дрібниці"
-      ],
-      "en": [
-        "arrogance",
-        "control"
-      ]
+      "ua": ["показність без змісту", "перегодування другорядного"],
+      "en": ["flash without substance", "overfeeding the secondary"]
     },
     "advice": {
-      "ua": [
-        "Оціни свої ресурси і визнач, що підсилює тебе.",
-        "Передай частину завдань тим, хто готовий долучитись.",
-        "Підтримай тіло: харчування та відпочинок — джерело сили."
-      ],
-      "en": [
-        "Use resources wisely."
-      ]
+      "ua": ["Підживи одне ключове місце (часом/увагою/ресурсом).", "Скажи собі чітке «можу» там, де сумнівався."],
+      "en": ["Nourish one key place (with time/attention/resource).", "Tell yourself a clear “I can” where you doubted."]
     }
   },
   "6": {
-    "name": {
-      "ua": "Тон 6 — Потік",
-      "en": "Tone 6 — Flow"
+    "name": { "ua": "Тон 6 — Ритмічний", "en": "Tone 6 — Rhythmic" },
+    "alias": { "ua": "Організація", "en": "Organization" },
+    "essence": {
+      "ua": "Ритмічний тон вирівнює і організовує. Баланс між лівим і правим, роботою і відпочинком дає стійкість.",
+      "en": "The Rhythmic tone aligns and organizes. Balancing left and right, work and rest, creates stability."
     },
-    "keywords": {
-      "ua": [
-        "потік",
-        "ритм",
-        "узгодженість"
-      ],
-      "en": [
-        "rhythm",
-        "harmony"
-      ]
+    "fields": {
+      "ua": ["балансування навантаження", "рутини/цикли", "тайм-менеджмент"],
+      "en": ["load balancing", "routines/cycles", "time management"]
     },
     "qualities": {
-      "ua": [
-        "узгоджений рух",
-        "стала продуктивність",
-        "лагідний ритм"
-      ],
-      "en": [
-        "coordination",
-        "efficiency"
-      ]
+      "ua": ["сталість", "узгодженість", "економність руху"],
+      "en": ["steadiness", "coherence", "economy of motion"]
     },
     "challenges": {
-      "ua": [
-        "перевтома від безперервності",
-        "відчуття рутини",
-        "розтягування задач без завершення"
-      ],
-      "en": [
-        "routine",
-        "exhaustion"
-      ]
+      "ua": ["перекоси в одну сторону", "втома від монотонності"],
+      "en": ["leaning to one side", "fatigue from monotony"]
     },
     "advice": {
-      "ua": [
-        "Працюй циклами: активність, перерва, повтор.",
-        "Відстежуй, де ритм природний, а де нав’язаний.",
-        "Додавай невеликі радості, щоб потік залишався живим."
-      ],
-      "en": [
-        "Find rhythm and maintain it."
-      ]
+      "ua": ["Вирівняй день: що забрати, що додати для балансу.", "Один простий ритм — щодня."],
+      "en": ["Level your day: what to remove and add for balance.", "One simple rhythm — daily."]
     }
   },
   "7": {
-    "name": {
-      "ua": "Тон 7 — Резонанс",
-      "en": "Tone 7 — Resonance"
+    "name": { "ua": "Тон 7 — Резонансний", "en": "Tone 7 — Resonant" },
+    "alias": { "ua": "Налаштування", "en": "Attunement" },
+    "essence": {
+      "ua": "Резонансний тон налаштовує на частоту наміру. Слухання і тонке відчуття коригують курс без зайвих зусиль.",
+      "en": "The Resonant tone tunes to the frequency of intention. Listening and subtle sensing adjust the course effortlessly."
     },
-    "keywords": {
-      "ua": [
-        "резонанс",
-        "баланс",
-        "інтуїція"
-      ],
-      "en": [
-        "balance",
-        "spirituality"
-      ]
+    "fields": {
+      "ua": ["інтуїтивні рішення", "коригування траєкторії", "тиха присутність"],
+      "en": ["intuitive decisions", "trajectory tuning", "quiet presence"]
     },
     "qualities": {
-      "ua": [
-        "глибинне чуття",
-        "внутрішня рівновага",
-        "духовний зв’язок"
-      ],
-      "en": [
-        "perceptiveness",
-        "receptivity"
-      ]
+      "ua": ["чутливість", "довіра", "співзвучність"],
+      "en": ["sensitivity", "trust", "consonance"]
     },
     "challenges": {
-      "ua": [
-        "сумніви у власному голосі",
-        "відчуття ізоляції",
-        "переважання мрій над дією"
-      ],
-      "en": [
-        "doubt",
-        "detachment"
-      ]
+      "ua": ["надмірна вразливість", "розчинення у сигналах"],
+      "en": ["over-sensitivity", "dissolving in signals"]
     },
     "advice": {
-      "ua": [
-        "Прислухайся до тілесних відгуків перед рішенням.",
-        "Підтримуй зв’язок з наставником або групою однодумців.",
-        "Заземлюй прозріння маленькою практичною дією."
-      ],
-      "en": [
-        "Listen to inner resonance."
-      ]
+      "ua": ["Зупинись і послухай — що відгукується зараз?", "Відкоригуй план на 1–2 кроки, не все одразу."],
+      "en": ["Pause and listen — what resonates now?", "Adjust the plan by 1–2 steps, not all at once."]
     }
   },
   "8": {
-    "name": {
-      "ua": "Тон 8 — Гармонія",
-      "en": "Tone 8 — Harmony"
+    "name": { "ua": "Тон 8 — Галактичний", "en": "Tone 8 — Galactic" },
+    "alias": { "ua": "Цілісність", "en": "Integrity" },
+    "essence": {
+      "ua": "Галактичний тон звіряє дії з цінностями. Цілісність зшиває форму і сенс у єдине тіло.",
+      "en": "The Galactic tone checks actions against values. Integrity stitches form and meaning into one body."
     },
-    "keywords": {
-      "ua": [
-        "гармонія",
-        "рівновага",
-        "справедливість"
-      ],
-      "en": [
-        "equilibrium",
-        "justice"
-      ]
+    "fields": {
+      "ua": ["етика і принципи", "рев’ю відповідності", "узгодження команди"],
+      "en": ["ethics and principles", "compliance review", "team alignment"]
     },
     "qualities": {
-      "ua": [
-        "справедливий обмін",
-        "зріла відповідальність",
-        "естетичний баланс"
-      ],
-      "en": [
-        "balancing",
-        "peacemaking"
-      ]
+      "ua": ["узгодженість", "відповідальність", "надійність"],
+      "en": ["alignment", "responsibility", "reliability"]
     },
     "challenges": {
-      "ua": [
-        "завелике прагнення досконалості",
-        "відкладання через пошук компромісу",
-        "перенавантаження обов’язками"
-      ],
-      "en": [
-        "indecision",
-        "compromise"
-      ]
+      "ua": ["розрив між словами і діями", "догматизм"],
+      "en": ["gap between words and actions", "dogmatism"]
     },
     "advice": {
-      "ua": [
-        "Збалансуй графік: робота, турбота, відпочинок.",
-        "Домовляйся про чесні умови обміну.",
-        "Підкреслюй красу в дрібницях, щоб підтримати гармонію."
-      ],
-      "en": [
-        "Align inner and outer sides."
-      ]
+      "ua": ["Назви 2–3 принципи й під них підлаштуй дії.", "Скасуй те, що суперечить базовим цінностям."],
+      "en": ["Name 2–3 principles and fit actions to them.", "Cancel what contradicts your base values."]
     }
   },
   "9": {
-    "name": {
-      "ua": "Тон 9 — Намір досягнення",
-      "en": "Tone 9 — Intention of Achievement"
+    "name": { "ua": "Тон 9 — Сонячний", "en": "Tone 9 — Solar" },
+    "alias": { "ua": "Намір", "en": "Intention" },
+    "essence": {
+      "ua": "Сонячний тон запалює намір у дію. Згусток волі спрямовує енергію в одну точку прояву.",
+      "en": "The Solar tone ignites intention into action. A knot of will directs energy to a single point of manifestation."
     },
-    "keywords": {
-      "ua": [
-        "досягнення",
-        "фініш",
-        "наміри"
-      ],
-      "en": [
-        "patience",
-        "completion"
-      ]
+    "fields": {
+      "ua": ["прийняття рішення", "внутрішній вогонь", "цілеспрямованість"],
+      "en": ["decision making", "inner fire", "single-mindedness"]
     },
     "qualities": {
-      "ua": [
-        "стійка мотивація",
-        "бачення фінішу",
-        "прискорення перед завершенням"
-      ],
-      "en": [
-        "perseverance",
-        "awareness"
-      ]
+      "ua": ["воля", "прямота", "натхнення"],
+      "en": ["will", "directness", "inspiration"]
     },
     "challenges": {
-      "ua": [
-        "втома наприкінці шляху",
-        "нетерплячість до проміжних результатів",
-        "страх не виправдати очікування"
-      ],
-      "en": [
-        "delays",
-        "disappointment"
-      ]
+      "ua": ["імпульсивність", "емоційні спалахи"],
+      "en": ["impulsiveness", "emotional flare-ups"]
     },
     "advice": {
-      "ua": [
-        "Розбий фінальний етап на невеликі перемоги.",
-        "Нагадуй собі, чому важливо довести справу до кінця.",
-        "Залучай підтримку, щоб поділитися відповідальністю."
-      ],
-      "en": [
-        "Be patient and finish the task."
-      ]
+      "ua": ["Сфокусуй намір на одному результаті.", "Зроби маленький, але видимий крок уперед."],
+      "en": ["Focus intention on one result.", "Make a small yet visible step forward."]
     }
   },
   "10": {
-    "name": {
-      "ua": "Тон 10 — Прояв",
-      "en": "Tone 10 — Manifestation"
+    "name": { "ua": "Тон 10 — Планетарний", "en": "Tone 10 — Planetary" },
+    "alias": { "ua": "Маніфестація", "en": "Manifestation" },
+    "essence": {
+      "ua": "Планетарний тон матеріалізує. Він перетворює задум на конкретний результат, який можна побачити та виміряти.",
+      "en": "The Planetary tone materializes. It turns the design into a concrete, visible and measurable outcome."
     },
-    "keywords": {
-      "ua": [
-        "прояв",
-        "результат",
-        "практичність"
-      ],
-      "en": [
-        "result",
-        "manifestation"
-      ]
+    "fields": {
+      "ua": ["результат і метрики", "здача робіт", "практичний ефект"],
+      "en": ["results & metrics", "delivery", "practical effect"]
     },
     "qualities": {
-      "ua": [
-        "конкретність",
-        "матеріалізація",
-        "відповідальність за результат"
-      ],
-      "en": [
-        "materialization",
-        "practicality"
-      ]
+      "ua": ["практичність", "доведення", "видимість"],
+      "en": ["practicality", "follow-through", "visibility"]
     },
     "challenges": {
-      "ua": [
-        "перфекціонізм",
-        "виснаження від гонитви",
-        "порівняння з чужими стандартами"
-      ],
-      "en": [
-        "dissatisfaction",
-        "excess"
-      ]
+      "ua": ["залипання на виправленнях", "страх показати незавершене"],
+      "en": ["perfectionist fixing", "fear to show the unfinished"]
     },
     "advice": {
-      "ua": [
-        "Затверди чіткий критерій успіху і дотримуйся його.",
-        "Відслідковуй прогрес цифрами чи фактами.",
-        "Відзначай досягнуте, перш ніж бігти далі."
-      ],
-      "en": [
-        "Pay attention to practical results."
-      ]
+      "ua": ["Покажи версію, яку вже можна оцінити.", "Визнач 1–3 метрики і запиши результат."],
+      "en": ["Show a version ready to be judged.", "Set 1–3 metrics and log the outcome."]
     }
   },
   "11": {
-    "name": {
-      "ua": "Тон 11",
-      "en": "Tone 11"
-    },
-    "alias": {
-      "ua": "Звільнення",
-      "en": "Release"
-    },
+    "name": { "ua": "Тон 11 — Спектральний", "en": "Tone 11 — Spectral" },
+    "alias": { "ua": "Звільнення", "en": "Release" },
     "essence": {
-      "ua": "Тон 11 — звільнення і розчинення зайвого. Він скидає те, що віджило, розв’язує вузли та відкриває простір для оновлення. Його хід — розпаковувати напругу, прибирати перешкоди, полегшувати шлях.",
-      "en": "Tone 11 releases and dissolves the excess. It loosens knots and opens space for renewal. Its movement is to unpack tension, remove obstacles, and lighten the path."
-    },
-    "keywords": {
-      "ua": [
-        "звільнення",
-        "очищення",
-        "детокс",
-        "спрощення",
-        "простір"
-      ],
-      "en": [
-        "release",
-        "cleansing",
-        "detox",
-        "simplification",
-        "space"
-      ]
-    },
-    "qualities": {
-      "ua": [
-        "вміння відпускати",
-        "детокс простору, стосунків і звичок",
-        "свіжий подих після очищення"
-      ],
-      "en": [
-        "ability to let go",
-        "detox of space, ties and habits",
-        "fresh breath after cleansing"
-      ]
-    },
-    "challenges": {
-      "ua": [
-        "відчуття хаосу під час розпаду старого",
-        "руйнування без структури, нетерплячість"
-      ],
-      "en": [
-        "a sense of chaos while the old falls apart",
-        "destruction without structure, impatience"
-      ]
+      "ua": "Спектральний тон звільняє і розчиняє зайве. Він розв’язує вузли, скидає віджилі форми і відкриває простір для оновлення.",
+      "en": "The Spectral tone releases and dissolves the excess. It loosens knots, sheds outdated forms, and opens space for renewal."
     },
     "fields": {
-      "ua": [
-        "ревізія і прибирання",
-        "спрощення процесів і навантажень",
-        "завершення/архівація незакритого"
-      ],
-      "en": [
-        "revision and clearing",
-        "simplifying processes and loads",
-        "closure/archiving of open loops"
-      ]
+      "ua": ["спрощення і детокс", "закриття петель", "скидання навантаження"],
+      "en": ["simplification & detox", "closing loops", "unloading burden"]
+    },
+    "qualities": {
+      "ua": ["полегшення", "свобода", "протікання"],
+      "en": ["relief", "freedom", "flow"]
+    },
+    "challenges": {
+      "ua": ["відчуття хаосу під час розпаду старого", "нетерплячість"],
+      "en": ["sense of chaos as the old falls apart", "impatience"]
     },
     "advice": {
-      "ua": [
-        "Сьогодні звільни місце: один обов’язок, одна річ або один рядок у списку.",
-        "Дихай глибоко, провітри простір і голову — дай місце новому."
-      ],
-      "en": [
-        "Free some space today: one duty, one item, or one line from the list.",
-        "Breathe, air the room and mind — make room for the new."
-      ]
+      "ua": ["Звільни трохи простору: один обов’язок, один предмет або один рядок у списку.", "Подихай і впусти свіже повітря — дай місце новому."],
+      "en": ["Free a bit of space: one duty, one item, or one line from the list.", "Breathe and air the room — make space for the new."]
     }
   },
   "12": {
-    "name": {
-      "ua": "Тон 12 — Розуміння",
-      "en": "Tone 12 — Understanding"
+    "name": { "ua": "Тон 12 — Кристалічний", "en": "Tone 12 — Crystal" },
+    "alias": { "ua": "Співпраця", "en": "Cooperation" },
+    "essence": {
+      "ua": "Кристалічний тон збирає мережу взаємодії. Обмін і спільне налаштування дають прозору архітектуру процесу.",
+      "en": "The Crystal tone weaves the network of interaction. Exchange and co-tuning create a transparent architecture of the process."
     },
-    "keywords": {
-      "ua": [
-        "розуміння",
-        "спільність",
-        "узгодження"
-      ],
-      "en": [
-        "integration",
-        "community"
-      ]
+    "fields": {
+      "ua": ["командна синхронізація", "ретроспектива й обмін досвідом", "угоди та ролі"],
+      "en": ["team synchronization", "retrospective & knowledge share", "agreements and roles"]
     },
     "qualities": {
-      "ua": [
-        "спільне розуміння",
-        "командна мудрість",
-        "узагальнення досвіду"
-      ],
-      "en": [
-        "communication",
-        "connection"
-      ]
+      "ua": ["прозорість", "спільність", "комунікабельність"],
+      "en": ["transparency", "communality", "communicability"]
     },
     "challenges": {
-      "ua": [
-        "застрягання у дискусіях",
-        "розмиті домовленості",
-        "перенасичення інформацією"
-      ],
-      "en": [
-        "misunderstanding",
-        "conflicts"
-      ]
+      "ua": ["зайві наради", "розмитість відповідальності"],
+      "en": ["meeting overload", "blurred accountability"]
     },
     "advice": {
-      "ua": [
-        "Підсумуй основні ідеї та поділися ними з командою.",
-        "Запитай інших про їхні потреби перед остаточним рішенням.",
-        "Створи спільний документ або ритуал, що закріплює уроки."
-      ],
-      "en": [
-        "Integrate knowledge and share it."
-      ]
+      "ua": ["Зустрінься для обміну по суті (коротко).", "Уточни ролі й очікування у 2–3 реченнях."],
+      "en": ["Meet to exchange essentials (briefly).", "Clarify roles and expectations in 2–3 sentences."]
     }
   },
   "13": {
-    "name": {
-      "ua": "Тон 13 — Трансформація",
-      "en": "Tone 13 — Transformation"
+    "name": { "ua": "Тон 13 — Космічний", "en": "Tone 13 — Cosmic" },
+    "alias": { "ua": "Присутність", "en": "Presence" },
+    "essence": {
+      "ua": "Космічний тон завершує цикл і відкриває новий через присутність. Це тиха повнота, у якій підсумок стає джерелом.",
+      "en": "The Cosmic tone completes the cycle and opens a new one through presence. It is the quiet fullness where the summary becomes a source."
     },
-    "keywords": {
-      "ua": [
-        "трансформація",
-        "завершення",
-        "новий цикл"
-      ],
-      "en": [
-        "completion",
-        "transition"
-      ]
+    "fields": {
+      "ua": ["завершення і інтеграція", "відпочинок/простір між", "усвідомленість"],
+      "en": ["completion & integration", "rest/the space between", "mindfulness"]
     },
     "qualities": {
-      "ua": [
-        "завершення циклу",
-        "прозріння",
-        "перехід у новий рівень"
-      ],
-      "en": [
-        "insight",
-        "change"
-      ]
+      "ua": ["цілісність", "спокій", "безчасся"],
+      "en": ["wholeness", "calm", "timelessness"]
     },
     "challenges": {
-      "ua": [
-        "непередбачувані зміни",
-        "сум за минулим",
-        "страх стрибка у невідоме"
-      ],
-      "en": [
-        "chaos",
-        "unpredictability"
-      ]
+      "ua": ["втрата темпу", "залипання у підсумках замість руху"],
+      "en": ["loss of tempo", "stuck in summaries instead of moving"]
     },
     "advice": {
-      "ua": [
-        "Поглянь назад і подякуй за уроки циклу.",
-        "Окресли наступний намір, опираючись на здобутий досвід.",
-        "Зроби символічний крок у нове — навіть маленький жест."
-      ],
-      "en": [
-        "Be ready for a leap into the new."
-      ]
+      "ua": ["Відчуй завершення і подякуй циклу.", "Зроби м’який перехід: мікровідпочинок перед новим стартом."],
+      "en": ["Sense completion and thank the cycle.", "Make a soft transition: micro-rest before the new start."]
     }
   }
 }
