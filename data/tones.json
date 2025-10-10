@@ -6,46 +6,64 @@
       "ua": "Магнітний тон збирає намір у єдину точку тяжіння. Він об’єднує розфокусовані сили довкола ядра сенсу і задає напрямок циклу.",
       "en": "The Magnetic tone gathers intention into a single point of gravity. It unifies dispersed forces around a core meaning and sets the cycle’s direction."
     },
-    "fields": {
-      "ua": ["формування наміру", "початок циклу", "визначення фокусу"],
-      "en": ["intention setting", "cycle initiation", "focus definition"]
-    },
-    "qualities": {
-      "ua": ["єдність", "притягнення", "зосередження"],
-      "en": ["unity", "attraction", "focus"]
-    },
     "challenges": {
-      "ua": ["розмитість наміру", "блукання між варіантами"],
-      "en": ["blurred intention", "wandering among options"]
+      "ua": ["розмитість наміру", "блукання між варіантами", "втрата фокусу на старті"],
+      "en": ["blurred intention", "wandering among options", "lost focus at start"]
     },
-    "advice": {
-      "ua": ["Назви головне однією фразою.", "Обери одне ядро і притягни довкола нього дії."],
-      "en": ["Name the core in one phrase.", "Choose one nucleus and pull actions around it."]
-    }
+    "synergy_patterns": {
+      "ua": ["притягує потрібні ресурси", "об’єднує навколо сенсу", "вказує початковий вектор"],
+      "en": ["attracts needed resources", "unifies around meaning", "points the initial vector"]
+    },
+    "imagery": {
+      "ua": ["ядро, до якого сходяться лінії", "компас, що фіксує північ"],
+      "en": ["a core with lines converging", "a compass fixing north"]
+    },
+    "advice_short": {
+      "ua": "Назви головне в одній фразі.",
+      "en": "Name the core in one phrase."
+    },
+    "advice_long": {
+      "ua": "Обери одне ядро і притягни довкола нього дії — прибері другорядне зі старту.",
+      "en": "Choose one nucleus and pull actions around it—strip the secondary from the start."
+    },
+    "questions": {
+      "ua": ["Що я насправді хочу запустити?", "Яке формулювання наміру просте і ясне?"],
+      "en": ["What do I truly want to start?", "What is the simplest clear intention?"]
+    },
+    "symbol": { "ua": "Purpose • 1", "en": "Purpose • 1" }
   },
   "2": {
     "name": { "ua": "Тон 2 — Лунарний", "en": "Tone 2 — Lunar" },
     "alias": { "ua": "Виклик", "en": "Challenge" },
     "essence": {
       "ua": "Лунарний тон показує полярності і тертя. Контраст виявляє слабкі місця системи і уточнює вибір.",
-      "en": "The Lunar tone reveals polarities and friction. Contrast exposes system weak spots and refines the choice."
-    },
-    "fields": {
-      "ua": ["тестування рішення", "робота з полярностями", "розв’язання протиріч"],
-      "en": ["testing decisions", "working with polarities", "resolving contradictions"]
-    },
-    "qualities": {
-      "ua": ["усвідомлення дуальності", "чесність до ризиків"],
-      "en": ["duality awareness", "honesty about risks"]
+      "en": "The Lunar tone reveals polarities and friction. Contrast exposes weak spots and refines the choice."
     },
     "challenges": {
-      "ua": ["коливання між крайнощами", "застрягання в сумнівах"],
-      "en": ["swinging between extremes", "stalling in doubts"]
+      "ua": ["коливання між крайнощами", "застрягання в сумнівах", "розщеплення уваги"],
+      "en": ["swinging between extremes", "stalling in doubts", "split attention"]
     },
-    "advice": {
-      "ua": ["Назви дві крайності і знайди робочу середину.", "Сформулюй критерій, що переважує."],
-      "en": ["Name the two extremes and find a working middle.", "Formulate the deciding criterion."]
-    }
+    "synergy_patterns": {
+      "ua": ["прояснює дві сторони питання", "тестує життєздатність рішення", "шукає робочу середину"],
+      "en": ["clarifies both sides", "stress-tests the decision", "seeks a working middle"]
+    },
+    "imagery": {
+      "ua": ["ваги з двома чашами", "лінія між світлом і тінню"],
+      "en": ["scales with two pans", "line between light and shadow"]
+    },
+    "advice_short": {
+      "ua": "Назви дві крайності.",
+      "en": "Name the two extremes."
+    },
+    "advice_long": {
+      "ua": "Визнач критерій, що переважує, і зроби крок у бік практичної рівноваги.",
+      "en": "Define the deciding criterion and step toward practical balance."
+    },
+    "questions": {
+      "ua": ["Які дві протилежності я бачу?", "Що змусить мене обрати?"],
+      "en": ["What two opposites do I see?", "What makes me choose?"]
+    },
+    "symbol": { "ua": "Challenge • 2", "en": "Challenge • 2" }
   },
   "3": {
     "name": { "ua": "Тон 3 — Електричний", "en": "Tone 3 — Electric" },
@@ -54,22 +72,31 @@
       "ua": "Електричний тон запускає рух через взаємодію і корисність. Енергія тече, коли є адресат дії.",
       "en": "The Electric tone starts motion through interaction and usefulness. Energy flows when action has a recipient."
     },
-    "fields": {
-      "ua": ["співпраця", "користь/сервіс", "старт дій"],
-      "en": ["collaboration", "usefulness/service", "action start"]
-    },
-    "qualities": {
-      "ua": ["залученість", "динаміка", "зв’язність"],
-      "en": ["engagement", "dynamics", "connectedness"]
-    },
     "challenges": {
-      "ua": ["розпорошення на дрібниці", "активність без адресата"],
-      "en": ["dilution on trivia", "activity without a target"]
+      "ua": ["активність без адресата", "розпорошення на дрібниці"],
+      "en": ["activity without a target", "dilution on trivia"]
     },
-    "advice": {
-      "ua": ["Обери, кому саме допомагає твоя дія.", "Зроби перший малий жест корисності."],
-      "en": ["Choose the exact beneficiary of your action.", "Make a small first gesture of service."]
-    }
+    "synergy_patterns": {
+      "ua": ["дає імпульс через співпрацю", "спрямовує енергію в корисну дію"],
+      "en": ["sparks via collaboration", "channels energy into useful action"]
+    },
+    "imagery": {
+      "ua": ["іскра, що запалює лампу", "долоні, що передають імпульс"],
+      "en": ["a spark lighting a lamp", "hands passing a charge"]
+    },
+    "advice_short": {
+      "ua": "Визнач конкретного адресата.",
+      "en": "Choose a concrete beneficiary."
+    },
+    "advice_long": {
+      "ua": "Зроби перший малий жест користі — і енергія піде по провіднику.",
+      "en": "Make a small first gesture of service—the energy will find its wire."
+    },
+    "questions": {
+      "ua": ["Кому саме це допоможе?", "Який найменший корисний крок?"],
+      "en": ["Who exactly benefits?", "What is the smallest useful step?"]
+    },
+    "symbol": { "ua": "Service • 3", "en": "Service • 3" }
   },
   "4": {
     "name": { "ua": "Тон 4 — Самовизначальний", "en": "Tone 4 — Self-Existing" },
@@ -78,22 +105,31 @@
       "ua": "Самовизначальний тон дає форму і структуру. Обмеження стають рамкою, в якій проявляється суть.",
       "en": "The Self-Existing tone gives form and structure. Constraints become a frame where essence takes shape."
     },
-    "fields": {
-      "ua": ["структурування", "правила і критерії", "макет/схема"],
-      "en": ["structuring", "rules and criteria", "layout/schema"]
-    },
-    "qualities": {
-      "ua": ["чіткість", "каркас", "методичність"],
-      "en": ["clarity", "framework", "method"]
-    },
     "challenges": {
       "ua": ["заригіднення у формах", "перевантаження правилами"],
       "en": ["rigidity of forms", "overloading with rules"]
     },
-    "advice": {
-      "ua": ["Опиши мінімальний каркас у 3–5 пунктах.", "Вистав обмеження, які допомагають, а не душать."],
-      "en": ["Outline a minimal 3–5 point frame.", "Set constraints that help, not choke."]
-    }
+    "synergy_patterns": {
+      "ua": ["окреслює мінімальний каркас", "визначає критерії і межі", "спрощує схему дій"],
+      "en": ["frames a minimal scaffold", "sets criteria and limits", "simplifies the action scheme"]
+    },
+    "imagery": {
+      "ua": ["креслення з простими лініями", "каркас із чотирьох опор"],
+      "en": ["a simple line blueprint", "a frame with four pillars"]
+    },
+    "advice_short": {
+      "ua": "Опиши каркас 3–5 пунктами.",
+      "en": "Outline a 3–5 point frame."
+    },
+    "advice_long": {
+      "ua": "Вистав обмеження, які допомагають рухатись, а не душать — і тримайся їх.",
+      "en": "Set constraints that help movement, not choke it—and keep them."
+    },
+    "questions": {
+      "ua": ["Які межі корисні зараз?", "Яка мінімальна структура достатня?"],
+      "en": ["What limits help now?", "What minimal structure is enough?"]
+    },
+    "symbol": { "ua": "Definition • 4", "en": "Definition • 4" }
   },
   "5": {
     "name": { "ua": "Тон 5 — Обертонний", "en": "Tone 5 — Overtone" },
@@ -102,22 +138,31 @@
       "ua": "Обертонний тон підсилює ядро і надає ресурсу. Він робить важливе помітним і живить його.",
       "en": "The Overtone tone amplifies the core and provides resource. It makes the essential visible and nourishes it."
     },
-    "fields": {
-      "ua": ["ресурсування", "виділення головного", "підтримка системи"],
-      "en": ["resourcing", "highlighting the essential", "system support"]
-    },
-    "qualities": {
-      "ua": ["сила", "самоповага", "щедрість"],
-      "en": ["strength", "self-respect", "generosity"]
-    },
     "challenges": {
-      "ua": ["показність без змісту", "перегодування другорядного"],
+      "ua": ["показність без змісту", "перегодовування другорядного"],
       "en": ["flash without substance", "overfeeding the secondary"]
     },
-    "advice": {
-      "ua": ["Підживи одне ключове місце (часом/увагою/ресурсом).", "Скажи собі чітке «можу» там, де сумнівався."],
-      "en": ["Nourish one key place (with time/attention/resource).", "Tell yourself a clear “I can” where you doubted."]
-    }
+    "synergy_patterns": {
+      "ua": ["виділяє головне", "додає паливо туди, де ефект найбільший"],
+      "en": ["highlights the essential", "adds fuel where effect is highest"]
+    },
+    "imagery": {
+      "ua": ["промінь світла на ключовій деталі", "резервуар, що наповнюється"],
+      "en": ["a spotlight on a key detail", "a reservoir filling up"]
+    },
+    "advice_short": {
+      "ua": "Підживи одне ключове місце.",
+      "en": "Nourish one key spot."
+    },
+    "advice_long": {
+      "ua": "Скажи собі чітке «можу» і підсиль дію ресурсом: часом, увагою чи підтримкою.",
+      "en": "Say a clear “I can” and empower the action with time, attention or support."
+    },
+    "questions": {
+      "ua": ["Що тут головне?", "Що принесе найбільший приріст сили?"],
+      "en": ["What is essential here?", "What brings the biggest power gain?"]
+    },
+    "symbol": { "ua": "Empower • 5", "en": "Empower • 5" }
   },
   "6": {
     "name": { "ua": "Тон 6 — Ритмічний", "en": "Tone 6 — Rhythmic" },
@@ -126,22 +171,31 @@
       "ua": "Ритмічний тон вирівнює і організовує. Баланс між лівим і правим, роботою і відпочинком дає стійкість.",
       "en": "The Rhythmic tone aligns and organizes. Balancing left and right, work and rest, creates stability."
     },
-    "fields": {
-      "ua": ["балансування навантаження", "рутини/цикли", "тайм-менеджмент"],
-      "en": ["load balancing", "routines/cycles", "time management"]
-    },
-    "qualities": {
-      "ua": ["сталість", "узгодженість", "економність руху"],
-      "en": ["steadiness", "coherence", "economy of motion"]
-    },
     "challenges": {
       "ua": ["перекоси в одну сторону", "втома від монотонності"],
       "en": ["leaning to one side", "fatigue from monotony"]
     },
-    "advice": {
-      "ua": ["Вирівняй день: що забрати, що додати для балансу.", "Один простий ритм — щодня."],
-      "en": ["Level your day: what to remove and add for balance.", "One simple rhythm — daily."]
-    }
+    "synergy_patterns": {
+      "ua": ["вирівнює навантаження", "будує прості цикли", "узгоджує ліве/праве"],
+      "en": ["balances workload", "builds simple cycles", "aligns left/right"]
+    },
+    "imagery": {
+      "ua": ["маятник, що знаходить середину", "рівномірні кроки"],
+      "en": ["a pendulum finding center", "even steps"]
+    },
+    "advice_short": {
+      "ua": "Вирівняй день: що прибрати, що додати.",
+      "en": "Level your day: what to remove, what to add."
+    },
+    "advice_long": {
+      "ua": "Один простий ритм щодня дає стабільність: час для роботи, відпочинку і переходів.",
+      "en": "One simple daily rhythm breeds stability: time to work, rest, and transition."
+    },
+    "questions": {
+      "ua": ["Де перекіс у навантаженні?", "Який один ритм я можу втримати щодня?"],
+      "en": ["Where is the load imbalance?", "What one rhythm can I keep daily?"]
+    },
+    "symbol": { "ua": "Rhythm • 6", "en": "Rhythm • 6" }
   },
   "7": {
     "name": { "ua": "Тон 7 — Резонансний", "en": "Tone 7 — Resonant" },
@@ -150,22 +204,31 @@
       "ua": "Резонансний тон налаштовує на частоту наміру. Слухання і тонке відчуття коригують курс без зайвих зусиль.",
       "en": "The Resonant tone tunes to the frequency of intention. Listening and subtle sensing adjust the course effortlessly."
     },
-    "fields": {
-      "ua": ["інтуїтивні рішення", "коригування траєкторії", "тиха присутність"],
-      "en": ["intuitive decisions", "trajectory tuning", "quiet presence"]
-    },
-    "qualities": {
-      "ua": ["чутливість", "довіра", "співзвучність"],
-      "en": ["sensitivity", "trust", "consonance"]
-    },
     "challenges": {
       "ua": ["надмірна вразливість", "розчинення у сигналах"],
       "en": ["over-sensitivity", "dissolving in signals"]
     },
-    "advice": {
-      "ua": ["Зупинись і послухай — що відгукується зараз?", "Відкоригуй план на 1–2 кроки, не все одразу."],
-      "en": ["Pause and listen — what resonates now?", "Adjust the plan by 1–2 steps, not all at once."]
-    }
+    "synergy_patterns": {
+      "ua": ["посилює чутливість до правильних сигналів", "коригує курс м’яко і вчасно"],
+      "en": ["heightens sensitivity to right signals", "adjusts course softly and in time"]
+    },
+    "imagery": {
+      "ua": ["налаштована струна", "радар, що ловить потрібну хвилю"],
+      "en": ["a tuned string", "a radar catching the right wave"]
+    },
+    "advice_short": {
+      "ua": "Зупинись і послухай.",
+      "en": "Pause and listen."
+    },
+    "advice_long": {
+      "ua": "Зверни увагу на те, що відгукується — не треба силувати рух, лише налаштуватися.",
+      "en": "Attend to what resonates—no forcing, only tuning."
+    },
+    "questions": {
+      "ua": ["Що відгукується в тілі/серці?", "Що якщо зменшити зусилля і налаштуватися?"],
+      "en": ["What resonates in body/heart?", "What if I reduce effort and tune in?"]
+    },
+    "symbol": { "ua": "Attune • 7", "en": "Attune • 7" }
   },
   "8": {
     "name": { "ua": "Тон 8 — Галактичний", "en": "Tone 8 — Galactic" },
@@ -174,22 +237,31 @@
       "ua": "Галактичний тон звіряє дії з цінностями. Цілісність зшиває форму і сенс у єдине тіло.",
       "en": "The Galactic tone checks actions against values. Integrity stitches form and meaning into one body."
     },
-    "fields": {
-      "ua": ["етика і принципи", "рев’ю відповідності", "узгодження команди"],
-      "en": ["ethics and principles", "compliance review", "team alignment"]
-    },
-    "qualities": {
-      "ua": ["узгодженість", "відповідальність", "надійність"],
-      "en": ["alignment", "responsibility", "reliability"]
-    },
     "challenges": {
       "ua": ["розрив між словами і діями", "догматизм"],
       "en": ["gap between words and actions", "dogmatism"]
     },
-    "advice": {
-      "ua": ["Назви 2–3 принципи й під них підлаштуй дії.", "Скасуй те, що суперечить базовим цінностям."],
-      "en": ["Name 2–3 principles and fit actions to them.", "Cancel what contradicts your base values."]
-    }
+    "synergy_patterns": {
+      "ua": ["узгоджує рішення з принципами", "вирівнює команду довкола цінностей"],
+      "en": ["aligns decisions with principles", "brings team around values"]
+    },
+    "imagery": {
+      "ua": ["вісім променів, що сходяться у центр", "шов, що стягує дві тканини"],
+      "en": ["eight rays converging to a center", "a seam stitching two fabrics"]
+    },
+    "advice_short": {
+      "ua": "Назви 2–3 принципи.",
+      "en": "Name 2–3 principles."
+    },
+    "advice_long": {
+      "ua": "Під них підлаштуй дії і скасуй усе, що суперечить базовим цінностям.",
+      "en": "Fit actions to them and cancel what contradicts your base values."
+    },
+    "questions": {
+      "ua": ["Чому я не зраджу?", "Що тут порушує цінності?"],
+      "en": ["What won’t I betray?", "What violates values here?"]
+    },
+    "symbol": { "ua": "Integrity • 8", "en": "Integrity • 8" }
   },
   "9": {
     "name": { "ua": "Тон 9 — Сонячний", "en": "Tone 9 — Solar" },
@@ -198,22 +270,31 @@
       "ua": "Сонячний тон запалює намір у дію. Згусток волі спрямовує енергію в одну точку прояву.",
       "en": "The Solar tone ignites intention into action. A knot of will directs energy to a single point of manifestation."
     },
-    "fields": {
-      "ua": ["прийняття рішення", "внутрішній вогонь", "цілеспрямованість"],
-      "en": ["decision making", "inner fire", "single-mindedness"]
-    },
-    "qualities": {
-      "ua": ["воля", "прямота", "натхнення"],
-      "en": ["will", "directness", "inspiration"]
-    },
     "challenges": {
       "ua": ["імпульсивність", "емоційні спалахи"],
       "en": ["impulsiveness", "emotional flare-ups"]
     },
-    "advice": {
-      "ua": ["Сфокусуй намір на одному результаті.", "Зроби маленький, але видимий крок уперед."],
-      "en": ["Focus intention on one result.", "Make a small yet visible step forward."]
-    }
+    "synergy_patterns": {
+      "ua": ["фокусує зусилля в одному векторі", "перетворює натхнення на конкретний крок"],
+      "en": ["focuses effort on one vector", "turns inspiration into a concrete step"]
+    },
+    "imagery": {
+      "ua": ["сонячний промінь у точку", "запалена іскра в серці"],
+      "en": ["a sunbeam to a point", "an ignited spark in the heart"]
+    },
+    "advice_short": {
+      "ua": "Сфокусуй намір на одному результаті.",
+      "en": "Focus intention on one result."
+    },
+    "advice_long": {
+      "ua": "Зроби малий, але видимий крок уперед — нехай енергія матиме вихід.",
+      "en": "Make a small yet visible step forward—give the energy an exit."
+    },
+    "questions": {
+      "ua": ["У чому один головний намір?", "Який перший крок я роблю сьогодні?"],
+      "en": ["What is the single main intention?", "What first step do I take today?"]
+    },
+    "symbol": { "ua": "Intention • 9", "en": "Intention • 9" }
   },
   "10": {
     "name": { "ua": "Тон 10 — Планетарний", "en": "Tone 10 — Planetary" },
@@ -222,22 +303,31 @@
       "ua": "Планетарний тон матеріалізує. Він перетворює задум на конкретний результат, який можна побачити та виміряти.",
       "en": "The Planetary tone materializes. It turns the design into a concrete, visible and measurable outcome."
     },
-    "fields": {
-      "ua": ["результат і метрики", "здача робіт", "практичний ефект"],
-      "en": ["results & metrics", "delivery", "practical effect"]
-    },
-    "qualities": {
-      "ua": ["практичність", "доведення", "видимість"],
-      "en": ["practicality", "follow-through", "visibility"]
-    },
     "challenges": {
       "ua": ["залипання на виправленнях", "страх показати незавершене"],
       "en": ["perfectionist fixing", "fear to show the unfinished"]
     },
-    "advice": {
-      "ua": ["Покажи версію, яку вже можна оцінити.", "Визнач 1–3 метрики і запиши результат."],
-      "en": ["Show a version ready to be judged.", "Set 1–3 metrics and log the outcome."]
-    }
+    "synergy_patterns": {
+      "ua": ["доводить справу до видимого ефекту", "прив’язує ціль до метрик"],
+      "en": ["drives to visible effect", "binds goal to metrics"]
+    },
+    "imagery": {
+      "ua": ["кейc із результатом на столі", "риска метрики на шкалі"],
+      "en": ["a delivered case on the table", "a metric tick on a scale"]
+    },
+    "advice_short": {
+      "ua": "Покажи версію, яку вже можна оцінити.",
+      "en": "Show a version ready to be judged."
+    },
+    "advice_long": {
+      "ua": "Визнач 1–3 метрики і зафіксуй результат. Закрий петлю поставкою.",
+      "en": "Set 1–3 metrics and log the outcome. Close the loop with delivery."
+    },
+    "questions": {
+      "ua": ["Що стане доказом результату?", "Які 1–3 метрики тут доречні?"],
+      "en": ["What will prove the result?", "Which 1–3 metrics fit here?"]
+    },
+    "symbol": { "ua": "Manifest • 10", "en": "Manifest • 10" }
   },
   "11": {
     "name": { "ua": "Тон 11 — Спектральний", "en": "Tone 11 — Spectral" },
@@ -246,46 +336,64 @@
       "ua": "Спектральний тон звільняє і розчиняє зайве. Він розв’язує вузли, скидає віджилі форми і відкриває простір для оновлення.",
       "en": "The Spectral tone releases and dissolves the excess. It loosens knots, sheds outdated forms, and opens space for renewal."
     },
-    "fields": {
-      "ua": ["спрощення і детокс", "закриття петель", "скидання навантаження"],
-      "en": ["simplification & detox", "closing loops", "unloading burden"]
-    },
-    "qualities": {
-      "ua": ["полегшення", "свобода", "протікання"],
-      "en": ["relief", "freedom", "flow"]
-    },
     "challenges": {
       "ua": ["відчуття хаосу під час розпаду старого", "нетерплячість"],
       "en": ["sense of chaos as the old falls apart", "impatience"]
     },
-    "advice": {
-      "ua": ["Звільни трохи простору: один обов’язок, один предмет або один рядок у списку.", "Подихай і впусти свіже повітря — дай місце новому."],
-      "en": ["Free a bit of space: one duty, one item, or one line from the list.", "Breathe and air the room — make space for the new."]
-    }
+    "synergy_patterns": {
+      "ua": ["розчиняє зайве", "розв'язує вузли", "звільняє простір"],
+      "en": ["dissolves excess", "unties knots", "frees space"]
+    },
+    "imagery": {
+      "ua": ["вітер, що провітрює кімнату", "листя, що опадає"],
+      "en": ["wind airing a room", "falling leaves"]
+    },
+    "advice_short": {
+      "ua": "Звільни трохи простору.",
+      "en": "Free a bit of space."
+    },
+    "advice_long": {
+      "ua": "Зніми одне навантаження або закрий один хвіст — хай потік дихає.",
+      "en": "Unload one burden or close one loop—let the flow breathe."
+    },
+    "questions": {
+      "ua": ["Що вже віджило?", "Яку одну річ я можу відпустити сьогодні?"],
+      "en": ["What has served its time?", "What one thing can I release today?"]
+    },
+    "symbol": { "ua": "Release • 11", "en": "Release • 11" }
   },
   "12": {
     "name": { "ua": "Тон 12 — Кристалічний", "en": "Tone 12 — Crystal" },
     "alias": { "ua": "Співпраця", "en": "Cooperation" },
     "essence": {
       "ua": "Кристалічний тон збирає мережу взаємодії. Обмін і спільне налаштування дають прозору архітектуру процесу.",
-      "en": "The Crystal tone weaves the network of interaction. Exchange and co-tuning create a transparent architecture of the process."
-    },
-    "fields": {
-      "ua": ["командна синхронізація", "ретроспектива й обмін досвідом", "угоди та ролі"],
-      "en": ["team synchronization", "retrospective & knowledge share", "agreements and roles"]
-    },
-    "qualities": {
-      "ua": ["прозорість", "спільність", "комунікабельність"],
-      "en": ["transparency", "communality", "communicability"]
+      "en": "The Crystal tone weaves the network of interaction. Exchange and co-tuning create a transparent process architecture."
     },
     "challenges": {
       "ua": ["зайві наради", "розмитість відповідальності"],
       "en": ["meeting overload", "blurred accountability"]
     },
-    "advice": {
-      "ua": ["Зустрінься для обміну по суті (коротко).", "Уточни ролі й очікування у 2–3 реченнях."],
-      "en": ["Meet to exchange essentials (briefly).", "Clarify roles and expectations in 2–3 sentences."]
-    }
+    "synergy_patterns": {
+      "ua": ["зшиває ролі та очікування", "підсвічує точки обміну", "налагоджує прозорість"],
+      "en": ["stitches roles and expectations", "highlights exchange points", "establishes transparency"]
+    },
+    "imagery": {
+      "ua": ["кристалічна решітка", "мережа вузлів зі зв’язками"],
+      "en": ["a crystal lattice", "a network of connected nodes"]
+    },
+    "advice_short": {
+      "ua": "Зустрінься для обміну по суті.",
+      "en": "Meet to exchange essentials."
+    },
+    "advice_long": {
+      "ua": "Уточни ролі й очікування у 2–3 реченнях. Залиш зайві обговорення поза зустріччю.",
+      "en": "Clarify roles and expectations in 2–3 sentences. Keep extras out of the meeting."
+    },
+    "questions": {
+      "ua": ["Що нам потрібно одне від одного?", "Які домовленості треба зафіксувати?"],
+      "en": ["What do we need from each other?", "Which agreements should we fix?"]
+    },
+    "symbol": { "ua": "Co-op • 12", "en": "Co-op • 12" }
   },
   "13": {
     "name": { "ua": "Тон 13 — Космічний", "en": "Tone 13 — Cosmic" },
@@ -294,21 +402,30 @@
       "ua": "Космічний тон завершує цикл і відкриває новий через присутність. Це тиха повнота, у якій підсумок стає джерелом.",
       "en": "The Cosmic tone completes the cycle and opens a new one through presence. It is the quiet fullness where the summary becomes a source."
     },
-    "fields": {
-      "ua": ["завершення і інтеграція", "відпочинок/простір між", "усвідомленість"],
-      "en": ["completion & integration", "rest/the space between", "mindfulness"]
-    },
-    "qualities": {
-      "ua": ["цілісність", "спокій", "безчасся"],
-      "en": ["wholeness", "calm", "timelessness"]
-    },
     "challenges": {
       "ua": ["втрата темпу", "залипання у підсумках замість руху"],
       "en": ["loss of tempo", "stuck in summaries instead of moving"]
     },
-    "advice": {
-      "ua": ["Відчуй завершення і подякуй циклу.", "Зроби м’який перехід: мікровідпочинок перед новим стартом."],
-      "en": ["Sense completion and thank the cycle.", "Make a soft transition: micro-rest before the new start."]
-    }
+    "synergy_patterns": {
+      "ua": ["інтегрує досвід у цілісність", "робить м’який перехід до нового циклу"],
+      "en": ["integrates experience into wholeness", "makes a soft transition to a new cycle"]
+    },
+    "imagery": {
+      "ua": ["коло, що змикається у спіраль", "тихий обрій перед світанком"],
+      "en": ["a circle closing into a spiral", "a quiet horizon before dawn"]
+    },
+    "advice_short": {
+      "ua": "Відчуй завершення.",
+      "en": "Sense the completion."
+    },
+    "advice_long": {
+      "ua": "Подякуй циклу і зроби мікровідпочинок — нехай новий старт народиться з повноти.",
+      "en": "Thank the cycle and take a micro-rest—let the new start arise from fullness."
+    },
+    "questions": {
+      "ua": ["Що я інтегрував/ла з цього циклу?", "Який м’який перехід я зроблю?"],
+      "en": ["What did I integrate from this cycle?", "What soft transition will I make?"]
+    },
+    "symbol": { "ua": "Presence • 13", "en": "Presence • 13" }
   }
 }
