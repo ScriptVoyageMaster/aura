@@ -1,7 +1,7 @@
 {
   "imix": {
     "name": { "ua": "Імікс", "en": "Imix" },
-    "element": { "ua": "земля", "en": "earth" },
+    "element": { "ua": "вода", "en": "water" },
     "keywords": {
       "ua": ["початок", "народження", "інстинкт", "живлення", "турбота", "ґрунт"],
       "en": ["beginning", "birth", "instinct", "nourishment", "care", "ground"]
@@ -14,15 +14,33 @@
       "ua": ["старт проєктів і циклів", "ресурси та базові потреби", "налагодження побуту/ритму"],
       "en": ["starting projects/cycles", "resources & basic needs", "household/ritual setup"]
     },
-    "synergy_verbs": { "ua": ["запускає", "живить", "заземлює", "захищає"], "en": ["initiates", "nourishes", "grounds", "protects"] },
-    "imagery": { "ua": ["зерно в темному ґрунті", "перший ковток води"], "en": ["seed in dark soil", "first sip of water"] },
-    "advice_short": { "ua": "Почни з базового й простого.", "en": "Start from the basics." },
-    "advice_long": { "ua": "Зроби перший маленький крок і подбай про ресурси — сон, воду, їжу, порядок.", "en": "Take a tiny first step and secure resources — sleep, water, food, order." },
-    "rituals": { "ua": ["склянка води після пробудження", "5-хвилинне планування ранку"], "en": ["glass of water on waking", "5-minute morning plan"] },
-    "shadows": { "ua": ["застрягання на безпеці", "зайва опіка", "хаотичний старт без структури"], "en": ["clinging to safety", "overcare", "chaotic start without structure"] }
+    "synergy_verbs": {
+      "ua": ["запускає", "живить", "заземлює", "захищає"],
+      "en": ["initiates", "nourishes", "grounds", "protects"]
+    },
+    "imagery": {
+      "ua": ["зерно в темному ґрунті", "перший ковток води"],
+      "en": ["seed in dark soil", "first sip of water"]
+    },
+    "advice_short": {
+      "ua": "Почни з базового й простого.",
+      "en": "Start from the basics."
+    },
+    "advice_long": {
+      "ua": "Зроби перший маленький крок і подбай про ресурси — сон, воду, їжу, порядок.",
+      "en": "Take a tiny first step and secure resources — sleep, water, food, order."
+    },
+    "rituals": {
+      "ua": ["Склянка води після пробудження", "5-хвилинне планування ранку"],
+      "en": ["Glass of water on waking", "5-minute morning plan"]
+    },
+    "shadows": {
+      "ua": ["застрягання на безпеці", "зайва опіка", "хаотичний старт без структури"],
+      "en": ["clinging to safety", "overcare", "chaotic start without structure"]
+    }
   },
   "ik": {
-    "name": { "ua": "Ік’", "en": "Ik’" },
+    "name": { "ua": "Ік’", "en": "Ik" },
     "element": { "ua": "повітря", "en": "air" },
     "keywords": {
       "ua": ["подих", "рух", "ясність", "слово", "зв’язок", "свобода"],
@@ -36,16 +54,34 @@
       "ua": ["комунікації й навчання", "подорожі/переміщення", "провітрювання процесів"],
       "en": ["communication & learning", "travel/mobility", "airing processes"]
     },
-    "synergy_verbs": { "ua": ["очищує", "прояснює", "оживляє", "зв’язує"], "en": ["clears", "clarifies", "animates", "connects"] },
-    "imagery": { "ua": ["відкрите вікно і вітер", "прапорець, що тріпоче"], "en": ["open window and wind", "fluttering pennant"] },
-    "advice_short": { "ua": "Провітри думки й простір.", "en": "Air your mind and space." },
-    "advice_long": { "ua": "Скажи головне просто. Зроби крок, де є більше повітря й огляду.", "en": "Say the core simply. Step where there is more air and view." },
-    "rituals": { "ua": ["10 хвилин свіжого повітря/прогулянки", "лист самому собі з трьома тезами"], "en": ["10-minute fresh-air walk", "note to self with three points"] },
-    "shadows": { "ua": ["балакучість без змісту", "непосидючість", "розпорошення уваги"], "en": ["chatter without meaning", "restlessness", "scattered focus"] }
+    "synergy_verbs": {
+      "ua": ["очищує", "прояснює", "оживляє", "зв’язує"],
+      "en": ["clears", "clarifies", "animates", "connects"]
+    },
+    "imagery": {
+      "ua": ["відкрите вікно і вітер", "прапорець, що тріпоче"],
+      "en": ["open window and wind", "fluttering pennant"]
+    },
+    "advice_short": {
+      "ua": "Провітри думки й простір.",
+      "en": "Air your mind and space."
+    },
+    "advice_long": {
+      "ua": "Скажи головне просто. Зроби крок, де є більше повітря й огляду.",
+      "en": "Say the core simply. Step where there is more air and view."
+    },
+    "rituals": {
+      "ua": ["10 хвилин свіжого повітря/прогулянки", "лист самому собі з трьома тезами"],
+      "en": ["10-minute fresh-air walk", "note to self with three points"]
+    },
+    "shadows": {
+      "ua": ["балакучість без змісту", "непосидючість", "розпорошення уваги"],
+      "en": ["chatter without meaning", "restlessness", "scattered focus"]
+    }
   },
   "akbal": {
-    "name": { "ua": "Ак’баль", "en": "Ak’bal" },
-    "element": { "ua": "вода", "en": "water" },
+    "name": { "ua": "Ак’баль", "en": "Akbal" },
+    "element": { "ua": "земля", "en": "earth" },
     "keywords": {
       "ua": ["ніч", "інтуїція", "сон", "тиша", "внутрішній світ", "пам’ять"],
       "en": ["night", "intuition", "dream", "silence", "inner world", "memory"]
@@ -58,16 +94,34 @@
       "ua": ["сон/сновидіння/щоденник", "медитація/усамітнення", "дослідження пам’яті та коренів"],
       "en": ["dream/sleep/journaling", "meditation/retreat", "roots and memory work"]
     },
-    "synergy_verbs": { "ua": ["заглиблює", "оберігає", "розкриває", "виносить назовні"], "en": ["deepens", "guards", "reveals", "brings forth"] },
-    "imagery": { "ua": ["двері у темряві з м’яким світлом", "нічне небо"], "en": ["door in darkness with soft light", "night sky"] },
-    "advice_short": { "ua": "Дай простір тиші.", "en": "Give room to silence." },
-    "advice_long": { "ua": "Запиши те, що приходить ізсередини. Нехай темрява побуде другом.", "en": "Write what arrives from within. Let darkness be your ally." },
-    "rituals": { "ua": ["вечірній digital-detox", "3 рядки зі сну вранці"], "en": ["evening digital-detox", "3 dream lines in the morning"] },
-    "shadows": { "ua": ["страх невідомого", "самозамикання", "втеча у фантазії"], "en": ["fear of unknown", "self-seclusion", "escapism into fantasy"] }
+    "synergy_verbs": {
+      "ua": ["заглиблює", "оберігає", "розкриває", "виносить назовні"],
+      "en": ["deepens", "guards", "reveals", "brings forth"]
+    },
+    "imagery": {
+      "ua": ["двері у темряві з м’яким світлом", "нічне небо"],
+      "en": ["door in darkness with soft light", "night sky"]
+    },
+    "advice_short": {
+      "ua": "Дай простір тиші.",
+      "en": "Give room to silence."
+    },
+    "advice_long": {
+      "ua": "Запиши те, що приходить ізсередини. Нехай темрява побуде другом.",
+      "en": "Write what arrives from within. Let darkness be your ally."
+    },
+    "rituals": {
+      "ua": ["вечірній digital-detox", "3 рядки зі сну вранці"],
+      "en": ["evening digital-detox", "3 dream lines in the morning"]
+    },
+    "shadows": {
+      "ua": ["страх невідомого", "самозамикання", "втеча у фантазії"],
+      "en": ["fear of unknown", "self-seclusion", "escapism into fantasy"]
+    }
   },
   "kan": {
     "name": { "ua": "Кан", "en": "Kan" },
-    "element": { "ua": "вогонь", "en": "fire" },
+    "element": { "ua": "земля", "en": "earth" },
     "keywords": {
       "ua": ["зерно", "потенціал", "силова точка", "зростання", "спокуса", "майстерність"],
       "en": ["seed", "potential", "power point", "growth", "temptation", "mastery"]
@@ -80,12 +134,30 @@
       "ua": ["навчання і тренування", "управління енергією/часом", "вирощування компетенції"],
       "en": ["learning & drills", "energy/time management", "growing competence"]
     },
-    "synergy_verbs": { "ua": ["заряджає", "концентрує", "дозріває", "укорінює"], "en": ["charges", "focuses", "matures", "roots"] },
-    "imagery": { "ua": ["насінина в долоні", "спіраль росту"], "en": ["seed in palm", "spiral of growth"] },
-    "advice_short": { "ua": "Сконцентруй силу в одному місці.", "en": "Focus power in one place." },
-    "advice_long": { "ua": "Малий щоденний тренінг дає великий результат. Плекай рутину.", "en": "Small daily drills yield big results. Cultivate routine." },
-    "rituals": { "ua": ["15 хвилин практики/свого ремесла", "відмова від однієї спокуси сьогодні"], "en": ["15-minute craft practice", "skip one temptation today"] },
-    "shadows": { "ua": ["безлад із енергією", "одержимість владою/результатом", "маніпуляція"], "en": ["energy disorder", "obsession with power/result", "manipulation"] }
+    "synergy_verbs": {
+      "ua": ["заряджає", "концентрує", "дозріває", "укорінює"],
+      "en": ["charges", "focuses", "matures", "roots"]
+    },
+    "imagery": {
+      "ua": ["насінина в долоні", "спіраль росту"],
+      "en": ["seed in palm", "spiral of growth"]
+    },
+    "advice_short": {
+      "ua": "Сконцентруй силу в одному місці.",
+      "en": "Focus power in one place."
+    },
+    "advice_long": {
+      "ua": "Малий щоденний тренінг дає великий результат. Плекай рутину.",
+      "en": "Small daily drills yield big results. Cultivate routine."
+    },
+    "rituals": {
+      "ua": ["15 хвилин практики/свого ремесла", "відмова від однієї спокуси сьогодні"],
+      "en": ["15-minute craft practice", "skip one temptation today"]
+    },
+    "shadows": {
+      "ua": ["безлад із енергією", "одержимість владою/результатом", "маніпуляція"],
+      "en": ["energy disorder", "obsession with power/result", "manipulation"]
+    }
   },
   "chicchan": {
     "name": { "ua": "Чікчан", "en": "Chicchan" },
@@ -102,12 +174,30 @@
       "ua": ["тілесні практики", "емоційна регуляція", "відновлення енергії"],
       "en": ["somatic practices", "emotional regulation", "energy recovery"]
     },
-    "synergy_verbs": { "ua": ["оживляє", "нагріває", "захищає", "очищує"], "en": ["vitalizes", "warms", "protects", "purifies"] },
-    "imagery": { "ua": ["змія, що скидає шкіру", "теплий подих у грудях"], "en": ["snake shedding skin", "warm breath in chest"] },
-    "advice_short": { "ua": "Повернись у тіло.", "en": "Return to the body." },
-    "advice_long": { "ua": "Дихай глибше, дозволь теплу розійтися. Рух, масаж, вода — тобі на користь.", "en": "Breathe deeper and let warmth spread. Movement, massage, water help." },
-    "rituals": { "ua": ["3 хвилини глибокого дихання", "теплий душ/ванна з сіллю"], "en": ["3-minute deep breathing", "warm bath/shower with salt"] },
-    "shadows": { "ua": ["надмірна реактивність", "залежність від задоволення", "страхи без ґрунту"], "en": ["hyper-reactivity", "pleasure-seeking loop", "groundless fears"] }
+    "synergy_verbs": {
+      "ua": ["оживляє", "нагріває", "захищає", "очищує"],
+      "en": ["vitalizes", "warms", "protects", "purifies"]
+    },
+    "imagery": {
+      "ua": ["змія, що скидає шкіру", "теплий подих у грудях"],
+      "en": ["snake shedding skin", "warm breath in chest"]
+    },
+    "advice_short": {
+      "ua": "Повернись у тіло.",
+      "en": "Return to the body."
+    },
+    "advice_long": {
+      "ua": "Дихай глибше, дозволь теплу розійтися. Рух, масаж, вода — тобі на користь.",
+      "en": "Breathe deeper and let warmth spread. Movement, massage, water help."
+    },
+    "rituals": {
+      "ua": ["3 хвилини глибокого дихання", "теплий душ/ванна з сіллю"],
+      "en": ["3-minute deep breathing", "warm bath/shower with salt"]
+    },
+    "shadows": {
+      "ua": ["надмірна реактивність", "залежність від задоволення", "страхи без ґрунту"],
+      "en": ["hyper-reactivity", "pleasure-seeking loop", "groundless fears"]
+    }
   },
   "cimi": {
     "name": { "ua": "Кімі", "en": "Cimi" },
@@ -124,12 +214,30 @@
       "ua": ["детокс/розхламлення", "закриття гештальтів", "ритуали прощання"],
       "en": ["declutter/detox", "closing loops", "farewell rituals"]
     },
-    "synergy_verbs": { "ua": ["завершує", "звільняє", "очищує", "переплавляє"], "en": ["completes", "releases", "cleanses", "reforges"] },
-    "imagery": { "ua": ["лист, що опадає", "свічка, що догоряє"], "en": ["falling leaf", "candle burning out"] },
-    "advice_short": { "ua": "Закрий хоча б один хвіст.", "en": "Close at least one loop." },
-    "advice_long": { "ua": "Подякуй минулому і відпусти. Вільний простір — ресурс.", "en": "Thank the past and release. Free space is resource." },
-    "rituals": { "ua": ["викинь/передай 3 речі", "список незавершеного і один пункт у дію"], "en": ["discard/pass on 3 items", "unfinished list — act on one"] },
-    "shadows": { "ua": ["чіпляння за старе", "жорсткість", "страх змін"], "en": ["attachment to old", "rigidity", "fear of change"] }
+    "synergy_verbs": {
+      "ua": ["завершує", "звільняє", "очищує", "переплавляє"],
+      "en": ["completes", "releases", "cleanses", "reforges"]
+    },
+    "imagery": {
+      "ua": ["лист, що опадає", "свічка, що догоряє"],
+      "en": ["falling leaf", "candle burning out"]
+    },
+    "advice_short": {
+      "ua": "Закрий хоча б один хвіст.",
+      "en": "Close at least one loop."
+    },
+    "advice_long": {
+      "ua": "Подякуй минулому і відпусти. Вільний простір — ресурс.",
+      "en": "Thank the past and release. Free space is resource."
+    },
+    "rituals": {
+      "ua": ["викинь/передай 3 речі", "список незавершеного і один пункт у дію"],
+      "en": ["discard/pass on 3 items", "unfinished list — act on one"]
+    },
+    "shadows": {
+      "ua": ["чіпляння за старе", "жорсткість", "страх змін"],
+      "en": ["attachment to old", "rigidity", "fear of change"]
+    }
   },
   "manik": {
     "name": { "ua": "Манік", "en": "Manik" },
@@ -146,16 +254,34 @@
       "ua": ["служіння людям", "ремесло/ручна майстерність", "цілющі/відновлювальні практики"],
       "en": ["service to others", "handcraft/applied skill", "healing/restorative work"]
     },
-    "synergy_verbs": { "ua": ["структурує", "зцілює", "закріплює", "заземлює"], "en": ["structures", "heals", "grounds", "secures"] },
-    "imagery": { "ua": ["відбиток оленячої ноги", "тепла долоня на плечі"], "en": ["deer hoofprint", "warm hand on shoulder"] },
-    "advice_short": { "ua": "Перетвори турботу на дію.", "en": "Turn care into action." },
-    "advice_long": { "ua": "Допомагає те, що зроблено, а не задумано. Перший крок важить.", "en": "Help is what’s done, not intended. The first step matters." },
-    "rituals": { "ua": ["масаж долонь натуральною олією", "вечірнє прибирання робочого столу"], "en": ["palm massage with natural oil", "evening workspace reset"] },
-    "shadows": { "ua": ["перенавантаження обов’язками", "скромність, що знецінює талант", "застрягання в рутину"], "en": ["over-duty", "humility that hides skill", "stuck in routine"] }
+    "synergy_verbs": {
+      "ua": ["структурує", "зцілює", "закріплює", "заземлює"],
+      "en": ["structures", "heals", "grounds", "secures"]
+    },
+    "imagery": {
+      "ua": ["відбиток оленячої ноги", "тепла долоня на плечі"],
+      "en": ["deer hoofprint", "warm hand on shoulder"]
+    },
+    "advice_short": {
+      "ua": "Перетвори турботу на дію.",
+      "en": "Turn care into action."
+    },
+    "advice_long": {
+      "ua": "Допомагає те, що зроблено, а не задумано. Перший крок важить.",
+      "en": "Help is what’s done, not intended. The first step matters."
+    },
+    "rituals": {
+      "ua": ["масаж долонь натуральною олією", "вечірнє прибирання робочого столу"],
+      "en": ["palm massage with natural oil", "evening workspace reset"]
+    },
+    "shadows": {
+      "ua": ["перенавантаження обов’язками", "скромність, що знецінює талант", "застрягання в рутину"],
+      "en": ["over-duty", "humility that hides skill", "stuck in routine"]
+    }
   },
   "lamat": {
     "name": { "ua": "Ламат", "en": "Lamat" },
-    "element": { "ua": "світло", "en": "light" },
+    "element": { "ua": "земля", "en": "earth" },
     "keywords": {
       "ua": ["краса", "гармонія", "врожай", "талант", "світло", "щедрість"],
       "en": ["beauty", "harmony", "harvest", "talent", "light", "generosity"]
@@ -168,15 +294,33 @@
       "ua": ["естетика/дизайн", "фінанси/помноження цінності", "догляд/ритуали краси"],
       "en": ["aesthetics/design", "finance/value growth", "care/beauty rituals"]
     },
-    "synergy_verbs": { "ua": ["прикрашає", "вирощує", "помножує", "врівноважує"], "en": ["adorns", "cultivates", "multiplies", "balances"] },
-    "imagery": { "ua": ["зоряний плід", "кошик із врожаєм"], "en": ["star-fruit", "basket of harvest"] },
-    "advice_short": { "ua": "Додай краплю краси в дію.", "en": "Let beauty touch the act." },
-    "advice_long": { "ua": "Доглянуте розквітає. Підтримай те, що дає плоди.", "en": "What’s cared for blossoms. Support what bears fruit." },
-    "rituals": { "ua": ["10 хвилин на порядок/догляд", "бюджет: +1 крок до заощаджень"], "en": ["10-minute tidy/care", "budget: +1 saving step"] },
-    "shadows": { "ua": ["перфекціонізм", "залежність від оцінок", "марнотратство"], "en": ["perfectionism", "need for approval", "wastefulness"] }
+    "synergy_verbs": {
+      "ua": ["прикрашає", "вирощує", "помножує", "врівноважує"],
+      "en": ["adorns", "cultivates", "multiplies", "balances"]
+    },
+    "imagery": {
+      "ua": ["зоряний плід", "кошик із врожаєм"],
+      "en": ["star-fruit", "basket of harvest"]
+    },
+    "advice_short": {
+      "ua": "Додай краплю краси в дію.",
+      "en": "Let beauty touch the act."
+    },
+    "advice_long": {
+      "ua": "Доглянуте розквітає. Підтримай те, що дає плоди.",
+      "en": "What’s cared for blossoms. Support what bears fruit."
+    },
+    "rituals": {
+      "ua": ["10 хвилин на порядок/догляд", "бюджет: +1 крок до заощаджень"],
+      "en": ["10-minute tidy/care", "budget: +1 saving step"]
+    },
+    "shadows": {
+      "ua": ["перфекціонізм", "залежність від оцінок", "марнотратство"],
+      "en": ["perfectionism", "need for approval", "wastefulness"]
+    }
   },
-  "muluk": {
-    "name": { "ua": "Мулук", "en": "Muluk" },
+  "muluc": {
+    "name": { "ua": "Мулук", "en": "Muluc" },
     "element": { "ua": "вода", "en": "water" },
     "keywords": {
       "ua": ["вода", "емоції", "жертва", "очищення", "плинність", "зв’язок"],
@@ -184,18 +328,36 @@
     },
     "archetype": {
       "ua": "Мулук — вода пам’яті та очищення. Відпускає застої, відновлює циркуляцію почуттів і зв’язків. Жертва — як свідомий дар.",
-      "en": "Muluk is water of memory and cleansing. It releases stagnation and restores circulation of feelings and ties. Offering is a conscious gift."
+      "en": "Muluc is water of memory and cleansing. It releases stagnation and restores circulation of feelings and ties. Offering is a conscious gift."
     },
     "domains": {
       "ua": ["емоційна гігієна", "ритуали води/очищення", "жертовність/волонтерство"],
       "en": ["emotional hygiene", "water/cleansing rituals", "volunteering/offering"]
     },
-    "synergy_verbs": { "ua": ["очищує", "з’єднує", "пом’якшує", "наповнює"], "en": ["cleanses", "connects", "softens", "fills"] },
-    "imagery": { "ua": ["крапля на поверхні води", "струмінь, що змиває"], "en": ["droplet on water", "stream washing away"] },
-    "advice_short": { "ua": "Дай воді попрацювати.", "en": "Let water do its work." },
-    "advice_long": { "ua": "Змий зайве, назви почуття, поділися добром там, де можеш.", "en": "Wash off excess, name feelings, share kindness where you can." },
-    "rituals": { "ua": ["ритуал/душ очищення", "маленький акт доброчину"], "en": ["cleansing shower/ritual", "small act of charity"] },
-    "shadows": { "ua": ["захлинання емоціями", "розчинення кордонів", "самопожертва без міри"], "en": ["drowning in emotions", "blurry boundaries", "self-sacrifice without measure"] }
+    "synergy_verbs": {
+      "ua": ["очищує", "з’єднує", "пом’якшує", "наповнює"],
+      "en": ["cleanses", "connects", "softens", "fills"]
+    },
+    "imagery": {
+      "ua": ["крапля на поверхні води", "струмінь, що змиває"],
+      "en": ["droplet on water", "stream washing away"]
+    },
+    "advice_short": {
+      "ua": "Дай воді попрацювати.",
+      "en": "Let water do its work."
+    },
+    "advice_long": {
+      "ua": "Змий зайве, назви почуття, поділися добром там, де можеш.",
+      "en": "Wash off excess, name feelings, share kindness where you can."
+    },
+    "rituals": {
+      "ua": ["ритуал/душ очищення", "маленький акт доброчину"],
+      "en": ["cleansing shower/ritual", "small act of charity"]
+    },
+    "shadows": {
+      "ua": ["захлинання емоціями", "розчинення кордонів", "самопожертва без міри"],
+      "en": ["drowning in emotions", "blurry boundaries", "self-sacrifice without measure"]
+    }
   },
   "oc": {
     "name": { "ua": "Ок", "en": "Oc" },
@@ -212,16 +374,34 @@
       "ua": ["стосунки й довіра", "служба охорони/опіки", "соціальні кола/спільноти"],
       "en": ["relationships & trust", "guard/care service", "social circles/communities"]
     },
-    "synergy_verbs": { "ua": ["захищає", "зігріває", "об’єднує", "веде"], "en": ["protects", "warms", "unites", "guides"] },
-    "imagery": { "ua": ["собака біля дверей", "вогнище дружби"], "en": ["dog at the door", "friendship fire"] },
-    "advice_short": { "ua": "Підтримай того, кому довіряєш.", "en": "Support someone you trust." },
-    "advice_long": { "ua": "Невеликий вчинок вірності зміцнює шлях. Скажи «я тут».", "en": "A small loyal act strengthens the path. Say “I’m here”." },
-    "rituals": { "ua": ["повідомлення підтримки другу", "спільна прогулянка/кава"], "en": ["send a support note", "shared walk/coffee"] },
-    "shadows": { "ua": ["ревнощі", "охоронна агресія", "образливість"], "en": ["jealousy", "guarded aggression", "resentment"] }
+    "synergy_verbs": {
+      "ua": ["захищає", "зігріває", "об’єднує", "веде"],
+      "en": ["protects", "warms", "unites", "guides"]
+    },
+    "imagery": {
+      "ua": ["собака біля дверей", "вогнище дружби"],
+      "en": ["dog at the door", "friendship fire"]
+    },
+    "advice_short": {
+      "ua": "Підтримай того, кому довіряєш.",
+      "en": "Support someone you trust."
+    },
+    "advice_long": {
+      "ua": "Невеликий вчинок вірності зміцнює шлях. Скажи «я тут».",
+      "en": "A small loyal act strengthens the path. Say “I’m here”."
+    },
+    "rituals": {
+      "ua": ["повідомлення підтримки другу", "спільна прогулянка/кава"],
+      "en": ["send a support note", "shared walk/coffee"]
+    },
+    "shadows": {
+      "ua": ["ревнощі", "охоронна агресія", "образливість"],
+      "en": ["jealousy", "guarded aggression", "resentment"]
+    }
   },
   "chuen": {
     "name": { "ua": "Чуен", "en": "Chuen" },
-    "element": { "ua": "світло", "en": "light" },
+    "element": { "ua": "повітря", "en": "air" },
     "keywords": {
       "ua": ["гра", "творчість", "майстер гри", "радість", "імпровізація", "плетіння"],
       "en": ["play", "creativity", "game-mastery", "joy", "improvisation", "weaving"]
@@ -234,12 +414,30 @@
       "ua": ["мистецтво/креатив", "навички імпровізації", "педагогіка через гру"],
       "en": ["art/creative work", "improvisation skill", "pedagogy through play"]
     },
-    "synergy_verbs": { "ua": ["грає", "тче", "оживляє", "навчає"], "en": ["plays", "weaves", "enlivens", "teaches"] },
-    "imagery": { "ua": ["нитка, що тчеться в орнамент", "ігрова маска"], "en": ["thread weaving a pattern", "theatrical mask"] },
-    "advice_short": { "ua": "Додай гри в процес.", "en": "Bring play into the process." },
-    "advice_long": { "ua": "Спробуй легше. Малий експеримент сьогодні — великий інсайт завтра.", "en": "Try lighter. A tiny experiment today — a big insight tomorrow." },
-    "rituals": { "ua": ["15 хв творчого етюду", "навчальна гра/скетч-ідея"], "en": ["15-minute creative sketch", "learning game/mini-exercise"] },
-    "shadows": { "ua": ["несерйозність", "уникання відповідальності", "самоіронія, що ранить"], "en": ["frivolity", "dodging responsibility", "self-mockery that hurts"] }
+    "synergy_verbs": {
+      "ua": ["грає", "тче", "оживляє", "навчає"],
+      "en": ["plays", "weaves", "enlivens", "teaches"]
+    },
+    "imagery": {
+      "ua": ["нитка, що тчеться в орнамент", "ігрова маска"],
+      "en": ["thread weaving a pattern", "theatrical mask"]
+    },
+    "advice_short": {
+      "ua": "Додай гри в процес.",
+      "en": "Bring play into the process."
+    },
+    "advice_long": {
+      "ua": "Спробуй легше. Малий експеримент сьогодні — великий інсайт завтра.",
+      "en": "Try lighter. A tiny experiment today — a big insight tomorrow."
+    },
+    "rituals": {
+      "ua": ["15 хв творчого етюду", "навчальна гра/скетч-ідея"],
+      "en": ["15-minute creative sketch", "learning game/mini-exercise"]
+    },
+    "shadows": {
+      "ua": ["несерйозність", "уникання відповідальності", "самоіронія, що ранить"],
+      "en": ["frivolity", "dodging responsibility", "self-mockery that hurts"]
+    }
   },
   "eb": {
     "name": { "ua": "Еб", "en": "Eb" },
@@ -256,12 +454,30 @@
       "ua": ["соціальні/побутові процеси", "здорові звички", "волонтерство/сервіс"],
       "en": ["social/household processes", "healthy habits", "volunteering/service"]
     },
-    "synergy_verbs": { "ua": ["упорядковує", "полегшує", "зцілює", "з’єднує"], "en": ["organizes", "eases", "heals", "connects"] },
-    "imagery": { "ua": ["стежка з ліхтариками", "аптечка першої допомоги"], "en": ["path with small lanterns", "first-aid kit"] },
-    "advice_short": { "ua": "Зроби комусь шлях простішим.", "en": "Make someone’s path easier." },
-    "advice_long": { "ua": "Маленький вчинок сервісу лікує і тебе, і простір.", "en": "A small act of service heals both you and the space." },
-    "rituals": { "ua": ["20 хв побутової турботи", "корисний перекус/вода"], "en": ["20-minute household care", "healthy snack/water"] },
-    "shadows": { "ua": ["самознецінення", "вигорання від служіння", "забуття власних меж"], "en": ["self-devaluation", "service burnout", "forgetting own limits"] }
+    "synergy_verbs": {
+      "ua": ["упорядковує", "полегшує", "зцілює", "з’єднує"],
+      "en": ["organizes", "eases", "heals", "connects"]
+    },
+    "imagery": {
+      "ua": ["стежка з ліхтариками", "аптечка першої допомоги"],
+      "en": ["path with small lanterns", "first-aid kit"]
+    },
+    "advice_short": {
+      "ua": "Зроби комусь шлях простішим.",
+      "en": "Make someone’s path easier."
+    },
+    "advice_long": {
+      "ua": "Маленький вчинок сервісу лікує і тебе, і простір.",
+      "en": "A small act of service heals both you and the space."
+    },
+    "rituals": {
+      "ua": ["20 хв побутової турботи", "корисний перекус/вода"],
+      "en": ["20-minute household care", "healthy snack/water"]
+    },
+    "shadows": {
+      "ua": ["самознецінення", "вигорання від служіння", "забуття власних меж"],
+      "en": ["self-devaluation", "service burnout", "forgetting own limits"]
+    }
   },
   "ben": {
     "name": { "ua": "Бен", "en": "Ben" },
@@ -278,12 +494,30 @@
       "ua": ["лідерство/наставництво", "розширення території", "робота з межами"],
       "en": ["leadership/mentoring", "territory expansion", "boundary work"]
     },
-    "synergy_verbs": { "ua": ["веде", "піднімає", "зміцнює", "спрямовує"], "en": ["leads", "raises", "strengthens", "orients"] },
-    "imagery": { "ua": ["дерево з глибокими коренями", "дорога вдалечінь"], "en": ["tree with deep roots", "road into distance"] },
-    "advice_short": { "ua": "Стань опорою для інших.", "en": "Be a support for others." },
-    "advice_long": { "ua": "Покажи керунок і тримай межі — приклад сильніший за слова.", "en": "Show direction and hold boundaries — example beats words." },
-    "rituals": { "ua": ["1 сміливе рішення сьогодні", "рев’ю власних меж у проєкті"], "en": ["one brave decision today", "review your project limits"] },
-    "shadows": { "ua": ["жорсткість", "амбітність без серця", "нав’язування волі"], "en": ["rigidity", "heartless ambition", "imposing will"] }
+    "synergy_verbs": {
+      "ua": ["веде", "піднімає", "зміцнює", "спрямовує"],
+      "en": ["leads", "raises", "strengthens", "orients"]
+    },
+    "imagery": {
+      "ua": ["дерево з глибокими коренями", "дорога вдалечінь"],
+      "en": ["tree with deep roots", "road into distance"]
+    },
+    "advice_short": {
+      "ua": "Стань опорою для інших.",
+      "en": "Be a support for others."
+    },
+    "advice_long": {
+      "ua": "Покажи керунок і тримай межі — приклад сильніший за слова.",
+      "en": "Show direction and hold boundaries — example beats words."
+    },
+    "rituals": {
+      "ua": ["1 сміливе рішення сьогодні", "рев’ю власних меж у проєкті"],
+      "en": ["one brave decision today", "review your project limits"]
+    },
+    "shadows": {
+      "ua": ["жорсткість", "амбітність без серця", "нав’язування волі"],
+      "en": ["rigidity", "heartless ambition", "imposing will"]
+    }
   },
   "ix": {
     "name": { "ua": "Іш", "en": "Ix" },
@@ -300,12 +534,30 @@
       "ua": ["ритуали/сакральні простори", "робота з інтуїцією", "захист землі/екологія"],
       "en": ["ritual/sacred spaces", "intuition work", "earth/ecology protection"]
     },
-    "synergy_verbs": { "ua": ["освячує", "захищає", "загострює чуття", "вкорінює"], "en": ["consecrates", "protects", "sharpens senses", "roots"] },
-    "imagery": { "ua": ["кішка в храмі", "вівтар зі свічкою"], "en": ["cat in a temple", "altar with a candle"] },
-    "advice_short": { "ua": "Сповільнись і прислухайся.", "en": "Slow down and listen." },
-    "advice_long": { "ua": "Постав намір і збережи тишу навколо нього.", "en": "Set an intention and keep quiet around it." },
-    "rituals": { "ua": ["створи маленький вівтар наміру", "5 хвилин спостереження без екранів"], "en": ["build a small intention altar", "5-minute screen-free watching"] },
-    "shadows": { "ua": ["таємничість заради влади", "відрив від реальності", "пасивність"], "en": ["mystery for control", "detached from reality", "passivity"] }
+    "synergy_verbs": {
+      "ua": ["освячує", "захищає", "загострює чуття", "вкорінює"],
+      "en": ["consecrates", "protects", "sharpens senses", "roots"]
+    },
+    "imagery": {
+      "ua": ["кішка в храмі", "вівтар зі свічкою"],
+      "en": ["cat in a temple", "altar with a candle"]
+    },
+    "advice_short": {
+      "ua": "Сповільнись і прислухайся.",
+      "en": "Slow down and listen."
+    },
+    "advice_long": {
+      "ua": "Постав намір і збережи тишу навколо нього.",
+      "en": "Set an intention and keep quiet around it."
+    },
+    "rituals": {
+      "ua": ["створи маленький вівтар наміру", "5 хвилин спостереження без екранів"],
+      "en": ["build a small intention altar", "5-minute screen-free watching"]
+    },
+    "shadows": {
+      "ua": ["таємничість заради влади", "відрив від реальності", "пасивність"],
+      "en": ["mystery for control", "detached from reality", "passivity"]
+    }
   },
   "men": {
     "name": { "ua": "Мен", "en": "Men" },
@@ -322,12 +574,30 @@
       "ua": ["стратегія/планування", "огляд проєктів", "визначення пріоритетів"],
       "en": ["strategy/planning", "project overview", "prioritization"]
     },
-    "synergy_verbs": { "ua": ["підносить", "проектує", "спрямовує", "очищує фокус"], "en": ["elevates", "maps", "directs", "clears focus"] },
-    "imagery": { "ua": ["орел у польоті", "мапа і компас"], "en": ["eagle in flight", "map and compass"] },
-    "advice_short": { "ua": "Підніми погляд вище.", "en": "Raise your gaze." },
-    "advice_long": { "ua": "Оціни ландшафт цілей. Сформулюй три пріоритети.", "en": "Survey the landscape of goals. Name your top three." },
-    "rituals": { "ua": ["30-хв вікно стратегічного мислення", "правило трьох головних завдань"], "en": ["30-min strategy window", "rule of three main tasks"] },
-    "shadows": { "ua": ["відрив від деталей", "гординя", "відкладання дій"], "en": ["detached from detail", "pride", "action procrastination"] }
+    "synergy_verbs": {
+      "ua": ["підносить", "проектує", "спрямовує", "очищує фокус"],
+      "en": ["elevates", "maps", "directs", "clears focus"]
+    },
+    "imagery": {
+      "ua": ["орел у польоті", "мапа і компас"],
+      "en": ["eagle in flight", "map and compass"]
+    },
+    "advice_short": {
+      "ua": "Підніми погляд вище.",
+      "en": "Raise your gaze."
+    },
+    "advice_long": {
+      "ua": "Оціни ландшафт цілей. Сформулюй три пріоритети.",
+      "en": "Survey the landscape of goals. Name your top three."
+    },
+    "rituals": {
+      "ua": ["30-хв вікно стратегічного мислення", "правило трьох головних завдань"],
+      "en": ["30-min strategy window", "rule of three main tasks"]
+    },
+    "shadows": {
+      "ua": ["відрив від деталей", "гординя", "відкладання дій"],
+      "en": ["detached from detail", "pride", "action procrastination"]
+    }
   },
   "cib": {
     "name": { "ua": "Кіб", "en": "Cib" },
@@ -337,19 +607,37 @@
       "en": ["wisdom", "ethics", "ancestors", "discipline", "integrity", "experience"]
     },
     "archetype": {
-      "ua": "Кіб — мудрість предків і етика дії. Помилки перетворює на досвід, дисципліна — на свободу.",
+      "ua": "Кіб — мудрість предків і етика дії. Помилки перетворює на досвід, дисципліну — на свободу.",
       "en": "Cib is ancestral wisdom and ethics of action. It turns mistakes into experience, discipline into freedom."
     },
     "domains": {
       "ua": ["менторство/етика", "ритуали дисципліни", "історія/родова пам’ять"],
       "en": ["mentoring/ethics", "discipline rituals", "history/lineage"]
     },
-    "synergy_verbs": { "ua": ["вчить", "очищує намір", "дисциплінує", "примирює"], "en": ["teaches", "purifies intent", "disciplines", "reconciles"] },
-    "imagery": { "ua": ["камінь-наставник", "книга з помітками"], "en": ["mentor stone", "notated book"] },
-    "advice_short": { "ua": "Візьми урок із помилки.", "en": "Take a lesson from an error." },
-    "advice_long": { "ua": "Малий акт чесності зміцнює основу. Тримай слово.", "en": "A small honest act strengthens the base. Keep your word." },
-    "rituals": { "ua": ["щоденник уроків/інсайтів", "15 хв практики дисципліни"], "en": ["insight/lesson journal", "15-minute discipline drill"] },
-    "shadows": { "ua": ["самокритика до жорстокості", "моралізаторство", "вина"], "en": ["self-criticism to cruelty", "moralizing", "guilt"] }
+    "synergy_verbs": {
+      "ua": ["вчить", "очищує намір", "дисциплінує", "примирює"],
+      "en": ["teaches", "purifies intent", "disciplines", "reconciles"]
+    },
+    "imagery": {
+      "ua": ["камінь-наставник", "книга з помітками"],
+      "en": ["mentor stone", "notated book"]
+    },
+    "advice_short": {
+      "ua": "Візьми урок із помилки.",
+      "en": "Take a lesson from an error."
+    },
+    "advice_long": {
+      "ua": "Малий акт чесності зміцнює основу. Тримай слово.",
+      "en": "A small honest act strengthens the base. Keep your word."
+    },
+    "rituals": {
+      "ua": ["щоденник уроків/інсайтів", "15 хв практики дисципліни"],
+      "en": ["insight/lesson journal", "15-minute discipline drill"]
+    },
+    "shadows": {
+      "ua": ["самокритика до жорстокості", "моралізаторство", "вина"],
+      "en": ["self-criticism to cruelty", "moralizing", "guilt"]
+    }
   },
   "caban": {
     "name": { "ua": "Кабан", "en": "Caban" },
@@ -366,12 +654,30 @@
       "ua": ["наука/дослідження", "ритми/звички", "процесне мислення"],
       "en": ["science/research", "rhythms/habits", "process thinking"]
     },
-    "synergy_verbs": { "ua": ["синхронізує", "просуває", "калібрує", "структурує"], "en": ["synchronizes", "advances", "calibrates", "structures"] },
-    "imagery": { "ua": ["сейсмограма", "чергування кроків"], "en": ["seismogram", "alternating steps"] },
-    "advice_short": { "ua": "Тримай сталий ритм.", "en": "Hold a steady rhythm." },
-    "advice_long": { "ua": "Налаштуй цикл: крок — повтор — вдосконалення.", "en": "Set a cycle: step — repeat — refinement." },
-    "rituals": { "ua": ["трекер звичок на день", "малий експеримент/вимір"], "en": ["one-day habit tracker", "small experiment/measurement"] },
-    "shadows": { "ua": ["зарігіднення в процесі", "самокритика за повільність", "втрата сенсу в рутині"], "en": ["rigid process", "self-blame for slowness", "losing meaning in routine"] }
+    "synergy_verbs": {
+      "ua": ["синхронізує", "просуває", "калібрує", "структурує"],
+      "en": ["synchronizes", "advances", "calibrates", "structures"]
+    },
+    "imagery": {
+      "ua": ["сейсмограма", "чергування кроків"],
+      "en": ["seismogram", "alternating steps"]
+    },
+    "advice_short": {
+      "ua": "Тримай сталий ритм.",
+      "en": "Hold a steady rhythm."
+    },
+    "advice_long": {
+      "ua": "Налаштуй цикл: крок — повтор — вдосконалення.",
+      "en": "Set a cycle: step — repeat — refinement."
+    },
+    "rituals": {
+      "ua": ["трекер звичок на день", "малий експеримент/міряння"],
+      "en": ["one-day habit tracker", "small experiment/measurement"]
+    },
+    "shadows": {
+      "ua": ["зарігіднення в процесі", "самокритика за повільність", "втрата сенсу в рутині"],
+      "en": ["rigid process", "self-blame for slowness", "losing meaning in routine"]
+    }
   },
   "etznab": {
     "name": { "ua": "Етцнаб", "en": "Etznab" },
@@ -388,38 +694,74 @@
       "ua": ["рішення/cut-off", "аудит/редагування", "чесний зворотний зв’язок"],
       "en": ["decisions/cut-off", "audit/editing", "honest feedback"]
     },
-    "synergy_verbs": { "ua": ["розрізає", "очищує", "прояснює", "віддзеркалює"], "en": ["cuts", "purifies", "clarifies", "mirrors"] },
-    "imagery": { "ua": ["лезо на світлі", "дзеркало без плям"], "en": ["blade in light", "spotless mirror"] },
-    "advice_short": { "ua": "Зріж одне «зайве».", "en": "Cut one “excess”." },
-    "advice_long": { "ua": "Назви речі своїми іменами. Одне точне «ні» відкриє «так».", "en": "Call things by name. One precise “no” opens a “yes”." },
-    "rituals": { "ua": ["10 хв редагування/видалення", "чесне «ні» там, де потрібно"], "en": ["10-minute edit/delete", "honest no where needed"] },
-    "shadows": { "ua": ["надмірна різкість", "критика без турботи", "самопідрив через перфекцію"], "en": ["over-sharpness", "careless criticism", "self-sabotage via perfection"] }
+    "synergy_verbs": {
+      "ua": ["розрізає", "очищує", "прояснює", "віддзеркалює"],
+      "en": ["cuts", "purifies", "clarifies", "mirrors"]
+    },
+    "imagery": {
+      "ua": ["лезо на світлі", "дзеркало без плям"],
+      "en": ["blade in light", "spotless mirror"]
+    },
+    "advice_short": {
+      "ua": "Зріж одне «зайве».",
+      "en": "Cut one “excess”."
+    },
+    "advice_long": {
+      "ua": "Назви речі своїми іменами. Одне точне «ні» відкриє «так».",
+      "en": "Call things by name. One precise “no” opens a “yes”."
+    },
+    "rituals": {
+      "ua": ["10 хв редагування/видалення", "чесне «ні» там, де потрібно"],
+      "en": ["10-minute edit/delete", "honest no where needed"]
+    },
+    "shadows": {
+      "ua": ["надмірна різкість", "критика без турботи", "самопідрив через перфекцію"],
+      "en": ["over-sharpness", "careless criticism", "self-sabotage via perfection"]
+    }
   },
-  "kawak": {
-    "name": { "ua": "Кавак", "en": "Kawak" },
+  "cauac": {
+    "name": { "ua": "Кавак", "en": "Cauac" },
     "element": { "ua": "вода", "en": "water" },
     "keywords": {
-      "ua": ["гроза", "дощ", "прорив", "очищення", "зцілення", "розрядка"],
-      "en": ["storm", "rain", "breakthrough", "cleansing", "healing", "discharge"]
+      "ua": ["буря", "гром", "очищення", "оновлення", "катарсис", "звільнення"],
+      "en": ["storm", "thunder", "cleansing", "renewal", "catharsis", "release"]
     },
     "archetype": {
-      "ua": "Кавак — грім і дощ, що приносять очищення. Напруга розряджається, простір освіжається, відбувається прорив.",
-      "en": "Kawak is thunder and rain that bring cleansing. Tension discharges, the space refreshes, and a breakthrough happens."
+      "ua": "Кавак — гроза, що промиває повітря. Буря виносить напругу і очищує простір для нового. Після грому — свіже небо.",
+      "en": "Cauac is the storm that washes the air. It discharges tension and clears space for the new. After thunder — a fresher sky."
     },
     "domains": {
-      "ua": ["емоційна розрядка", "оздоровлення/водні практики", "кризові рішення"],
-      "en": ["emotional release", "healing/water practices", "crisis decisions"]
+      "ua": ["кризи та переломні моменти", "очищення систем/проєктів", "емоційний катарсис"],
+      "en": ["crises and turning points", "system/project cleansing", "emotional catharsis"]
     },
-    "synergy_verbs": { "ua": ["очищує", "розряджає", "оновлює", "лікує"], "en": ["cleanses", "discharges", "renews", "heals"] },
-    "imagery": { "ua": ["грозова злива", "грім над містом"], "en": ["thunderstorm rain", "thunder over the city"] },
-    "advice_short": { "ua": "Дозволь бурі пройти крізь тебе.", "en": "Let the storm pass through you." },
-    "advice_long": { "ua": "Вирази емоції екологічно й очисти простір — вода допоможе.", "en": "Express emotions cleanly and refresh the space — water helps." },
-    "rituals": { "ua": ["контрастний душ", "прогулянка під дощем/після"], "en": ["contrast shower", "walk under/after rain"] },
-    "shadows": { "ua": ["бурхливість", "вибухи гніву", "знесилення після шторму"], "en": ["turbulence", "anger outbursts", "exhaustion after storm"] }
+    "synergy_verbs": {
+      "ua": ["розряджає", "промиває", "оновлює", "звільняє"],
+      "en": ["discharges", "washes", "renews", "releases"]
+    },
+    "imagery": {
+      "ua": ["блискавка у хмарі", "злива над містом"],
+      "en": ["lightning in cloud", "downpour over a city"]
+    },
+    "advice_short": {
+      "ua": "Дозволь бурі пройти крізь.",
+      "en": "Let the storm pass through."
+    },
+    "advice_long": {
+      "ua": "Не тримай напругу — випусти й провітри. Після очищення заплануй перший крок.",
+      "en": "Don’t hold tension—release and air it out. After cleansing, plan the first step."
+    },
+    "rituals": {
+      "ua": ["глибоке дихання + провітрювання", "дощовий/контрастний душ"],
+      "en": ["deep breathing + airing the room", "rain/contrast shower"]
+    },
+    "shadows": {
+      "ua": ["емоційні зриви", "руйнування заради руйнування", "втома після бурі"],
+      "en": ["emotional outbursts", "destruction for its own sake", "fatigue after the storm"]
+    }
   },
   "ahau": {
     "name": { "ua": "Ахав", "en": "Ahau" },
-    "element": { "ua": "світло", "en": "light" },
+    "element": { "ua": "вогонь", "en": "fire" },
     "keywords": {
       "ua": ["сонце", "свідомість", "завершення циклу", "сяйво", "гідність", "радість"],
       "en": ["sun", "consciousness", "cycle close", "radiance", "dignity", "joy"]
@@ -432,11 +774,29 @@
       "ua": ["підсумки/визнання", "свято/радість", "просвітлення/сенс"],
       "en": ["summaries/recognition", "celebration/joy", "enlightenment/meaning"]
     },
-    "synergy_verbs": { "ua": ["освітлює", "підсумовує", "благословляє", "зігріває"], "en": ["illumines", "summarizes", "blesses", "warms"] },
-    "imagery": { "ua": ["сонячний диск", "вінок зі світла"], "en": ["solar disc", "wreath of light"] },
-    "advice_short": { "ua": "Побач світло своєї праці.", "en": "See the light of your work." },
-    "advice_long": { "ua": "Підіб’ють підсумки, поділись радістю, відзнач людей поруч.", "en": "Close the loop, share joy, acknowledge people around." },
-    "rituals": { "ua": ["лист подяки/визнання", "маленьке свято результату"], "en": ["gratitude/recognition note", "small celebration of result"] },
-    "shadows": { "ua": ["зарозумілість", "виснаження від постійного сяйва", "страх тіні/помилки"], "en": ["arrogance", "burnout from constant shine", "fear of shadow/error"] }
+    "synergy_verbs": {
+      "ua": ["освітлює", "підсумовує", "благословляє", "зігріває"],
+      "en": ["illumines", "summarizes", "blesses", "warms"]
+    },
+    "imagery": {
+      "ua": ["сонячний диск", "вінок зі світла"],
+      "en": ["solar disc", "wreath of light"]
+    },
+    "advice_short": {
+      "ua": "Побач світло своєї праці.",
+      "en": "See the light of your work."
+    },
+    "advice_long": {
+      "ua": "Закрий коло, поділися радістю, відзнач людей поруч.",
+      "en": "Close the loop, share joy, acknowledge people around."
+    },
+    "rituals": {
+      "ua": ["лист подяки/визнання", "маленьке свято результату"],
+      "en": ["gratitude/recognition note", "small celebration of result"]
+    },
+    "shadows": {
+      "ua": ["зарозумілість", "виснаження від постійного сяйва", "страх тіні/помилки"],
+      "en": ["arrogance", "burnout from constant shine", "fear of shadow/error"]
+    }
   }
 }
