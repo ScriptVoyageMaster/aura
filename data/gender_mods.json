@@ -342,5 +342,130 @@
         "Your gentle strength is working."
       ]
     }
+  },
+  "neutral": {
+  "address": {
+    "ua": [
+      "Твоє бачення",
+      "Твоя присутність",
+      "Твоє ядро",
+      "Твій намір",
+      "Твій фокус",
+      "Твій ритм",
+      "Твоя точка опори",
+      "Твоя ясність",
+      "Твій курс",
+      "Твій простір дії"
+    ],
+    "en": [
+      "Your vision",
+      "Your presence",
+      "Your core",
+      "Your intention",
+      "Your focus",
+      "Your rhythm",
+      "Your anchor point",
+      "Your clarity",
+      "Your course",
+      "Your space of action"
+    ]
+  },
+  "lex_shift": {
+    "ua": [
+      "усвідомленість",
+      "спокій",
+      "баланс",
+      "ясність",
+      "узгодженість",
+      "послідовність",
+      "достатність",
+      "міра",
+      "адаптивність",
+      "екологічність у рішеннях"
+    ],
+    "en": [
+      "awareness",
+      "calm",
+      "balance",
+      "clarity",
+      "alignment",
+      "consistency",
+      "sufficiency",
+      "measure",
+      "adaptability",
+      "ecological decisions"
+    ]
+  },
+  "tone_style": {
+    "ua": [
+      "Зроби малий, але точний крок.",
+      "Вирівняй темп і подих.",
+      "Залиш простір для ясності.",
+      "Обери одне пріоритетне рішення.",
+      "Відпусти зайве — звільни місце новому.",
+      "Підтримай послідовність ритму.",
+      "Зафіксуй спостереження без оцінок.",
+      "Перевір відповідність дій наміру."
+    ],
+    "en": [
+      "Make a small yet precise step.",
+      "Level your pace and breath.",
+      "Leave room for clarity.",
+      "Choose one priority decision.",
+      "Release the excess—make space for the new.",
+      "Maintain rhythm consistency.",
+      "Log observations without judgment.",
+      "Check action-to-intention alignment."
+    ]
+  },
+  "advice_prefixes": {
+    "ua": [
+      "Зверни увагу на:",
+      "Сьогодні обери:",
+      "Крок зараз:",
+      "Підтримай ритм через:",
+      "Відпусти зайве у:",
+      "Перевір відповідність за:",
+      "Мікро-дія:"
+    ],
+    "en": [
+      "Notice:",
+      "Today choose:",
+      "Step now:",
+      "Sustain rhythm via:",
+      "Release the excess in:",
+      "Check alignment by:",
+      "Micro-action:"
+    ]
+  },
+  "conclusion_closers": {
+    "ua": [
+      "Присутність тримає форму.",
+      "Ясність народжується з простору.",
+      "Сила — у міру і ритмі.",
+      "Малий крок — стабільний прогрес.",
+      "Твій фокус веде курс."
+    ],
+    "en": [
+      "Presence holds the form.",
+      "Clarity grows from space.",
+      "Strength lives in measure and rhythm.",
+      "Small step — steady progress.",
+      "Your focus guides the course."
+    ]
+  },
+  "acknowledgements": {
+    "ua": [
+      "Є м’який рух уперед — це видно.",
+      "Ти тримаєш ритм — добре.",
+      "Сьогодні стало ясніше, ніж учора."
+    ],
+    "en": [
+      "There’s a gentle forward motion — visible.",
+      "You keep the rhythm — good.",
+      "Today is clearer than yesterday."
+    ]
   }
+}
+
 }
