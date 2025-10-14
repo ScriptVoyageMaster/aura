@@ -7,7 +7,7 @@ import { glyph as IK } from './tzolkin/ik.js';
 import { glyph as AKBAL } from './tzolkin/akbal.js';
 import { glyph as KAN } from './tzolkin/kan.js';
 import { glyph as CHICCHAN } from './tzolkin/chicchan.js';
-import { glyph as KIMI } from './tzolkin/kimi.js';
+import { glyph as CIMI } from './tzolkin/cimi.js';
 import { glyph as MANIK } from './tzolkin/manik.js';
 import { glyph as LAMAT } from './tzolkin/lamat.js';
 import { glyph as MULUC } from './tzolkin/muluc.js';
@@ -30,7 +30,7 @@ export const TZOLKIN_GLYPHS = {
   [AKBAL.id]: AKBAL,
   [KAN.id]: KAN,
   [CHICCHAN.id]: CHICCHAN,
-  [KIMI.id]: KIMI,
+  [CIMI.id]: CIMI,
   [MANIK.id]: MANIK,
   [LAMAT.id]: LAMAT,
   [MULUC.id]: MULUC,

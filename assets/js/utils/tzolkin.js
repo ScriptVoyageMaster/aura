@@ -6,27 +6,41 @@
     "Ik",
     "Akbal",
     "Kan",
-    "Chikchan",
-    "Kimi",
+    "Chicchan",
+    "Cimi",
     "Manik",
     "Lamat",
-    "Muluk",
-    "Ok",
-    "Chuwen",
+    "Muluc",
+    "Oc",
+    "Chuen",
     "Eb",
     "Ben",
     "Ix",
     "Men",
-    "Kib",
-    "Kaban",
+    "Cib",
+    "Caban",
     "Etznab",
-    "Kawak",
-    "Ajaw",
+    "Cauac",
+    "Ahau",
   ];
 
-  // Деякі SVG мають нестандартні назви файлів, тож ведемо окремий довідник винятків.
+  // Формуємо єдиний канонічний список ідентифікаторів гліфів у нижньому регістрі.
+  // Це головне джерело правди для всіх обчислень у браузері.
+  const CANON_GLYPHS = TZ_SIGNS.map((sign) => sign.toLowerCase());
+
+  // Деякі SVG досі мають історичні назви файлів, тому зберігаємо словник винятків.
   const FILE_NAME_OVERRIDES = {
+    // Пропускаємо "Ok" через альтернативне позначення у назві файлу.
     10: "MAYA-g-log-cal-D10-Ok_b.svg",
+    // Старі назви з літерою «k» у середині.
+    5: "MAYA-g-log-cal-D05-Chikchan.svg",
+    6: "MAYA-g-log-cal-D06-Kimi.svg",
+    9: "MAYA-g-log-cal-D09-Muluk.svg",
+    11: "MAYA-g-log-cal-D11-Chuwen.svg",
+    16: "MAYA-g-log-cal-D16-Kib.svg",
+    17: "MAYA-g-log-cal-D17-Kaban.svg",
+    19: "MAYA-g-log-cal-D19-Kawak.svg",
+    20: "MAYA-g-log-cal-D20-Ajaw.svg",
   };
 
   /**
@@ -97,4 +111,5 @@
   window.tzolkinFromDate = tzolkinFromDate;
   window.mayaSvgPathFor = mayaSvgPathFor;
   window.TZ_SIGNS = TZ_SIGNS;
+  window.CANON_GLYPHS = CANON_GLYPHS;
 })();

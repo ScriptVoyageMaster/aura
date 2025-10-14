@@ -28,28 +28,48 @@ const overrideUsageStats = new Map();
 // Кеш результатів генерації, щоб уникати повторних складань тексту для однакових параметрів.
 const descriptionCache = new Map();
 
-// Карта відповідностей між популярними латинськими написаннями та канонічними ідентифікаторами гліфів.
-// Завдяки ній навіть якщо користувач або зовнішній сервіс передасть «kaban» замість «caban»,
-// ми все одно звернемося до правильного словникового запису.
-const GLYPH_ID_MAP = {
-  kaban: "caban",
-  kib: "cib",
-  muluk: "muluc",
-  kawak: "cauac",
-  kimi: "cimi",
-  ok: "oc",
-  chikchan: "chicchan",
-  ajaw: "ahau",
-  imish: "imix",
-  "ik'": "ik",
-  "ak'bal": "akbal",
-};
+// Єдине джерело правди для ключів гліфів у текстовому сервісі.
+// Значення повністю збігаються з каноном TZ_SIGNS і не мають синонімів.
+const CANON_GLYPHS = [
+  "imix",
+  "ik",
+  "akbal",
+  "kan",
+  "chicchan",
+  "cimi",
+  "manik",
+  "lamat",
+  "muluc",
+  "oc",
+  "chuen",
+  "eb",
+  "ben",
+  "ix",
+  "men",
+  "cib",
+  "caban",
+  "etznab",
+  "cauac",
+  "ahau",
+];
 
-// Допоміжна утиліта: нормалізуємо будь-який вхідний ідентифікатор гліфа до нижнього регістру
-// та підміняємо його синонімом із мапи, якщо така відповідність існує.
-function resolveGlyphId(rawId) {
-  const id = String(rawId || "").toLowerCase();
-  return GLYPH_ID_MAP[id] || id;
+// Перетворюємо довільний індекс (може бути від'ємним або більшим за 20) на коректний ключ гліфа.
+function getGlyphKeyByIndex(idx) {
+  const total = CANON_GLYPHS.length;
+  if (!Number.isFinite(idx) || total === 0) {
+    return null;
+  }
+  const normalizedIndex = ((Math.trunc(idx) % total) + total) % total;
+  return CANON_GLYPHS[normalizedIndex];
+}
+
+// Проста валідація ключа гліфа: приймаємо лише канонічні значення без транслітерацій.
+function normalizeGlyphKey(rawId) {
+  const candidate = String(rawId || "").toLowerCase().trim();
+  if (!candidate) {
+    return null;
+  }
+  return CANON_GLYPHS.includes(candidate) ? candidate : null;
 }
 
 // Значення за замовчуванням для випадку, коли словники відсутні або неповні.
@@ -651,7 +671,7 @@ function getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang) {
     return null;
   }
   // Нормалізуємо ID гліфа, щоби звертатися до overrides за єдиним ключем незалежно від написання.
-  const glyphIdNorm = resolveGlyphId(glyphId);
+  const glyphIdNorm = normalizeGlyphKey(glyphId);
   if (!glyphIdNorm) {
     return null;
   }
@@ -720,7 +740,7 @@ function recordOverrideUsage({
 }) {
   const calendarKey = normalizeKeyCandidate(calendar);
   // Для статистики також застосовуємо нормалізацію, щоб однакові гліфи не роз'їжджалися у звітах.
-  const glyphKey = normalizeKeyCandidate(resolveGlyphId(glyphId));
+  const glyphKey = normalizeGlyphKey(glyphId);
   const toneKey = normalizeKeyCandidate(toneId);
   const blockKey = normalizeKeyCandidate(blockName);
   const genderKey = normalizeKeyCandidate(actualGender || requestedGender);
@@ -2133,19 +2153,22 @@ export async function generateDescription({
   }
 
   // Вирівнюємо ідентифікатор гліфа, щоби подальші звернення до словників були уніфікованими.
-  const glyphIdNorm = resolveGlyphId(glyphId);
+  const glyphIdNorm = normalizeGlyphKey(glyphId);
   logContext.glyphIdNormalized = glyphIdNorm;
+  if (!glyphIdNorm) {
+    logContext.violations.push("invalid:glyph");
+  }
 
   const toneKey = String(toneId);
-  const glyphEntry = dictionaries.glyphs?.[glyphIdNorm];
+  const glyphEntry = glyphIdNorm ? dictionaries.glyphs?.[glyphIdNorm] : null;
   const toneEntry = dictionaries.tones?.[toneKey];
 
   if (!glyphEntry || !toneEntry) {
     logContext.violations.push("missing:dictionary_entry");
     const message =
       normalizedLang === "en"
-        ? `We are still preparing the description for ${glyphIdNorm} + tone ${toneKey}.`
-        : `Ми ще готуємо опис для ${glyphIdNorm} та тону ${toneKey}.`;
+        ? `We are still preparing the description for ${glyphIdNorm || "unknown glyph"} + tone ${toneKey}.`
+        : `Ми ще готуємо опис для ${glyphIdNorm || "невідомого гліфа"} та тону ${toneKey}.`;
     const fallback = buildServiceFallback(message);
     descriptionCache.set(cacheKey, fallback);
     console.error("Aura description dictionary fallback", logContext);
@@ -2182,3 +2205,6 @@ export async function generateDescription({
 export async function preloadDictionaries() {
   await Promise.all([loadDictionaries(), loadOverrides()]);
 }
+
+// Додатково експортуємо канонічні утиліти, аби інші модулі могли працювати з єдиними ключами.
+export { CANON_GLYPHS, normalizeGlyphKey, getGlyphKeyByIndex };
