@@ -28,6 +28,30 @@ const overrideUsageStats = new Map();
 // Кеш результатів генерації, щоб уникати повторних складань тексту для однакових параметрів.
 const descriptionCache = new Map();
 
+// Карта відповідностей між популярними латинськими написаннями та канонічними ідентифікаторами гліфів.
+// Завдяки ній навіть якщо користувач або зовнішній сервіс передасть «kaban» замість «caban»,
+// ми все одно звернемося до правильного словникового запису.
+const GLYPH_ID_MAP = {
+  kaban: "caban",
+  kib: "cib",
+  muluk: "muluc",
+  kawak: "cauac",
+  kimi: "cimi",
+  ok: "oc",
+  chikchan: "chicchan",
+  ajaw: "ahau",
+  imish: "imix",
+  "ik'": "ik",
+  "ak'bal": "akbal",
+};
+
+// Допоміжна утиліта: нормалізуємо будь-який вхідний ідентифікатор гліфа до нижнього регістру
+// та підміняємо його синонімом із мапи, якщо така відповідність існує.
+function resolveGlyphId(rawId) {
+  const id = String(rawId || "").toLowerCase();
+  return GLYPH_ID_MAP[id] || id;
+}
+
 // Значення за замовчуванням для випадку, коли словники відсутні або неповні.
 const DEFAULT_BLOCK_ORDER = [
   "title",
@@ -626,11 +650,16 @@ function getOverrideBlock(calendar, glyphId, toneId, gender, blockName, lang) {
   if (!calendar || !glyphId || !toneId || !gender || !blockName || !lang) {
     return null;
   }
+  // Нормалізуємо ID гліфа, щоби звертатися до overrides за єдиним ключем незалежно від написання.
+  const glyphIdNorm = resolveGlyphId(glyphId);
+  if (!glyphIdNorm) {
+    return null;
+  }
   const calendarBucket = overridesState.data?.[calendar];
   if (!calendarBucket || typeof calendarBucket !== "object") {
     return null;
   }
-  const glyphBucket = calendarBucket?.[glyphId];
+  const glyphBucket = calendarBucket?.[glyphIdNorm];
   if (!glyphBucket || typeof glyphBucket !== "object") {
     return null;
   }
@@ -690,7 +719,8 @@ function recordOverrideUsage({
   blockName,
 }) {
   const calendarKey = normalizeKeyCandidate(calendar);
-  const glyphKey = normalizeKeyCandidate(glyphId);
+  // Для статистики також застосовуємо нормалізацію, щоб однакові гліфи не роз'їжджалися у звітах.
+  const glyphKey = normalizeKeyCandidate(resolveGlyphId(glyphId));
   const toneKey = normalizeKeyCandidate(toneId);
   const blockKey = normalizeKeyCandidate(blockName);
   const genderKey = normalizeKeyCandidate(actualGender || requestedGender);
@@ -2102,15 +2132,20 @@ export async function generateDescription({
     return cloneResult(fallback);
   }
 
-  const glyphEntry = dictionaries.glyphs?.[glyphId];
-  const toneEntry = dictionaries.tones?.[String(toneId)];
+  // Вирівнюємо ідентифікатор гліфа, щоби подальші звернення до словників були уніфікованими.
+  const glyphIdNorm = resolveGlyphId(glyphId);
+  logContext.glyphIdNormalized = glyphIdNorm;
+
+  const toneKey = String(toneId);
+  const glyphEntry = dictionaries.glyphs?.[glyphIdNorm];
+  const toneEntry = dictionaries.tones?.[toneKey];
 
   if (!glyphEntry || !toneEntry) {
     logContext.violations.push("missing:dictionary_entry");
     const message =
       normalizedLang === "en"
-        ? `We are still preparing the description for ${glyphId} + tone ${toneId}.`
-        : `Ми ще готуємо опис для ${glyphId} та тону ${toneId}.`;
+        ? `We are still preparing the description for ${glyphIdNorm} + tone ${toneKey}.`
+        : `Ми ще готуємо опис для ${glyphIdNorm} та тону ${toneKey}.`;
     const fallback = buildServiceFallback(message);
     descriptionCache.set(cacheKey, fallback);
     console.error("Aura description dictionary fallback", logContext);
@@ -2123,15 +2158,15 @@ export async function generateDescription({
     toneEntry,
     genderEntry,
     rules: dictionaries.rules,
-    glyphId,
-    toneId: String(toneId),
+    glyphId: glyphIdNorm,
+    toneId: toneKey,
     gender: normalizedGender,
     lang: normalizedLang,
     calendar: normalizedCalendar,
     logContext,
     synergyEntry:
-      dictionaries.synergy?.[`${String(glyphId).toUpperCase()}-${String(toneId).toUpperCase()}`] ||
-      dictionaries.synergy?.[`${String(glyphId).toUpperCase()}-${String(toneId)}`] ||
+      dictionaries.synergy?.[`${String(glyphIdNorm).toUpperCase()}-${toneKey.toUpperCase()}`] ||
+      dictionaries.synergy?.[`${String(glyphIdNorm).toUpperCase()}-${toneKey}`] ||
       null,
   });
 
