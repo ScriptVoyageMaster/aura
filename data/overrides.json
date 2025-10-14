@@ -10730,7 +10730,574 @@
         }
       }
     },
-    "kawak": {
+    "ahau": {
+      "1": {
+        "any": {
+          "title": {
+            "ua": "Ахав 1 — поєднання гліфа і тону",
+            "en": "Ahau 1 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 1: базове поєднання якостей гліфа з ритмом Тону 1. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 1: a basic blend of glyph qualities with Tone 1. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 1 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 1 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 1 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 1 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "2": {
+        "any": {
+          "title": {
+            "ua": "Ахав 2 — поєднання гліфа і тону",
+            "en": "Ahau 2 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 2: базове поєднання якостей гліфа з ритмом Тону 2. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 2: a basic blend of glyph qualities with Tone 2. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 2 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 2 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 2 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 2 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "3": {
+        "any": {
+          "title": {
+            "ua": "Ахав 3 — поєднання гліфа і тону",
+            "en": "Ahau 3 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 3: базове поєднання якостей гліфа з ритмом Тону 3. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 3: a basic blend of glyph qualities with Tone 3. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 3 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 3 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 3 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 3 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "4": {
+        "any": {
+          "title": {
+            "ua": "Ахав 4 — поєднання гліфа і тону",
+            "en": "Ahau 4 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 4: базове поєднання якостей гліфа з ритмом Тону 4. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 4: a basic blend of glyph qualities with Tone 4. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 4 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 4 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 4 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 4 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "5": {
+        "any": {
+          "title": {
+            "ua": "Ахав 5 — поєднання гліфа і тону",
+            "en": "Ahau 5 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 5: базове поєднання якостей гліфа з ритмом Тону 5. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 5: a basic blend of glyph qualities with Tone 5. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 5 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 5 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 5 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 5 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "6": {
+        "any": {
+          "title": {
+            "ua": "Ахав 6 — поєднання гліфа і тону",
+            "en": "Ahau 6 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 6: базове поєднання якостей гліфа з ритмом Тону 6. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 6: a basic blend of glyph qualities with Tone 6. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 6 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 6 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 6 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 6 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "7": {
+        "any": {
+          "title": {
+            "ua": "Ахав 7 — поєднання гліфа і тону",
+            "en": "Ahau 7 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 7: базове поєднання якостей гліфа з ритмом Тону 7. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 7: a basic blend of glyph qualities with Tone 7. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 7 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 7 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 7 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 7 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "8": {
+        "any": {
+          "title": {
+            "ua": "Ахав 8 — поєднання гліфа і тону",
+            "en": "Ahau 8 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 8: базове поєднання якостей гліфа з ритмом Тону 8. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 8: a basic blend of glyph qualities with Tone 8. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 8 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 8 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 8 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 8 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "9": {
+        "any": {
+          "title": {
+            "ua": "Ахав 9 — поєднання гліфа і тону",
+            "en": "Ahau 9 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 9: базове поєднання якостей гліфа з ритмом Тону 9. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 9: a basic blend of glyph qualities with Tone 9. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 9 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 9 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 9 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 9 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "10": {
+        "any": {
+          "title": {
+            "ua": "Ахав 10 — поєднання гліфа і тону",
+            "en": "Ahau 10 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 10: базове поєднання якостей гліфа з ритмом Тону 10. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 10: a basic blend of glyph qualities with Tone 10. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 10 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 10 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 10 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 10 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "11": {
+        "any": {
+          "title": {
+            "ua": "Ахав 11 — поєднання гліфа і тону",
+            "en": "Ahau 11 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 11: базове поєднання якостей гліфа з ритмом Тону 11. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 11: a basic blend of glyph qualities with Tone 11. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 11 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 11 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 11 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 11 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "12": {
+        "any": {
+          "title": {
+            "ua": "Ахав 12 — поєднання гліфа і тону",
+            "en": "Ahau 12 — glyph & tone blend"
+          },
+          "meta": {
+            "ua": "Ахав 12: базове поєднання якостей гліфа з ритмом Тону 12. Тримай простоту, послідовність і ясність наміру.",
+            "en": "Ahau 12: a basic blend of glyph qualities with Tone 12. Keep it simple, consistent, and clear in intention."
+          },
+          "intro": {
+            "ua": "Твій вибір.",
+            "en": "Your choice."
+          },
+          "glyph_core": {
+            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
+            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
+          },
+          "tone_core": {
+            "ua": "Тон 12 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
+            "en": "Tone 12 activates its quality—work in its rhythm without overloading the form."
+          },
+          "synergy": {
+            "ua": "Поєднання Ахав і Тону 12 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
+            "en": "The fusion of Ahau and Tone 12 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
+          },
+          "advice": [
+            {
+              "ua": "Залиши зайве — тримайся суті одного кроку.",
+              "en": "Drop the excess—stick to the essence of one step."
+            },
+            {
+              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
+              "en": "Log a short note of result at day’s end."
+            }
+          ],
+          "shadow": {
+            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
+            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
+          },
+          "conclusion": {
+            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
+            "en": "Hold the course and measure. Small step—steady progress."
+          }
+        }
+      },
+      "13": {
+        "any": {
+          "title": {
+            "ua": "Ахау 13 — завершення у світлі"
+          },
+          "meta": {
+            "ua": "Ахау 13 підсумовує цикл теплом: подякуй досвіду, поділись сяйвом та сміливо відкрий новий етап."
+          },
+          "conclusion": {
+            "ua": "Світло Ахау 13 лагідно проводить у нову спіраль: подякуй тим, хто поруч, і дозволь собі власне свято."
+          }
+        }
+      }
+    },
+    "cauac": {
       "1": {
         "any": {
           "title": {
@@ -11326,573 +11893,6 @@
           "conclusion": {
             "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
             "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      }
-    },
-    "ahau": {
-      "1": {
-        "any": {
-          "title": {
-            "ua": "Ахав 1 — поєднання гліфа і тону",
-            "en": "Ahau 1 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 1: базове поєднання якостей гліфа з ритмом Тону 1. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 1: a basic blend of glyph qualities with Tone 1. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 1 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 1 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 1 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 1 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "2": {
-        "any": {
-          "title": {
-            "ua": "Ахав 2 — поєднання гліфа і тону",
-            "en": "Ahau 2 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 2: базове поєднання якостей гліфа з ритмом Тону 2. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 2: a basic blend of glyph qualities with Tone 2. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 2 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 2 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 2 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 2 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "3": {
-        "any": {
-          "title": {
-            "ua": "Ахав 3 — поєднання гліфа і тону",
-            "en": "Ahau 3 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 3: базове поєднання якостей гліфа з ритмом Тону 3. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 3: a basic blend of glyph qualities with Tone 3. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 3 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 3 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 3 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 3 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "4": {
-        "any": {
-          "title": {
-            "ua": "Ахав 4 — поєднання гліфа і тону",
-            "en": "Ahau 4 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 4: базове поєднання якостей гліфа з ритмом Тону 4. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 4: a basic blend of glyph qualities with Tone 4. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 4 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 4 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 4 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 4 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "5": {
-        "any": {
-          "title": {
-            "ua": "Ахав 5 — поєднання гліфа і тону",
-            "en": "Ahau 5 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 5: базове поєднання якостей гліфа з ритмом Тону 5. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 5: a basic blend of glyph qualities with Tone 5. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 5 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 5 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 5 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 5 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "6": {
-        "any": {
-          "title": {
-            "ua": "Ахав 6 — поєднання гліфа і тону",
-            "en": "Ahau 6 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 6: базове поєднання якостей гліфа з ритмом Тону 6. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 6: a basic blend of glyph qualities with Tone 6. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 6 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 6 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 6 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 6 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "7": {
-        "any": {
-          "title": {
-            "ua": "Ахав 7 — поєднання гліфа і тону",
-            "en": "Ahau 7 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 7: базове поєднання якостей гліфа з ритмом Тону 7. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 7: a basic blend of glyph qualities with Tone 7. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 7 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 7 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 7 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 7 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "8": {
-        "any": {
-          "title": {
-            "ua": "Ахав 8 — поєднання гліфа і тону",
-            "en": "Ahau 8 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 8: базове поєднання якостей гліфа з ритмом Тону 8. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 8: a basic blend of glyph qualities with Tone 8. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 8 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 8 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 8 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 8 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "9": {
-        "any": {
-          "title": {
-            "ua": "Ахав 9 — поєднання гліфа і тону",
-            "en": "Ahau 9 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 9: базове поєднання якостей гліфа з ритмом Тону 9. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 9: a basic blend of glyph qualities with Tone 9. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 9 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 9 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 9 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 9 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "10": {
-        "any": {
-          "title": {
-            "ua": "Ахав 10 — поєднання гліфа і тону",
-            "en": "Ahau 10 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 10: базове поєднання якостей гліфа з ритмом Тону 10. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 10: a basic blend of glyph qualities with Tone 10. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 10 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 10 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 10 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 10 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "11": {
-        "any": {
-          "title": {
-            "ua": "Ахав 11 — поєднання гліфа і тону",
-            "en": "Ahau 11 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 11: базове поєднання якостей гліфа з ритмом Тону 11. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 11: a basic blend of glyph qualities with Tone 11. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 11 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 11 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 11 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 11 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "12": {
-        "any": {
-          "title": {
-            "ua": "Ахав 12 — поєднання гліфа і тону",
-            "en": "Ahau 12 — glyph & tone blend"
-          },
-          "meta": {
-            "ua": "Ахав 12: базове поєднання якостей гліфа з ритмом Тону 12. Тримай простоту, послідовність і ясність наміру.",
-            "en": "Ahau 12: a basic blend of glyph qualities with Tone 12. Keep it simple, consistent, and clear in intention."
-          },
-          "intro": {
-            "ua": "Твій вибір.",
-            "en": "Your choice."
-          },
-          "glyph_core": {
-            "ua": "Сутність гліфа Ахав підтримує твій рух: скористайся його природними якостями у конкретній дії.",
-            "en": "The core of Ahau supports your motion: use its natural qualities in a concrete action."
-          },
-          "tone_core": {
-            "ua": "Тон 12 активує свою якість — працюй у його ритмі, не перевантажуючи форму.",
-            "en": "Tone 12 activates its quality—work in its rhythm without overloading the form."
-          },
-          "synergy": {
-            "ua": "Поєднання Ахав і Тону 12 узгоджує сильні сторони гліфа з ритмом тону. Роби малими, точними кроками.",
-            "en": "The fusion of Ahau and Tone 12 aligns the glyph’s strengths with the tone’s rhythm. Move in small, precise steps."
-          },
-          "advice": [
-            {
-              "ua": "Залиши зайве — тримайся суті одного кроку.",
-              "en": "Drop the excess—stick to the essence of one step."
-            },
-            {
-              "ua": "Зафіксуй результат короткою нотаткою наприкінці дня.",
-              "en": "Log a short note of result at day’s end."
-            }
-          ],
-          "shadow": {
-            "ua": "Виклик — адаптація до зміни ритму: не пересмикуй форму, повертайся до простоти.",
-            "en": "Challenge—adapting to rhythm changes: don’t over-tighten the form, return to simplicity."
-          },
-          "conclusion": {
-            "ua": "Тримай курс і міру. Малий крок — стабільний прогрес.",
-            "en": "Hold the course and measure. Small step—steady progress."
-          }
-        }
-      },
-      "13": {
-        "any": {
-          "title": {
-            "ua": "Ахау 13 — завершення у світлі"
-          },
-          "meta": {
-            "ua": "Ахау 13 підсумовує цикл теплом: подякуй досвіду, поділись сяйвом та сміливо відкрий новий етап."
-          },
-          "conclusion": {
-            "ua": "Світло Ахау 13 лагідно проводить у нову спіраль: подякуй тим, хто поруч, і дозволь собі власне свято."
           }
         }
       }

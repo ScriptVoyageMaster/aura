@@ -156,28 +156,33 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     en: "Description",
   };
 
-  const SIGN_ID_MAP = [
-    "imix",
-    "ik",
-    "akbal",
-    "kan",
-    "chikchan",
-    "kimi",
-    "manik",
-    "lamat",
-    "muluk",
-    "ok",
-    "chuwen",
-    "eb",
-    "ben",
-    "ix",
-    "men",
-    "kib",
-    "kaban",
-    "etznab",
-    "kawak",
-    "ahau",
-  ];
+  // Канонічний порядок гліфів отримуємо з утиліти tzolkin.js.
+  // Якщо з якихось причин глобальна константа недоступна, маємо локальний запасний перелік.
+  const CANON_GLYPHS =
+    Array.isArray(window?.CANON_GLYPHS) && window.CANON_GLYPHS.length === 20
+      ? window.CANON_GLYPHS
+      : [
+          "imix",
+          "ik",
+          "akbal",
+          "kan",
+          "chicchan",
+          "cimi",
+          "manik",
+          "lamat",
+          "muluc",
+          "oc",
+          "chuen",
+          "eb",
+          "ben",
+          "ix",
+          "men",
+          "cib",
+          "caban",
+          "etznab",
+          "cauac",
+          "ahau",
+        ];
 
   // --- 4. Допоміжні функції ---
 
@@ -352,10 +357,10 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       return null;
     }
     const normalized = Math.trunc(numeric) - 1;
-    if (normalized < 0 || normalized >= SIGN_ID_MAP.length) {
+    if (normalized < 0 || normalized >= CANON_GLYPHS.length) {
       return null;
     }
-    return SIGN_ID_MAP[normalized];
+    return CANON_GLYPHS[normalized];
   }
 
   /**
