@@ -1,0 +1,17 @@
+{
+  "start_date": "1900-01-01",
+  "end_date": "today",
+  "frequency_minutes": 5,
+  "pairs_list_path": "data/pairs.json",
+  "overrides_path": "data/overrides.json",
+  "public_root": "public",
+  "site_base_url": "https://aura.bit.city",
+  "template_version": "v1",
+  "sitemaps": {
+    "index_path": "public/sitemap.xml",
+    "yearly_dir": "public/sitemaps"
+  },
+  "cron_window": {
+    "max_pages_per_run": 500
+  }
+}
