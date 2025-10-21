@@ -1,0 +1,15 @@
+# === Static generated horoscope pages ===
+# Генеровані HTML сторінки Майя
+/public/maya/*
+
+# Sitemap-и, створені скриптом
+/public/sitemaps/*
+/public/sitemap.xml
+
+# Тимчасові файли генератора
+*.tmp
+*.log
+
+# Keep empty folder structure
+!/public/maya/.gitkeep
+!/public/sitemaps/.gitkeep
