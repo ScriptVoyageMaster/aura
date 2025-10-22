@@ -5,10 +5,11 @@
   "pairs_list_path": "data/pairs.json",
   "overrides_path": "data/overrides.json",
   "public_root": "public",
-  "site_base_url": "https://aura.bit.city",
-  "template_version": "v1",
+  "template_version": "v2",
+  "site_origin": "https://aura.bit.city",
+  "canonical_prefix": "/maya",
   "sitemaps": {
-    "index_path": "public/sitemap.xml",
+    "index": "public/sitemap.xml",
     "yearly_dir": "public/sitemaps"
   },
   "cron_window": {

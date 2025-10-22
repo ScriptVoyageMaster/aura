@@ -36,6 +36,19 @@ const CANON_GLYPHS = [
   "ahau",
 ];
 
+// Карта винятків для назв SVG-файлів гліфів, що історично зберегли альтернативні написання.
+const GLYPH_FILE_OVERRIDES = {
+  chicchan: "MAYA-g-log-cal-D05-Chikchan.svg",
+  cimi: "MAYA-g-log-cal-D06-Kimi.svg",
+  muluc: "MAYA-g-log-cal-D09-Muluk.svg",
+  oc: "MAYA-g-log-cal-D10-Ok_b.svg",
+  chuen: "MAYA-g-log-cal-D11-Chuwen.svg",
+  cib: "MAYA-g-log-cal-D16-Kib.svg",
+  caban: "MAYA-g-log-cal-D17-Kaban.svg",
+  cauac: "MAYA-g-log-cal-D19-Kawak.svg",
+  ahau: "MAYA-g-log-cal-D20-Ajaw.svg",
+};
+
 // Допоміжна константа: кількість мілісекунд у добі. Знадобиться для циклів дат.
 const DAY_MS = 24 * 60 * 60 * 1000;
 
@@ -54,6 +67,9 @@ const DAY_MS = 24 * 60 * 60 * 1000;
  */
 async function runGenerator() {
   const config = await readConfig();
+  const siteOrigin = normalizeSiteOrigin(config.site_origin || config.site_base_url);
+  const canonicalPrefix = normalizeCanonicalPrefix(config.canonical_prefix);
+  const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
   const pairs = await readPairs(config.pairs_list_path);
   const overrides = await readOverrides(config.overrides_path);
   const glyphMetadata = await readGlyphMetadata();
@@ -114,8 +130,13 @@ async function runGenerator() {
       break;
     }
     const { year, month, day, iso, human } = buildDateParts(date);
-    const canonicalPath = `/maya/${year}/${month}/${day}/`;
-    const canonicalUrl = buildCanonicalUrl(config.site_base_url, canonicalPath);
+    const canonicalPath = buildCanonicalPath({
+      canonicalPrefix,
+      year,
+      month,
+      day,
+    });
+    const canonicalUrl = buildCanonicalUrl(siteOrigin, canonicalPath);
     const targetDir = path.join(publicRoot, "maya", year, month, day);
     const targetFile = path.join(targetDir, "index.html");
 
@@ -172,21 +193,37 @@ async function runGenerator() {
 
     await fs.mkdir(targetDir, { recursive: true });
 
-    const html = buildHtml({
-      template,
-      titleUa,
-      metaUa,
-      adviceUa,
-      glyphName,
-      toneValue: String(pair.tone),
-      isoDate: iso,
-      humanDate: human,
-      canonicalUrl,
-      glyphSlug: pair.glyph_slug,
-      templateVersion: config.template_version,
-      overrideHash: hash,
-      siteBaseUrl: config.site_base_url,
-    });
+    let html;
+    try {
+      const replacements = buildPlaceholderReplacements({
+        titleUa,
+        metaUa,
+        adviceUa,
+        glyphName,
+        toneValue: String(pair.tone),
+        isoDate: iso,
+        humanDate: human,
+        canonicalUrl,
+        glyphSlug: pair.glyph_slug,
+        templateVersion: config.template_version,
+        overrideHash: hash,
+        siteOrigin,
+        canonicalPrefix: canonicalPrefixForTemplate,
+        year,
+        month,
+        day,
+      });
+      html = buildHtml({ template, replacements });
+    } catch (error) {
+      if (error?.code === "PLACEHOLDER_MISSING") {
+        console.error(
+          `[maya-static] Пропущено ${iso}: не всі плейсхолдери замінені (${error.missingPlaceholders.join(", ")})`
+        );
+        skippedCount += 1;
+        continue;
+      }
+      throw error;
+    }
 
     const tmpFile = `${targetFile}.tmp`;
     await fs.writeFile(tmpFile, html, "utf8");
@@ -217,8 +254,8 @@ async function runGenerator() {
   if (generatedPages.length > 0) {
     await updateSitemaps({
       pages: generatedPages,
-      siteBaseUrl: config.site_base_url,
-      indexPath: path.resolve(ROOT_DIR, config.sitemaps?.index_path || "public/sitemap.xml"),
+      siteOrigin,
+      indexPath: path.resolve(ROOT_DIR, config.sitemaps?.index || config.sitemaps?.index_path || "public/sitemap.xml"),
       yearlyDir: path.resolve(ROOT_DIR, config.sitemaps?.yearly_dir || "public/sitemaps"),
     });
   }
@@ -449,11 +486,30 @@ function buildDateParts(date) {
 }
 
 /**
- * Складаємо повний канонічний URL з базового домену та відносного шляху.
+ * Складаємо повний канонічний URL з урахуванням нормалізованого домену.
  */
-function buildCanonicalUrl(baseUrl, canonicalPath) {
-  const cleanBase = String(baseUrl || "https://aura.bit.city").replace(/\/$/, "");
-  return `${cleanBase}${canonicalPath}`;
+function buildCanonicalUrl(siteOrigin, canonicalPath) {
+  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+  const normalizedPath = canonicalPath.startsWith("/")
+    ? canonicalPath
+    : `/${canonicalPath}`;
+  return `${cleanOrigin}${normalizedPath}`;
+}
+
+/**
+ * Конструюємо канонічний шлях з префіксом, роком, місяцем і днем.
+ */
+function buildCanonicalPath({ canonicalPrefix, year, month, day }) {
+  const prefix = canonicalPrefix === "/" ? "" : canonicalPrefix;
+  const parts = [prefix, year, month, day].filter((segment) => segment !== null && segment !== undefined);
+  let path = parts.join("/");
+  if (!path.startsWith("/")) {
+    path = `/${path}`;
+  }
+  if (!path.endsWith("/")) {
+    path = `${path}/`;
+  }
+  return path.replace(/\/+/g, "/");
 }
 
 /**
@@ -487,8 +543,8 @@ function sanitizeText(value) {
   if (typeof value !== "string") {
     return null;
   }
-  const trimmed = value.trim();
-  return trimmed.length > 0 ? trimmed : null;
+  const normalized = normalizeWhitespace(value);
+  return normalized.length > 0 ? normalized : null;
 }
 
 /**
@@ -553,10 +609,30 @@ async function checkNeedToRegenerate({
 }
 
 /**
- * Формуємо фінальний HTML, підставляючи значення у всі плейсхолдери шаблону.
+ * Формуємо фінальний HTML, гарантуючи заміну всіх плейсхолдерів.
  */
-function buildHtml({
-  template,
+function buildHtml({ template, replacements }) {
+  let output = template;
+  for (const [key, value] of Object.entries(replacements)) {
+    const token = `{{${key}}}`;
+    output = output.replace(new RegExp(escapeRegExp(token), "g"), value);
+  }
+
+  const leftovers = output.match(/{{[^}]+}}/g);
+  if (leftovers) {
+    const error = new Error("У шаблоні залишилися незамінені плейсхолдери");
+    error.code = "PLACEHOLDER_MISSING";
+    error.missingPlaceholders = Array.from(new Set(leftovers));
+    throw error;
+  }
+
+  return output;
+}
+
+/**
+ * Готуємо словник замін для шаблону, одразу застосовуючи усі нормалізації.
+ */
+function buildPlaceholderReplacements({
   titleUa,
   metaUa,
   adviceUa,
@@ -568,131 +644,126 @@ function buildHtml({
   glyphSlug,
   templateVersion,
   overrideHash,
-  siteBaseUrl,
+  siteOrigin,
+  canonicalPrefix,
+  year,
+  month,
+  day,
 }) {
-  const ogImage = buildOgImageUrl(siteBaseUrl, glyphSlug);
-  const jsonLd = buildJsonLd({
-    titleUa,
-    metaUa,
-    canonicalUrl,
-    ogImage,
-    isoDate,
-    siteBaseUrl,
-  });
-  const qualitiesBlock = adviceUa
-    ? `<li><strong>Підказка дня:</strong> ${escapeHtml(adviceUa)}</li>`
-    : "";
-  const replacements = new Map([
-    ["{{PAGE_TITLE}}", escapeHtml(`${titleUa} — ${humanDate}`)],
-    ["{{META_DESCRIPTION}}", escapeHtml(metaUa)],
-    ["{{OG_TITLE}}", escapeHtml(`${titleUa} — ${humanDate}`)],
-    ["{{OG_DESCRIPTION}}", escapeHtml(metaUa)],
-    ["{{OG_IMAGE}}", escapeHtml(ogImage)],
-    ["{{CANONICAL_URL}}", escapeHtml(canonicalUrl)],
-    ["{{JSON_LD}}", indentJson(jsonLd, 6)],
-    ["{{H1_TEXT}}", escapeHtml(`Гороскоп Майя на ${humanDate} — ${titleUa}`)],
-    ["{{LEAD_PARAGRAPH}}", escapeHtml(metaUa)],
-    ["{{GLYPH_NAME}}", escapeHtml(glyphName)],
-    ["{{TONE_VALUE}}", escapeHtml(toneValue)],
-    ["{{QUALITIES_BLOCK}}", qualitiesBlock],
-    ["{{CTA_URL}}", escapeHtml(`/?date=${isoDate}`)],
-    ["{{SERVICE_COMMENT}}", buildServiceComment({
-      templateVersion,
-      overrideHash,
-      glyphSlug,
-      toneValue,
-      isoDate,
-    })],
-  ]);
+  const normalizedMeta = truncateSmart(metaUa, 160);
+  const normalizedAdvice = adviceUa ? truncateSmart(adviceUa, 120) : "";
+  const pageTitle = buildPageTitle(titleUa, humanDate);
+  const ogImage = buildOgImageUrl(siteOrigin, glyphSlug);
 
-  let output = template;
-  for (const [token, value] of replacements.entries()) {
-    output = output.replace(new RegExp(escapeRegExp(token), "g"), value);
+  return {
+    PAGE_TITLE: escapeHtml(pageTitle),
+    META_UA: escapeHtml(normalizedMeta),
+    TITLE_UA: escapeHtml(titleUa),
+    GLYPH_NAME_UA: escapeHtml(glyphName),
+    GLYPH_SLUG: escapeHtml(glyphSlug),
+    TONE: escapeHtml(toneValue),
+    DATE_ISO: escapeHtml(isoDate),
+    DATE_DDMMYYYY: escapeHtml(humanDate),
+    DATE_YEAR: escapeHtml(year),
+    DATE_MM: escapeHtml(month),
+    DATE_DD: escapeHtml(day),
+    SITE_ORIGIN: escapeHtml(siteOrigin),
+    CANONICAL_URL: escapeHtml(canonicalUrl),
+    CANONICAL_PREFIX: escapeHtml(canonicalPrefix),
+    OG_IMAGE: escapeHtml(ogImage),
+    TEMPLATE_VERSION: escapeHtml(templateVersion),
+    OV_HASH: escapeHtml(overrideHash),
+    ADVICE_SHORT: escapeHtml(normalizedAdvice),
+  };
+}
+
+/**
+ * Формуємо короткий <title>, щоб він поміщався у сніпети пошуку.
+ */
+function buildPageTitle(titleUa, humanDate) {
+  const combined = `${titleUa} — ${humanDate}`;
+  return truncateSmart(combined, 60);
+}
+
+/**
+ * Обрізаємо рядки по словах і додаємо трикрапку, якщо довжина перевищує ліміт.
+ */
+function truncateSmart(value, maxLength) {
+  const text = normalizeWhitespace(value);
+  if (text.length <= maxLength) {
+    return text;
   }
-  return output;
+  const slice = text.slice(0, maxLength - 1);
+  const lastSpace = slice.lastIndexOf(" ");
+  const safe = lastSpace > maxLength * 0.6 ? slice.slice(0, lastSpace) : slice;
+  return `${safe.trim()}…`;
 }
 
 /**
- * Формуємо рядок JSON-LD з двома сутностями: стаття + хлібні крихти.
+ * Замінюємо послідовності пробілів на один пробіл і прибираємо зайві переноси рядків.
  */
-function buildJsonLd({ titleUa, metaUa, canonicalUrl, ogImage, isoDate, siteBaseUrl }) {
-  const [year, month, day] = isoDate.split("-");
-  const cleanBase = String(siteBaseUrl || "").replace(/\/$/, "");
-  const rootUrl = cleanBase || "https://aura.bit.city";
-  const mayaRoot = `${rootUrl}/maya/`;
-  const graph = [
-    {
-      "@type": "Article",
-      name: titleUa,
-      description: metaUa,
-      datePublished: isoDate,
-      url: canonicalUrl,
-      image: ogImage,
-      author: {
-        "@type": "Organization",
-        name: "Aura Bit City",
-      },
-    },
-    {
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Головна",
-          item: `${rootUrl}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: "Майя",
-          item: mayaRoot,
-        },
-        {
-          "@type": "ListItem",
-          position: 3,
-          name: year,
-          item: `${mayaRoot}${year}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 4,
-          name: `${month}.${year}`,
-          item: `${mayaRoot}${year}/${month}/`,
-        },
-        {
-          "@type": "ListItem",
-          position: 5,
-          name: `День ${day}.${month}`,
-          item: canonicalUrl,
-        },
-      ],
-    },
-  ];
-  return JSON.stringify(
-    {
-      "@context": "https://schema.org",
-      "@graph": graph,
-    },
-    null,
-    2
-  );
+function normalizeWhitespace(value) {
+  return String(value || "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 /**
- * Створюємо службовий коментар із ключовою інформацією для контролю версій.
+ * Нормалізуємо базовий домен: прибираємо хвіст зі слешів і підставляємо дефолт.
  */
-function buildServiceComment({ templateVersion, overrideHash, glyphSlug, toneValue, isoDate }) {
-  return `    <!-- tpl:${templateVersion}; ov:${overrideHash}; pair:${glyphSlug}-${toneValue}; date:${isoDate} -->`;
+function normalizeSiteOrigin(value) {
+  const fallback = "https://aura.bit.city";
+  if (!value) {
+    return fallback;
+  }
+  const trimmed = String(value).trim();
+  if (!trimmed) {
+    return fallback;
+  }
+  return trimmed.replace(/\/+$/, "");
 }
 
 /**
- * Формуємо шлях до ілюстрації гліфа, а за потреби підставляємо дефолтну картинку.
+ * Гарантуємо, що канонічний префікс починається зі слеша й не має його у кінці.
  */
-function buildOgImageUrl(siteBaseUrl, glyphSlug) {
-  const cleanBase = String(siteBaseUrl || "https://aura.bit.city").replace(/\/$/, "");
-  const candidate = `${cleanBase}/img/maya/glyphs/${glyphSlug}.png`;
-  return candidate;
+function normalizeCanonicalPrefix(value) {
+  const fallback = "/maya";
+  if (!value) {
+    return fallback;
+  }
+  let normalized = String(value).trim();
+  if (!normalized) {
+    return fallback;
+  }
+  if (!normalized.startsWith("/")) {
+    normalized = `/${normalized}`;
+  }
+  if (normalized !== "/") {
+    normalized = normalized.replace(/\/+$/, "");
+  }
+  return normalized || fallback;
+}
+
+/**
+ * Формуємо абсолютний шлях до SVG-гліфа або повертаємо запасне превʼю.
+ */
+function buildOgImageUrl(siteOrigin, glyphSlug) {
+  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+  const slug = String(glyphSlug || "").toLowerCase();
+  const override = GLYPH_FILE_OVERRIDES[slug];
+  const index = CANON_GLYPHS.indexOf(slug);
+
+  if (override) {
+    return `${cleanOrigin}/assets/img/maya/${override}`;
+  }
+
+  if (index >= 0) {
+    const number = String(index + 1).padStart(2, "0");
+    const display = prettifySlug(slug).replace(/\s+/g, "");
+    return `${cleanOrigin}/assets/img/maya/MAYA-g-log-cal-D${number}-${display}.svg`;
+  }
+
+  return `${cleanOrigin}/preview.png`;
 }
 
 /**
@@ -725,17 +796,6 @@ function prettifySlug(slug) {
 }
 
 /**
- * Додаємо відступи до JSON-LD, щоб скрипт був красивим і читабельним у вихідному HTML.
- */
-function indentJson(jsonString, indentLevel) {
-  const indent = " ".repeat(indentLevel);
-  return jsonString
-    .split("\n")
-    .map((line) => `${indent}${line}`)
-    .join("\n");
-}
-
-/**
  * Форматуємо дату у вигляді ISO (YYYY-MM-DD) для логів.
  */
 function formatIsoDate(date) {
@@ -746,7 +806,7 @@ function formatIsoDate(date) {
 /**
  * Оновлюємо річні sitemap-и та головний індекс, щоби пошукові системи бачили свіжі сторінки.
  */
-async function updateSitemaps({ pages, siteBaseUrl, indexPath, yearlyDir }) {
+async function updateSitemaps({ pages, siteOrigin, indexPath, yearlyDir }) {
   await fs.mkdir(yearlyDir, { recursive: true });
   const grouped = new Map();
   for (const page of pages) {
@@ -772,7 +832,7 @@ async function updateSitemaps({ pages, siteBaseUrl, indexPath, yearlyDir }) {
   // Після оновлення річних карт потрібно перебудувати індексну sitemap.xml.
   const sitemapUrls = [];
   const yearlyFiles = await fs.readdir(yearlyDir);
-  const sitemapBase = String(siteBaseUrl || "https://aura.bit.city").replace(/\/$/, "");
+  const sitemapBase = normalizeSiteOrigin(siteOrigin);
 
   for (const fileName of yearlyFiles) {
     if (!fileName.startsWith("maya-") || !fileName.endsWith(".xml")) {
