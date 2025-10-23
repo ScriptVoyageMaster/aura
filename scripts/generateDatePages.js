@@ -865,6 +865,38 @@ function normalizeCanonicalPrefix(value) {
 }
 
 /**
+ * Приводимо файловий відносний шлях до URL-формату, гарантуючи провідний слеш.
+ * Завдяки цьому sitemap.xml буде коректним і на Windows, і на Unix-подібних системах.
+ */
+function normalizeRelativeUrlPath(relativePath) {
+  // Будь-який вхід перетворюємо на рядок та обрізаємо пробіли по краях.
+  let normalized = String(relativePath || "").trim();
+  // Порожній рядок або крапка означають, що файли лежать просто в public/.
+  if (!normalized || normalized === ".") {
+    return "/";
+  }
+  // Якщо шлях починається з "./" або ".\", видаляємо ці символи як позначення поточного каталогу.
+  if (normalized.startsWith("./") || normalized.startsWith(".\\")) {
+    normalized = normalized.slice(2);
+  }
+  // Замінюємо всі зворотні слеші на звичайні, щоб позбутися Windows-нотації.
+  normalized = normalized.replace(/\\+/g, "/");
+  // Скорочуємо повторювані слеші усередині шляху, залишаючи один.
+  normalized = normalized.replace(/\/+/g, "/");
+  // Видаляємо фінальні слеші, щоби не отримати подвоєння після конкатенації.
+  normalized = normalized.replace(/\/+$/, "");
+  // Якщо після очищення шлях спорожнів, повертаємо кореневий слеш.
+  if (!normalized) {
+    return "/";
+  }
+  // Якщо шлях не починається зі слеша, додаємо його для правильного URL-формату.
+  if (!normalized.startsWith("/")) {
+    normalized = `/${normalized}`;
+  }
+  return normalized;
+}
+
+/**
  * Формуємо шлях до стандартного PNG-банера для Open Graph, щоби соцмережі гарантовано його підхопили.
  */
 function buildOgImageUrl(siteOrigin, glyphSlug) {
@@ -932,6 +964,11 @@ async function updateSitemaps({
   canonicalPrefix,
 }) {
   await fs.mkdir(yearlyDir, { recursive: true });
+  // Вираховуємо відносний шлях від public/ до каталогу sitemap-ів і перетворюємо його на URL-формат.
+  const yearlyRelativePath = path.relative(publicRoot, yearlyDir);
+  const yearlyUrlBase = normalizeRelativeUrlPath(yearlyRelativePath);
+  // Готуємо префікс з фінальним слешем, щоб акуратно додати назву XML-файлу.
+  const yearlyUrlPrefix = yearlyUrlBase === "/" ? "/" : `${yearlyUrlBase}/`;
   const grouped = new Map();
   for (const page of pages) {
     if (!grouped.has(page.year)) {
@@ -979,7 +1016,7 @@ async function updateSitemaps({
     }
     const filePath = path.join(yearlyDir, fileName);
     const stats = await fs.stat(filePath);
-    const loc = `${sitemapBase}/sitemaps/${fileName}`;
+    const loc = `${sitemapBase}${yearlyUrlPrefix}${fileName}`;
     sitemapUrls.push({ loc, lastmod: stats.mtime.toISOString() });
   }
 

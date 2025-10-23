@@ -910,6 +910,38 @@ function normalizeCanonicalPrefix(value) {
 }
 
 /**
+ * Перетворюємо файловий відносний шлях на акуратний URL-шлях з початковим слешем.
+ * Це дозволяє безпечно підставляти сегмент у sitemap.xml незалежно від ОС.
+ */
+function normalizeRelativeUrlPath(relativePath) {
+  // Перетворюємо будь-яке значення на рядок та позбуваємося пробілів.
+  let normalized = String(relativePath || "").trim();
+  // "" або "." означає, що файли лежать прямо в public/, тому повертаємо корінь.
+  if (!normalized || normalized === ".") {
+    return "/";
+  }
+  // Якщо шлях починається з позначення поточного каталогу (./ або .\), прибираємо ці два символи.
+  if (normalized.startsWith("./") || normalized.startsWith(".\\")) {
+    normalized = normalized.slice(2);
+  }
+  // Уніфікуємо роздільники для Windows і Unix.
+  normalized = normalized.replace(/\\+/g, "/");
+  // Прибираємо повтори слешів усередині шляху для красивого результату.
+  normalized = normalized.replace(/\/+/g, "/");
+  // Видаляємо фінальні слеші, аби уникнути // після конкатенації.
+  normalized = normalized.replace(/\/+$/, "");
+  // Якщо після чистки нічого не залишилось, повертаємо кореневий слеш.
+  if (!normalized) {
+    return "/";
+  }
+  // Якщо шлях не починається зі слеша, додаємо його для коректного URL.
+  if (!normalized.startsWith("/")) {
+    normalized = `/${normalized}`;
+  }
+  return normalized;
+}
+
+/**
  * Формуємо шлях до стандартного PNG-банера для Open Graph, щоби соцмережі гарантовано його підхопили.
  */
 function buildOgImageUrl(siteOrigin, glyphSlug) {
@@ -977,6 +1009,12 @@ async function updateSitemaps({
   canonicalPrefix,
 }) {
   await fs.mkdir(yearlyDir, { recursive: true });
+  // Обчислюємо відносний шлях від каталогу public до теки з річними sitemap-файлами.
+  // Далі перетворюємо його на безпечний URL-шлях: замінюємо Windows-слеші та додаємо початковий "/".
+  const yearlyRelativePath = path.relative(publicRoot, yearlyDir);
+  const yearlyUrlBase = normalizeRelativeUrlPath(yearlyRelativePath);
+  // Додаємо фінальний слеш лише для конкатенації з назвою файлу, уникаючи подвоєних символів.
+  const yearlyUrlPrefix = yearlyUrlBase === "/" ? "/" : `${yearlyUrlBase}/`;
   const grouped = new Map();
   for (const page of pages) {
     if (!grouped.has(page.year)) {
@@ -1024,7 +1062,7 @@ async function updateSitemaps({
     }
     const filePath = path.join(yearlyDir, fileName);
     const stats = await fs.stat(filePath);
-    const loc = `${sitemapBase}/sitemaps/${fileName}`;
+    const loc = `${sitemapBase}${yearlyUrlPrefix}${fileName}`;
     sitemapUrls.push({ loc, lastmod: stats.mtime.toISOString() });
   }
 
