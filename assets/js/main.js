@@ -20,6 +20,9 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   const CONFIG = window.CONFIG;
 
+  // Заздалегідь дістаємо прапорець, що дозволяє або забороняє майбутні дати.
+  const allowFutureDates = Boolean(CONFIG?.global?.allowFutureDates);
+
   // --- 1. Збір посилань на DOM-елементи ---
   const canvas = document.getElementById("scene");
   // Просимо контекст одразу з підтримкою прозорості, аби фон задавався лише через CSS.
@@ -197,6 +200,37 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   /** Повертає рядок сьогоднішньої дати у форматі YYYY-MM-DD. */
   function getTodayIso() {
     return formatDateYYYYMMDD(new Date());
+  }
+
+  /**
+   * Приводимо рядок дати до політики застосунку: мінімум береться з конфіга,
+   * а верхня межа накладається лише тоді, коли заборонені майбутні дати.
+   * Якщо рядок не схожий на YYYY-MM-DD — повертаємо null, щоб вищі рівні
+   * могли коректно відреагувати.
+   */
+  function normalizeDateByPolicy(dateStr) {
+    if (!dateStr || typeof dateStr !== "string") {
+      return null;
+    }
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      return null;
+    }
+
+    let normalized = dateStr;
+
+    if (normalized < CONFIG.global.DATE_MIN) {
+      normalized = CONFIG.global.DATE_MIN;
+    }
+
+    if (!allowFutureDates) {
+      const todayIso = getTodayIso();
+      if (normalized > todayIso) {
+        normalized = todayIso;
+      }
+    }
+
+    return normalized;
   }
 
   /** Рахує кількість днів у конкретному місяці певного року. */
@@ -833,10 +867,16 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   // --- 5. Налаштування дати ---
-  const dateMax = getTodayIso();
+  // Вираховуємо верхню межу для інпуту: якщо дозволені майбутні дати — межі немає.
+  const maxSelectableDateIso = allowFutureDates ? null : getTodayIso();
   if (dateInput) {
     dateInput.min = CONFIG.global.DATE_MIN;
-    dateInput.max = dateMax;
+    if (maxSelectableDateIso) {
+      dateInput.max = maxSelectableDateIso;
+    } else {
+      // Прибираємо атрибут max, щоб користувач міг натиснути будь-яку дату в майбутньому.
+      dateInput.removeAttribute("max");
+    }
   }
 
   const supportsNativeDate = isInputTypeSupported("date");
@@ -859,9 +899,19 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     const { year, month, day } = getTodayParts();
     const minYear = Number(CONFIG.global.DATE_MIN.slice(0, 4));
     const currentYear = Number(year);
+    const params = new URLSearchParams(location.search);
+    const rawDateParam = params.get("date");
+    const urlYear = rawDateParam && /^\d{4}-\d{2}-\d{2}$/.test(rawDateParam)
+      ? Number(rawDateParam.slice(0, 4))
+      : null;
+    const futureSpanYears = 150; // З невеликим запасом, щоб покрити далекі майбутні дати.
+    const maxYearCandidate = allowFutureDates
+      ? Math.max(currentYear + futureSpanYears, urlYear || currentYear)
+      : currentYear;
+    const maxYear = Math.max(minYear, maxYearCandidate);
 
     fallbackYear.innerHTML = "";
-    for (let y = currentYear; y >= minYear; y -= 1) {
+    for (let y = maxYear; y >= minYear; y -= 1) {
       const option = document.createElement("option");
       option.value = String(y);
       option.textContent = String(y);
@@ -987,7 +1037,14 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   function isDateInRange(dateStr) {
-    return dateStr >= CONFIG.global.DATE_MIN && dateStr <= dateMax;
+    if (!dateStr || typeof dateStr !== "string") {
+      return false;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      return false;
+    }
+    const normalized = normalizeDateByPolicy(dateStr);
+    return normalized === dateStr;
   }
 
   function buildSeedFromDateStr(dateStr) {
@@ -1031,18 +1088,25 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   }
 
   function writeStateToUrl(dateStr) {
-    const params = new URLSearchParams();
+    if (!dateStr || !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
+      return;
+    }
+    // Зберігаємо всі наявні параметри, щоб не затирати можливі майбутні налаштування.
+    const params = new URLSearchParams(location.search);
     params.set("date", dateStr);
-    const newUrl = `${location.pathname}?${params.toString()}${location.hash}`;
+    const queryString = params.toString();
+    const newUrl = queryString
+      ? `${location.pathname}?${queryString}${location.hash}`
+      : `${location.pathname}${location.hash}`;
     history.replaceState(null, "", newUrl);
   }
 
   function hydrateUIFromUrlOrToday() {
     const stateFromUrl = readStateFromUrl();
-    let dateStr = stateFromUrl?.date ?? formatDateYYYYMMDD(new Date());
-    if (!isDateInRange(dateStr)) {
-      dateStr = formatDateYYYYMMDD(new Date());
-    }
+    const todayIso = formatDateYYYYMMDD(new Date());
+    const candidate = stateFromUrl?.date ?? todayIso;
+    const normalized = normalizeDateByPolicy(candidate);
+    const dateStr = normalized ?? todayIso;
 
     if (!state.usingFallback && dateInput) {
       dateInput.value = dateStr;
