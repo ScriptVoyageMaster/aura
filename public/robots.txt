@@ -1,0 +1,5 @@
+# Файл robots.txt підказує пошуковим роботам, що всі сторінки відкриті для індексації.
+User-agent: *
+Allow: /
+
+Sitemap: https://aura.bit.city/sitemap.xml

@@ -4,33 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Aura — генеративна графіка</title>
+    <title>Aura — гороскоп Майя за датою народження (гліф і тон) | BIT.CITY</title>
     <meta
       name="description"
-      content="Aura — сервіс генеративної графіки. Створюйте унікальні візерунки на основі дати народження."
+      content="Обери свою дату народження — отримай персональний знак Майя (гліф і тон): коротке значення, підказка дня, посилання на повний опис."
     />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Aura — генеративна графіка" />
+    <meta property="og:title" content="Aura — гороскоп Майя за датою народження (гліф і тон) | BIT.CITY" />
     <meta
       property="og:description"
-      content="Створюйте унікальні візерунки на основі дати народження."
+      content="Обери свою дату народження — отримай персональний знак Майя (гліф і тон): коротке значення, підказка дня, посилання на повний опис."
     />
-    <meta property="og:image" content="https://aura.bit.city/preview.png" />
+    <meta property="og:image" content="https://aura.bit.city/assets/img/og/aura-maya.png" />
     <meta property="og:url" content="https://aura.bit.city/" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Aura — генеративна графіка" />
+    <meta
+      name="twitter:title"
+      content="Aura — гороскоп Майя за датою народження (гліф і тон) | BIT.CITY"
+    />
     <meta
       name="twitter:description"
-      content="Створюйте унікальні візерунки на основі дати народження."
+      content="Обери свою дату народження — отримай персональний знак Майя (гліф і тон): коротке значення, підказка дня, посилання на повний опис."
     />
-    <meta name="twitter:image" content="https://aura.bit.city/preview.png" />
+    <meta name="twitter:image" content="https://aura.bit.city/assets/img/og/aura-maya.png" />
 
     <!-- Canonical -->
     <link rel="canonical" href="https://aura.bit.city/" />
+
+    <!-- JSON-LD: організація та пошук по сайту -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "name": "Aura",
+            "url": "https://aura.bit.city/",
+            "logo": "https://aura.bit.city/assets/img/og/aura-maya.png",
+            "sameAs": []
+          },
+          {
+            "@type": "WebSite",
+            "name": "Aura — гороскоп Майя",
+            "url": "https://aura.bit.city/",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://aura.bit.city/?date={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
 
     <!-- Styles -->
     <link rel="stylesheet" href="assets/css/style.css" />
@@ -256,6 +285,14 @@
             Combining ancient calendars with modern graphics
           </span>
         </p>
+        <nav class="footer-archives" aria-label="Архіви гороскопу Майя">
+          <span class="footer-archives__label">Гороскоп Майя:</span>
+          <ul class="footer-archives__list">
+            <li><a href="/maya/2024/">Архів 2024</a></li>
+            <li><a href="/maya/2025/">Архів 2025</a></li>
+            <li><a href="/maya/2026/">Архів 2026</a></li>
+          </ul>
+        </nav>
       </footer>
       </div>
     </div>

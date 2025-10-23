@@ -240,6 +240,38 @@ body {
   color: inherit;
 }
 
+.footer-archives {
+  /* Додаткові посилання на архіви допомагають краулеру дістатися статичних сторінок */
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-archives__label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.footer-archives__list {
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-archives__list a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.footer-archives__list a:hover {
+  color: var(--accent);
+}
+
 .modal[hidden] {
   display: none;
 }
