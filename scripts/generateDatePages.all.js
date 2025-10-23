@@ -62,8 +62,7 @@ async function runGenerator() {
   // Опція CLI дозволяє примусово перебудувати sitemap-и навіть без нових сторінок.
   const forceSitemap = Boolean(cliOptions.forceSitemap);
   const siteOrigin = normalizeSiteOrigin(config.site_origin || config.site_base_url);
-  const canonicalPrefix = normalizeCanonicalPrefix(config.canonical_prefix);
-  const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
+  const canonicalPrefixRaw = normalizeCanonicalPrefix(config.canonical_prefix);
   const pairs = await readPairs(config.pairs_list_path);
   const overrides = await readOverrides(config.overrides_path);
   const glyphMetadata = await readGlyphMetadata();
@@ -92,6 +91,12 @@ async function runGenerator() {
 
   const publicRoot = path.resolve(ROOT_DIR, config.public_root || "public");
   await fs.mkdir(publicRoot, { recursive: true });
+
+  // Обчислюємо, під яким веб-шляхом доступний каталог public, щоб канонічні URL містили цей сегмент.
+  const publicUrlBase = normalizeRelativeUrlPath(path.relative(ROOT_DIR, publicRoot));
+  // Додаємо до веб-шляху каталогу public канонічний префікс з конфіга, отримуючи фінальний сегмент.
+  const canonicalPrefix = joinUrlSegments(publicUrlBase, canonicalPrefixRaw);
+  const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
 
   const generatedPages = [];
   let createdCount = 0;
@@ -939,6 +944,34 @@ function normalizeRelativeUrlPath(relativePath) {
     normalized = `/${normalized}`;
   }
   return normalized;
+}
+
+/**
+ * Акуратно об'єднуємо декілька сегментів URL, щоб уникнути подвоєних слешів.
+ * Корисно, коли треба додати базовий шлях (наприклад, /public) до канонічного префіксу.
+ */
+function joinUrlSegments(...segments) {
+  const parts = [];
+  for (const segment of segments) {
+    if (!segment) {
+      continue;
+    }
+    let normalized = String(segment).trim();
+    if (!normalized) {
+      continue;
+    }
+    normalized = normalized.replace(/\\+/g, "/");
+    normalized = normalized.replace(/\/+/g, "/");
+    normalized = normalized.replace(/^\/+/, "");
+    normalized = normalized.replace(/\/+$/, "");
+    if (normalized) {
+      parts.push(normalized);
+    }
+  }
+  if (parts.length === 0) {
+    return "/";
+  }
+  return `/${parts.join("/")}`;
 }
 
 /**

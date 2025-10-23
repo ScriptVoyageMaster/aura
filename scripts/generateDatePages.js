@@ -58,8 +58,7 @@ const ARCHIVE_PAGE_SIZE = 150;
 async function runGenerator() {
   const config = await readConfig();
   const siteOrigin = normalizeSiteOrigin(config.site_origin || config.site_base_url);
-  const canonicalPrefix = normalizeCanonicalPrefix(config.canonical_prefix);
-  const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
+  const canonicalPrefixRaw = normalizeCanonicalPrefix(config.canonical_prefix);
   const pairs = await readPairs(config.pairs_list_path);
   const overrides = await readOverrides(config.overrides_path);
   const glyphMetadata = await readGlyphMetadata();
@@ -101,6 +100,12 @@ async function runGenerator() {
 
   const publicRoot = path.resolve(ROOT_DIR, config.public_root || "public");
   await fs.mkdir(publicRoot, { recursive: true });
+
+  // Знаходимо веб-шлях для каталогу public, щоб включити його до канонічних URL сторінок.
+  const publicUrlBase = normalizeRelativeUrlPath(path.relative(ROOT_DIR, publicRoot));
+  // Поєднуємо веб-шлях каталогу public із префіксом із конфіга, отримуючи кінцевий канонічний сегмент.
+  const canonicalPrefix = joinUrlSegments(publicUrlBase, canonicalPrefixRaw);
+  const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
 
   const generatedPages = [];
   let createdCount = 0;
@@ -894,6 +899,34 @@ function normalizeRelativeUrlPath(relativePath) {
     normalized = `/${normalized}`;
   }
   return normalized;
+}
+
+/**
+ * Акуратно поєднуємо кілька URL-сегментів, щоб уникнути подвоєних слешів і зайвих пробілів.
+ * Це гарантує, що комбінація шляху "/public" та префікса "/maya" стане саме "/public/maya".
+ */
+function joinUrlSegments(...segments) {
+  const parts = [];
+  for (const segment of segments) {
+    if (!segment) {
+      continue;
+    }
+    let normalized = String(segment).trim();
+    if (!normalized) {
+      continue;
+    }
+    normalized = normalized.replace(/\\+/g, "/");
+    normalized = normalized.replace(/\/+/g, "/");
+    normalized = normalized.replace(/^\/+/, "");
+    normalized = normalized.replace(/\/+$/, "");
+    if (normalized) {
+      parts.push(normalized);
+    }
+  }
+  if (parts.length === 0) {
+    return "/";
+  }
+  return `/${parts.join("/")}`;
 }
 
 /**
