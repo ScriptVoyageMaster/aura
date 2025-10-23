@@ -59,6 +59,8 @@ const ARCHIVE_PAGE_SIZE = 150;
 async function runGenerator() {
   const config = await readConfig();
   const cliOptions = parseCliArguments();
+  // Опція CLI дозволяє примусово перебудувати sitemap-и навіть без нових сторінок.
+  const forceSitemap = Boolean(cliOptions.forceSitemap);
   const siteOrigin = normalizeSiteOrigin(config.site_origin || config.site_base_url);
   const canonicalPrefix = normalizeCanonicalPrefix(config.canonical_prefix);
   const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
@@ -81,6 +83,12 @@ async function runGenerator() {
   console.log(
     `[maya-static] Повний прохід по діапазону ${formatIsoDate(startDate)} – ${formatIsoDate(endDate)}.`
   );
+
+  if (forceSitemap) {
+    console.log(
+      "[maya-static] Увімкнено примусове оновлення sitemap-ів: буде виконано навіть без нових HTML-сторінок."
+    );
+  }
 
   const publicRoot = path.resolve(ROOT_DIR, config.public_root || "public");
   await fs.mkdir(publicRoot, { recursive: true });
@@ -241,21 +249,27 @@ async function runGenerator() {
     }
   }
 
-  if (generatedPages.length > 0) {
-    await updateSitemaps({
-      pages: generatedPages,
-      siteOrigin,
-      indexPath: path.resolve(
-        ROOT_DIR,
-        config.sitemaps?.index || config.sitemaps?.index_path || "public/sitemap.xml"
-      ),
-      yearlyDir: path.resolve(
-        ROOT_DIR,
-        config.sitemaps?.yearly_dir || "public/sitemaps"
-      ),
-      publicRoot,
-      canonicalPrefix,
-    });
+  // Формуємо payload для генератора sitemap-ів, щоб одразу використати його у виклику.
+  const allUrls = {
+    pages: generatedPages,
+    siteOrigin,
+    indexPath: path.resolve(
+      ROOT_DIR,
+      config.sitemaps?.index || config.sitemaps?.index_path || "public/sitemap.xml"
+    ),
+    yearlyDir: path.resolve(ROOT_DIR, config.sitemaps?.yearly_dir || "public/sitemaps"),
+    publicRoot,
+    canonicalPrefix,
+  };
+
+  // Узагальнена статистика допомагає вирішити, чи варто оновлювати sitemap-и.
+  const stats = {
+    created: createdCount,
+    updated: updatedCount,
+  };
+
+  if (forceSitemap || stats.created > 0 || stats.updated > 0) {
+    await updateSitemaps(allUrls);
   }
 
   console.log(
@@ -273,12 +287,16 @@ function parseCliArguments() {
   const args = process.argv.slice(2);
   const options = {
     range: null,
+    // Прапорець для примусового оновлення sitemap-ів без огляду на статистику.
+    forceSitemap: false,
   };
 
   for (const arg of args) {
     if (arg.startsWith("--range=")) {
       const raw = arg.slice("--range=".length);
       options.range = parseRangeArgument(raw);
+    } else if (arg === "--force-sitemap") {
+      options.forceSitemap = true;
     } else if (arg === "--help" || arg === "-h") {
       printHelpAndExit();
     } else {
@@ -312,8 +330,11 @@ function parseRangeArgument(value) {
  * Виводимо підказку щодо доступних параметрів та перериваємо виконання без помилки.
  */
 function printHelpAndExit() {
-  console.log(`\nВикористання: node scripts/generateDatePages.all.js [--range=YYYY-MM-DD:YYYY-MM-DD]\n`);
+  console.log(
+    "\nВикористання: node scripts/generateDatePages.all.js [--range=YYYY-MM-DD:YYYY-MM-DD] [--force-sitemap]\n"
+  );
   console.log("--range  — разово перекриває start_date та end_date з конфіга.");
+  console.log("--force-sitemap — примусово перебудовує sitemap-и навіть без змін сторінок.");
   process.exit(0);
 }
 
