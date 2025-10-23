@@ -905,8 +905,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
       ? Number(rawDateParam.slice(0, 4))
       : null;
     const futureSpanYears = 150; // З невеликим запасом, щоб покрити далекі майбутні дати.
+    const maxReasonableYear = currentYear + futureSpanYears;
+    const clampedUrlYear = urlYear == null
+      ? null
+      : Math.min(Math.max(urlYear, minYear), maxReasonableYear);
     const maxYearCandidate = allowFutureDates
-      ? Math.max(currentYear + futureSpanYears, urlYear || currentYear)
+      ? Math.max(maxReasonableYear, clampedUrlYear || currentYear)
       : currentYear;
     const maxYear = Math.max(minYear, maxYearCandidate);
 
