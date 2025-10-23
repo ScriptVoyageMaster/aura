@@ -68,6 +68,10 @@
     .cta:hover { background:var(--brand-dark); }
     figure { margin: 1.25rem 0; }
     figcaption { font-size:.9rem; color:var(--muted); }
+    .nav-links { margin:2rem 0; padding:0; }
+    .nav-links ul { list-style:none; display:flex; flex-wrap:wrap; gap:.5rem; padding:0; margin:0; }
+    .nav-links__item a { display:inline-flex; align-items:center; gap:.35rem; padding:.55rem .9rem; border-radius:999px; background:#0a7ad9; color:#fff; text-decoration:none; font-weight:600; }
+    .nav-links__item a:hover { background:#075ea7; }
     footer { margin-top:2rem; font-size:.9rem; color:var(--muted); }
   </style>
 </head>
@@ -93,6 +97,14 @@
       <img src="{{OG_IMAGE}}" alt="Гліф {{GLYPH_NAME_UA}}" width="256" height="256" loading="lazy">
       <figcaption class="muted">Гліф {{GLYPH_NAME_UA}} • Тон {{TONE}}</figcaption>
     </figure>
+
+    <nav class="nav-links" aria-label="Навігація між днями">
+      <ul>
+        {{NAV_PREVIOUS}}
+        {{NAV_ARCHIVE}}
+        {{NAV_NEXT}}
+      </ul>
+    </nav>
 
     <footer>
       <span class="muted">© Aura Bit City</span>

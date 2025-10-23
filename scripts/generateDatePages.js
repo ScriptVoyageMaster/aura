@@ -36,21 +36,11 @@ const CANON_GLYPHS = [
   "ahau",
 ];
 
-// Карта винятків для назв SVG-файлів гліфів, що історично зберегли альтернативні написання.
-const GLYPH_FILE_OVERRIDES = {
-  chicchan: "MAYA-g-log-cal-D05-Chikchan.svg",
-  cimi: "MAYA-g-log-cal-D06-Kimi.svg",
-  muluc: "MAYA-g-log-cal-D09-Muluk.svg",
-  oc: "MAYA-g-log-cal-D10-Ok_b.svg",
-  chuen: "MAYA-g-log-cal-D11-Chuwen.svg",
-  cib: "MAYA-g-log-cal-D16-Kib.svg",
-  caban: "MAYA-g-log-cal-D17-Kaban.svg",
-  cauac: "MAYA-g-log-cal-D19-Kawak.svg",
-  ahau: "MAYA-g-log-cal-D20-Ajaw.svg",
-};
-
 // Допоміжна константа: кількість мілісекунд у добі. Знадобиться для циклів дат.
 const DAY_MS = 24 * 60 * 60 * 1000;
+
+// Скільки посилань показувати на одній сторінці річного архіву.
+const ARCHIVE_PAGE_SIZE = 150;
 
 // Головна точка входу. Обгортаємо все в async-функцію для зручної роботи з await.
 (async () => {
@@ -140,6 +130,14 @@ async function runGenerator() {
     const targetDir = path.join(publicRoot, "maya", year, month, day);
     const targetFile = path.join(targetDir, "index.html");
 
+    const navigation = buildNavigationLinks({
+      date,
+      startDate,
+      endDate,
+      canonicalPrefix,
+      siteOrigin,
+    });
+
     const overrideBlock = getOverrideBlock(overrides, pair.glyph_slug, pair.tone);
     if (!overrideBlock) {
       console.error(
@@ -212,6 +210,9 @@ async function runGenerator() {
         year,
         month,
         day,
+        previousLinkHtml: navigation.previousLinkHtml,
+        nextLinkHtml: navigation.nextLinkHtml,
+        archiveLinkHtml: navigation.archiveLinkHtml,
       });
       html = buildHtml({ template, replacements });
     } catch (error) {
@@ -229,6 +230,8 @@ async function runGenerator() {
     await fs.writeFile(tmpFile, html, "utf8");
     await fs.rename(tmpFile, targetFile);
 
+    const generatedAt = new Date().toISOString();
+
     if (existed) {
       updatedCount += 1;
     } else {
@@ -240,6 +243,9 @@ async function runGenerator() {
       canonicalPath,
       isoDate: iso,
       year,
+      lastmod: generatedAt,
+      changefreq: navigation.changefreq,
+      priority: navigation.priority,
     });
   }
 
@@ -257,6 +263,8 @@ async function runGenerator() {
       siteOrigin,
       indexPath: path.resolve(ROOT_DIR, config.sitemaps?.index || config.sitemaps?.index_path || "public/sitemap.xml"),
       yearlyDir: path.resolve(ROOT_DIR, config.sitemaps?.yearly_dir || "public/sitemaps"),
+      publicRoot,
+      canonicalPrefix,
     });
   }
 
@@ -649,6 +657,9 @@ function buildPlaceholderReplacements({
   year,
   month,
   day,
+  previousLinkHtml,
+  nextLinkHtml,
+  archiveLinkHtml,
 }) {
   const normalizedMeta = truncateSmart(metaUa, 160);
   const normalizedAdvice = adviceUa ? truncateSmart(adviceUa, 120) : "";
@@ -674,7 +685,116 @@ function buildPlaceholderReplacements({
     TEMPLATE_VERSION: escapeHtml(templateVersion),
     OV_HASH: escapeHtml(overrideHash),
     ADVICE_SHORT: escapeHtml(normalizedAdvice),
+    NAV_PREVIOUS: previousLinkHtml || "",
+    NAV_NEXT: nextLinkHtml || "",
+    NAV_ARCHIVE: archiveLinkHtml || "",
   };
+}
+
+/**
+ * Формуємо блоки внутрішньої навігації й паралельно розраховуємо метадані для sitemap.
+ */
+function buildNavigationLinks({ date, startDate, endDate, canonicalPrefix, siteOrigin }) {
+  const previousDate = new Date(date.getTime() - DAY_MS);
+  const nextDate = new Date(date.getTime() + DAY_MS);
+  const currentParts = buildDateParts(date);
+  const archiveUrl = buildArchiveUrl({
+    canonicalPrefix,
+    siteOrigin,
+    year: currentParts.year,
+  });
+
+  const archiveLinkHtml = createNavLink({
+    href: archiveUrl,
+    label: `Повернутися до архіву ${currentParts.year}`,
+    rel: "up",
+  });
+
+  let previousLinkHtml = "";
+  if (!startDate || previousDate >= startDate) {
+    const prevParts = buildDateParts(previousDate);
+    const prevPath = buildCanonicalPath({
+      canonicalPrefix,
+      year: prevParts.year,
+      month: prevParts.month,
+      day: prevParts.day,
+    });
+    const prevUrl = buildCanonicalUrl(siteOrigin, prevPath);
+    previousLinkHtml = createNavLink({
+      href: prevUrl,
+      label: `Попередній день — ${prevParts.day}.${prevParts.month}.${prevParts.year}`,
+      rel: "prev",
+    });
+  }
+
+  let nextLinkHtml = "";
+  if (!endDate || nextDate <= endDate) {
+    const nextParts = buildDateParts(nextDate);
+    const nextPath = buildCanonicalPath({
+      canonicalPrefix,
+      year: nextParts.year,
+      month: nextParts.month,
+      day: nextParts.day,
+    });
+    const nextUrl = buildCanonicalUrl(siteOrigin, nextPath);
+    nextLinkHtml = createNavLink({
+      href: nextUrl,
+      label: `Наступний день — ${nextParts.day}.${nextParts.month}.${nextParts.year}`,
+      rel: "next",
+    });
+  }
+
+  const sitemapMeta = computeSitemapMeta(currentParts.iso);
+
+  return {
+    previousLinkHtml,
+    nextLinkHtml,
+    archiveLinkHtml,
+    changefreq: sitemapMeta.changefreq,
+    priority: sitemapMeta.priority,
+  };
+}
+
+/**
+ * Створюємо готовий HTML-рядок для пункту навігації з урахуванням безпеки.
+ */
+function createNavLink({ href, label, rel }) {
+  if (!href || !label) {
+    return "";
+  }
+  const safeHref = escapeHtml(href);
+  const safeLabel = escapeHtml(label);
+  const relAttribute = rel ? ` rel="${escapeHtml(rel)}"` : "";
+  return `<li class="nav-links__item"><a href="${safeHref}"${relAttribute}>${safeLabel}</a></li>`;
+}
+
+/**
+ * Рахуємо пріоритети для sitemap, надаючи трохи вищу вагу найближчим датам.
+ */
+function computeSitemapMeta(isoDate) {
+  if (!isoDate) {
+    return { changefreq: "weekly", priority: "0.6" };
+  }
+  const now = new Date();
+  const target = new Date(`${isoDate}T00:00:00Z`);
+  const diffMs = target - now;
+  const diffDays = Math.round(diffMs / DAY_MS);
+  const priority = Math.abs(diffDays) <= 7 ? "0.8" : "0.6";
+  return { changefreq: "weekly", priority };
+}
+
+/**
+ * Формуємо абсолютну URL-адресу архіву конкретного року.
+ */
+function buildArchiveUrl({ canonicalPrefix, siteOrigin, year }) {
+  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+  const prefix = canonicalPrefix === "/" ? "" : canonicalPrefix;
+  let path = `${prefix}/${year}/`;
+  if (!path.startsWith("/")) {
+    path = `/${path}`;
+  }
+  path = path.replace(/\/+/g, "/");
+  return `${cleanOrigin}${path}`;
 }
 
 /**
@@ -745,25 +865,22 @@ function normalizeCanonicalPrefix(value) {
 }
 
 /**
- * Формуємо абсолютний шлях до SVG-гліфа або повертаємо запасне превʼю.
+ * Формуємо шлях до стандартного PNG-банера для Open Graph, щоби соцмережі гарантовано його підхопили.
  */
 function buildOgImageUrl(siteOrigin, glyphSlug) {
   const cleanOrigin = normalizeSiteOrigin(siteOrigin);
   const slug = String(glyphSlug || "").toLowerCase();
-  const override = GLYPH_FILE_OVERRIDES[slug];
-  const index = CANON_GLYPHS.indexOf(slug);
 
-  if (override) {
-    return `${cleanOrigin}/assets/img/maya/${override}`;
+  if (!CANON_GLYPHS.includes(slug)) {
+    console.warn(
+      "[maya-static] Отримано невідомий гліф для OG-зображення, повертаємо дефолтний банер.",
+      glyphSlug
+    );
   }
 
-  if (index >= 0) {
-    const number = String(index + 1).padStart(2, "0");
-    const display = prettifySlug(slug).replace(/\s+/g, "");
-    return `${cleanOrigin}/assets/img/maya/MAYA-g-log-cal-D${number}-${display}.svg`;
-  }
-
-  return `${cleanOrigin}/preview.png`;
+  // PNG 1200×630 додається вручну до /public/assets/img/og/ і використовується для всіх статичних сторінок.
+  // Це усуває SVG, з якими соцмережі та деякі месенджери працюють нестабільно.
+  return `${cleanOrigin}/assets/img/og/aura-maya.png`;
 }
 
 /**
@@ -806,7 +923,14 @@ function formatIsoDate(date) {
 /**
  * Оновлюємо річні sitemap-и та головний індекс, щоби пошукові системи бачили свіжі сторінки.
  */
-async function updateSitemaps({ pages, siteOrigin, indexPath, yearlyDir }) {
+async function updateSitemaps({
+  pages,
+  siteOrigin,
+  indexPath,
+  yearlyDir,
+  publicRoot,
+  canonicalPrefix,
+}) {
   await fs.mkdir(yearlyDir, { recursive: true });
   const grouped = new Map();
   for (const page of pages) {
@@ -817,31 +941,48 @@ async function updateSitemaps({ pages, siteOrigin, indexPath, yearlyDir }) {
   }
 
   for (const [year, yearPages] of grouped.entries()) {
-    const filePath = path.join(yearlyDir, `maya-${year}.xml`);
-    const existingEntries = await readYearlySitemap(filePath);
+    const existingEntries = await readYearlySitemapSet(yearlyDir, year);
     for (const page of yearPages) {
+      const meta = computeSitemapMeta(page.isoDate);
       existingEntries.set(page.canonicalUrl, {
         loc: page.canonicalUrl,
-        lastmod: new Date().toISOString(),
+        isoDate: page.isoDate,
+        lastmod: page.lastmod || new Date().toISOString(),
+        changefreq: page.changefreq || meta.changefreq,
+        priority: page.priority || meta.priority,
       });
     }
-    const xml = buildYearlySitemap(existingEntries);
-    await fs.writeFile(filePath, xml, "utf8");
+
+    const { entries } = await writeYearlySitemaps({
+      year,
+      entries: existingEntries,
+      yearlyDir,
+    });
+
+    await writeYearArchive({
+      year,
+      entries,
+      canonicalPrefix,
+      publicRoot,
+      siteOrigin,
+    });
   }
 
   // Після оновлення річних карт потрібно перебудувати індексну sitemap.xml.
-  const sitemapUrls = [];
-  const yearlyFiles = await fs.readdir(yearlyDir);
   const sitemapBase = normalizeSiteOrigin(siteOrigin);
+  const yearlyFiles = await safeReadDir(yearlyDir);
+  const sitemapUrls = [];
 
   for (const fileName of yearlyFiles) {
     if (!fileName.startsWith("maya-") || !fileName.endsWith(".xml")) {
       continue;
     }
-    const year = fileName.replace("maya-", "").replace(".xml", "");
+    const filePath = path.join(yearlyDir, fileName);
+    const stats = await fs.stat(filePath);
     const loc = `${sitemapBase}/sitemaps/${fileName}`;
-    sitemapUrls.push({ loc, year });
+    sitemapUrls.push({ loc, lastmod: stats.mtime.toISOString() });
   }
+
   const indexXml = buildIndexSitemap(sitemapUrls);
   await fs.writeFile(indexPath, indexXml, "utf8");
 }
@@ -849,14 +990,45 @@ async function updateSitemaps({ pages, siteOrigin, indexPath, yearlyDir }) {
 /**
  * Зчитуємо наявну річну карту, щоб не губити попередні записи.
  */
+async function readYearlySitemapSet(yearlyDir, year) {
+  const entries = new Map();
+  const files = await safeReadDir(yearlyDir);
+  for (const fileName of files) {
+    if (!isYearlySitemapFile(fileName, year)) {
+      continue;
+    }
+    const filePath = path.join(yearlyDir, fileName);
+    const fileEntries = await readYearlySitemap(filePath);
+    for (const entry of fileEntries.values()) {
+      entries.set(entry.loc, entry);
+    }
+  }
+  return entries;
+}
+
+/**
+ * Зчитуємо один sitemap-файл і повертаємо мапу записів.
+ */
 async function readYearlySitemap(filePath) {
   try {
     const raw = await fs.readFile(filePath, "utf8");
     const entries = new Map();
-    const regex = /<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>[\s\S]*?<\/url>/g;
+    const regex = /<url>\s*<loc>([^<]+)<\/loc>\s*<lastmod>([^<]+)<\/lastmod>([\s\S]*?)<\/url>/g;
     let match;
     while ((match = regex.exec(raw))) {
-      entries.set(match[1], { loc: match[1], lastmod: match[2] });
+      const loc = match[1];
+      const lastmod = match[2];
+      const tail = match[3] || "";
+      const changefreqMatch = tail.match(/<changefreq>([^<]+)<\/changefreq>/);
+      const priorityMatch = tail.match(/<priority>([^<]+)<\/priority>/);
+      const isoDate = extractIsoFromUrl(loc);
+      entries.set(loc, {
+        loc,
+        lastmod,
+        changefreq: changefreqMatch ? changefreqMatch[1] : undefined,
+        priority: priorityMatch ? priorityMatch[1] : undefined,
+        isoDate,
+      });
     }
     return entries;
   } catch (error) {
@@ -868,22 +1040,297 @@ async function readYearlySitemap(filePath) {
 }
 
 /**
- * Будуємо XML для річної sitemap із відсортованими URL.
+ * Перевіряємо, що файл належить конкретному року.
+ */
+function isYearlySitemapFile(fileName, year) {
+  if (!fileName.startsWith(`maya-${year}`) || !fileName.endsWith(".xml")) {
+    return false;
+  }
+  if (fileName === `maya-${year}.xml`) {
+    return true;
+  }
+  return /^maya-\d{4}-[a-z]+\.xml$/.test(fileName);
+}
+
+/**
+ * Записуємо одну або кілька sitemap-файлів для конкретного року.
+ */
+async function writeYearlySitemaps({ year, entries, yearlyDir }) {
+  const urls = Array.from(entries.values()).map((entry) => ({
+    ...entry,
+    isoDate: entry.isoDate || extractIsoFromUrl(entry.loc),
+  }));
+
+  urls.sort((a, b) => a.isoDate.localeCompare(b.isoDate));
+
+  const existingFiles = (await safeReadDir(yearlyDir)).filter((fileName) =>
+    isYearlySitemapFile(fileName, year)
+  );
+  for (const fileName of existingFiles) {
+    await fs.unlink(path.join(yearlyDir, fileName));
+  }
+
+  if (urls.length === 0) {
+    return { entries: [], fileNames: [] };
+  }
+
+  const chunkSize = 50000;
+  const chunks = chunkArray(urls, chunkSize);
+  const fileNames = [];
+  const pendingWrites = [];
+
+  chunks.forEach((chunk, index) => {
+    const suffix = chunks.length === 1 ? "" : `-${indexToSuffix(index)}`;
+    const fileName = `maya-${year}${suffix}.xml`;
+    const hydrated = chunk.map((item) => ({
+      ...item,
+      lastmod: item.lastmod || new Date().toISOString(),
+      changefreq: item.changefreq || computeSitemapMeta(item.isoDate).changefreq,
+      priority: item.priority || computeSitemapMeta(item.isoDate).priority,
+    }));
+    const xml = buildYearlySitemap(hydrated);
+    fileNames.push(fileName);
+    const targetPath = path.join(yearlyDir, fileName);
+    pendingWrites.push(fs.writeFile(targetPath, xml, "utf8"));
+    chunks[index] = hydrated;
+  });
+
+  await Promise.all(pendingWrites);
+
+  const flattened = chunks.flat();
+  return { entries: flattened, fileNames };
+}
+
+/**
+ * Формуємо XML для річної sitemap із відсортованими URL.
  */
 function buildYearlySitemap(entries) {
-  const urls = Array.from(entries.values()).sort((a, b) => a.loc.localeCompare(b.loc));
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   ];
-  for (const url of urls) {
+  for (const url of entries) {
     lines.push("  <url>");
     lines.push(`    <loc>${url.loc}</loc>`);
     lines.push(`    <lastmod>${url.lastmod}</lastmod>`);
+    if (url.changefreq) {
+      lines.push(`    <changefreq>${url.changefreq}</changefreq>`);
+    }
+    if (url.priority) {
+      lines.push(`    <priority>${url.priority}</priority>`);
+    }
     lines.push("  </url>");
   }
   lines.push("</urlset>");
   return `${lines.join("\n")}\n`;
+}
+
+/**
+ * Перебудовуємо HTML-архів для року, додаючи пагінацію.
+ */
+async function writeYearArchive({ year, entries, canonicalPrefix, publicRoot, siteOrigin }) {
+  const normalizedEntries = [...entries].sort((a, b) => b.isoDate.localeCompare(a.isoDate));
+  const pages = chunkArray(normalizedEntries, ARCHIVE_PAGE_SIZE);
+  const segments = canonicalPrefix === "/"
+    ? []
+    : canonicalPrefix.replace(/^\//, "").split("/").filter(Boolean);
+  const archiveRoot = path.join(publicRoot, ...segments, year);
+  await fs.mkdir(archiveRoot, { recursive: true });
+
+  if (pages.length === 0) {
+    const emptyHtml = buildArchiveHtml({
+      year,
+      entries: [],
+      pageNumber: 1,
+      totalPages: 1,
+      canonicalPrefix,
+      siteOrigin,
+    });
+    const emptyPath = path.join(archiveRoot, "index.html");
+    await fs.writeFile(emptyPath, emptyHtml, "utf8");
+    return;
+  }
+
+  for (let index = 0; index < pages.length; index += 1) {
+    const pageNumber = index + 1;
+    const slice = pages[index];
+    const html = buildArchiveHtml({
+      year,
+      entries: slice,
+      pageNumber,
+      totalPages: pages.length,
+      canonicalPrefix,
+      siteOrigin,
+    });
+
+    if (pageNumber === 1) {
+      await fs.writeFile(path.join(archiveRoot, "index.html"), html, "utf8");
+    } else {
+      const pageDir = path.join(archiveRoot, "page", String(pageNumber));
+      await fs.mkdir(pageDir, { recursive: true });
+      await fs.writeFile(path.join(pageDir, "index.html"), html, "utf8");
+    }
+  }
+}
+
+/**
+ * Будуємо фінальний HTML для сторінки архіву з урахуванням пагінації.
+ */
+function buildArchiveHtml({ year, entries, pageNumber, totalPages, canonicalPrefix, siteOrigin }) {
+  const title = `Архів гороскопу Майя ${year} — Aura`;
+  const description = `Усі статичні сторінки гороскопу Майя за ${year} рік.`;
+  const canonicalUrl = buildArchivePageUrl({
+    canonicalPrefix,
+    siteOrigin,
+    year,
+    pageNumber,
+  });
+
+  const prevLink = pageNumber > 1
+    ? buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber: pageNumber - 1 })
+    : null;
+  const nextLink = pageNumber < totalPages
+    ? buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber: pageNumber + 1 })
+    : null;
+
+  const listItems = entries
+    .map((entry) => {
+      const iso = entry.isoDate || extractIsoFromUrl(entry.loc) || "";
+      const parts = iso.split("-");
+      const [y, m, d] = parts.length === 3 ? parts : ["????", "??", "??"];
+      const label = `Гороскоп Майя на ${d}.${m}.${y}`;
+      return `        <li><a href="${escapeHtml(entry.loc)}">${escapeHtml(label)}</a></li>`;
+    })
+    .join("\n");
+
+  const pagination = buildArchivePagination({ year, canonicalPrefix, siteOrigin, pageNumber, totalPages });
+
+  return `<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>${escapeHtml(title)}</title>
+    <meta name="description" content="${escapeHtml(description)}" />
+    <link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
+    ${prevLink ? `<link rel="prev" href="${escapeHtml(prevLink)}" />` : ""}
+    ${nextLink ? `<link rel="next" href="${escapeHtml(nextLink)}" />` : ""}
+    <style>
+      body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; margin: 0; padding: 1.5rem; background: #f9fafb; color: #0f172a; }
+      main { max-width: 960px; margin: 0 auto; background: #ffffff; border-radius: 16px; padding: 2rem 2.5rem; box-shadow: 0 10px 35px rgba(15, 23, 42, 0.12); }
+      h1 { margin-top: 0; font-size: clamp(1.6rem, 1.2rem + 1vw, 2rem); }
+      p.lead { margin: 0.25rem 0 1.5rem; color: #475569; }
+      ul.archive-list { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.75rem 1.5rem; }
+      ul.archive-list li { background: #f1f5f9; border-radius: 12px; padding: 0.85rem 1.1rem; transition: background 0.2s ease, transform 0.2s ease; }
+      ul.archive-list li:hover { background: #e2e8f0; transform: translateY(-1px); }
+      ul.archive-list a { color: inherit; text-decoration: none; font-weight: 600; }
+      nav.pagination { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+      nav.pagination a { padding: 0.5rem 0.9rem; border-radius: 8px; background: #e0f2fe; color: #0f172a; text-decoration: none; font-weight: 600; }
+      nav.pagination span.current { padding: 0.5rem 0.9rem; border-radius: 8px; background: #0ea5e9; color: #ffffff; font-weight: 700; }
+      .cta { display: inline-flex; margin-top: 1.5rem; padding: 0.65rem 1rem; border-radius: 10px; background: #0ea5e9; color: #fff; font-weight: 600; text-decoration: none; }
+      .cta:hover { background: #0284c7; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Архів гороскопу Майя за ${escapeHtml(year)}</h1>
+      <p class="lead">Переглянь усі статичні сторінки на кожен день року та переходь до потрібної дати.</p>
+      <ul class="archive-list">
+${listItems || "        <li>Архів наразі порожній. Перевір, чи згенеровані сторінки для цього року.</li>"}
+      </ul>
+      ${pagination}
+      <a class="cta" href="${escapeHtml(`${normalizeSiteOrigin(siteOrigin)}/`)}">На головну Aura</a>
+    </main>
+  </body>
+</html>
+`;
+}
+
+/**
+ * Формуємо навігацію пагінації з посиланнями на всі сторінки архіву року.
+ */
+function buildArchivePagination({ year, canonicalPrefix, siteOrigin, pageNumber, totalPages }) {
+  if (totalPages <= 1) {
+    return "";
+  }
+  const parts = ['      <nav class="pagination" aria-label="Пагінація архіву">'];
+  for (let page = 1; page <= totalPages; page += 1) {
+    if (page === pageNumber) {
+      parts.push(`        <span class="current">Сторінка ${page}</span>`);
+      continue;
+    }
+    const href = buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber: page });
+    parts.push(`        <a href="${escapeHtml(href)}">Сторінка ${page}</a>`);
+  }
+  parts.push("      </nav>");
+  return parts.join("\n");
+}
+
+/**
+ * Формуємо абсолютну адресу сторінки архіву конкретного року й сторінки.
+ */
+function buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber }) {
+  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+  const prefix = canonicalPrefix === "/" ? "" : canonicalPrefix;
+  let path = `${prefix}/${year}/`;
+  if (pageNumber && pageNumber > 1) {
+    path += `page/${pageNumber}/`;
+  }
+  if (!path.startsWith("/")) {
+    path = `/${path}`;
+  }
+  path = path.replace(/\/+/g, "/");
+  return `${cleanOrigin}${path}`;
+}
+
+/**
+ * Повертаємо масив сторінок у форматі батчів для подальшого запису.
+ */
+function chunkArray(items, chunkSize) {
+  const chunks = [];
+  for (let index = 0; index < items.length; index += chunkSize) {
+    chunks.push(items.slice(index, index + chunkSize));
+  }
+  return chunks;
+}
+
+/**
+ * Перетворюємо індекс частини на літеральний суфікс (a, b, ..., aa).
+ */
+function indexToSuffix(index) {
+  const alphabet = "abcdefghijklmnopqrstuvwxyz";
+  let value = index;
+  let suffix = "";
+  do {
+    suffix = alphabet[value % alphabet.length] + suffix;
+    value = Math.floor(value / alphabet.length) - 1;
+  } while (value >= 0);
+  return suffix;
+}
+
+/**
+ * Безпечно читаємо директорію: повертаємо порожній масив, якщо її не існує.
+ */
+async function safeReadDir(dirPath) {
+  try {
+    return await fs.readdir(dirPath);
+  } catch (error) {
+    if (error.code === "ENOENT") {
+      return [];
+    }
+    throw error;
+  }
+}
+
+/**
+ * Витягуємо ISO-дату з канонічної URL сторінки /maya/YYYY/MM/DD/.
+ */
+function extractIsoFromUrl(loc) {
+  const match = String(loc).match(/\/(\d{4})\/(\d{2})\/(\d{2})\/?$/);
+  if (!match) {
+    return null;
+  }
+  return `${match[1]}-${match[2]}-${match[3]}`;
 }
 
 /**
@@ -898,7 +1345,9 @@ function buildIndexSitemap(sitemaps) {
   for (const item of sorted) {
     lines.push("  <sitemap>");
     lines.push(`    <loc>${item.loc}</loc>`);
-    lines.push(`    <lastmod>${new Date().toISOString()}</lastmod>`);
+    if (item.lastmod) {
+      lines.push(`    <lastmod>${item.lastmod}</lastmod>`);
+    }
     lines.push("  </sitemap>");
   }
   lines.push("</sitemapindex>");

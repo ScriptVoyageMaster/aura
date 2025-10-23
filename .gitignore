@@ -4,7 +4,9 @@
 
 # Sitemap-и, створені скриптом
 /public/sitemaps/*
+!/public/sitemaps/.gitkeep
 /public/sitemap.xml
+!/public/sitemap.xml
 
 # Тимчасові файли генератора
 *.tmp
@@ -12,4 +14,3 @@
 
 # Keep empty folder structure
 !/public/maya/.gitkeep
-!/public/sitemaps/.gitkeep
