@@ -179,7 +179,34 @@ async function runGenerator() {
         isoDate: iso,
       });
 
+      // Ця змінна згодом зберігатиме значення lastmod для sitemap,
+      // незалежно від того, чи ми реально згенерували HTML, чи просто додали сторінку.
+      let sitemapLastmod = null;
+
       if (!shouldRegenerate) {
+        if (forceSitemap) {
+          try {
+            // Якщо примусова опція ввімкнена, але HTML і так актуальний, ми все одно
+            // додаємо сторінку до sitemap, використавши час останньої модифікації файлу.
+            const stats = await fs.stat(targetFile);
+            sitemapLastmod = stats.mtime.toISOString();
+            generatedPages.push({
+              canonicalUrl,
+              canonicalPath,
+              isoDate: iso,
+              year,
+              lastmod: sitemapLastmod,
+              changefreq: navigation.changefreq,
+              priority: navigation.priority,
+            });
+          } catch (statError) {
+            // Якщо файл не існує або недоступний, просто попередимо та поведемося як раніше.
+            console.warn(
+              `[maya-static] Не вдалося зчитати mtime для ${iso}: ${statError.message}. Сторінку пропущено.`
+            );
+          }
+        }
+
         skippedCount += 1;
         continue;
       }
@@ -230,6 +257,7 @@ async function runGenerator() {
       await fs.rename(tmpFile, targetFile);
 
       const generatedAt = new Date().toISOString();
+      sitemapLastmod = generatedAt;
 
       if (existed) {
         updatedCount += 1;
@@ -237,12 +265,15 @@ async function runGenerator() {
         createdCount += 1;
       }
 
+      // Після збереження HTML додаємо інформацію для sitemap.
+      // Окрема змінна sitemapLastmod гарантує, що і нові, і оновлені сторінки
+      // потрапляють у список з актуальним timestamp.
       generatedPages.push({
         canonicalUrl,
         canonicalPath,
         isoDate: iso,
         year,
-        lastmod: generatedAt,
+        lastmod: sitemapLastmod,
         changefreq: navigation.changefreq,
         priority: navigation.priority,
       });
