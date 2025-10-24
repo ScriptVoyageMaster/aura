@@ -57,7 +57,12 @@ const ARCHIVE_PAGE_SIZE = 150;
  */
 async function runGenerator() {
   const config = await readConfig();
-  const siteOrigin = normalizeSiteOrigin(config.site_origin || config.site_base_url);
+  const siteOrigin = normalizeSiteOrigin(
+    (config.site && config.site.origin) || config.site_origin || config.site_base_url
+  );
+  const publicPrefix = normalizePublicPrefix(
+    (config.site && config.site.publicPrefix) || config.public_prefix || "/public"
+  );
   const canonicalPrefix = normalizeCanonicalPrefix(config.canonical_prefix);
   const canonicalPrefixForTemplate = canonicalPrefix === "/" ? "" : canonicalPrefix;
   const pairs = await readPairs(config.pairs_list_path);
@@ -126,7 +131,14 @@ async function runGenerator() {
       month,
       day,
     });
-    const canonicalUrl = buildCanonicalUrl(siteOrigin, canonicalPath);
+    const canonicalUrl = pageUrlForDate({
+      siteOrigin,
+      publicPrefix,
+      canonicalPrefix,
+      year,
+      month,
+      day,
+    });
     const targetDir = path.join(publicRoot, "maya", year, month, day);
     const targetFile = path.join(targetDir, "index.html");
 
@@ -136,6 +148,7 @@ async function runGenerator() {
       endDate,
       canonicalPrefix,
       siteOrigin,
+      publicPrefix,
     });
 
     const overrideBlock = getOverrideBlock(overrides, pair.glyph_slug, pair.tone);
@@ -243,6 +256,8 @@ async function runGenerator() {
       canonicalPath,
       isoDate: iso,
       year,
+      month,
+      day,
       lastmod: generatedAt,
       changefreq: navigation.changefreq,
       priority: navigation.priority,
@@ -265,6 +280,7 @@ async function runGenerator() {
       yearlyDir: path.resolve(ROOT_DIR, config.sitemaps?.yearly_dir || "public/sitemaps"),
       publicRoot,
       canonicalPrefix,
+      publicPrefix,
     });
   }
 
@@ -521,6 +537,58 @@ function buildCanonicalPath({ canonicalPrefix, year, month, day }) {
 }
 
 /**
+ * Нормалізуємо публічний префікс (/public), щоби не було зайвих або відсутніх слешів.
+ */
+function normalizePublicPrefix(value) {
+  const fallback = "/public";
+  const raw = typeof value === "string" ? value.trim() : "";
+  let prefix = raw.length > 0 ? raw : fallback;
+  if (!prefix.startsWith("/")) {
+    prefix = `/${prefix}`;
+  }
+  prefix = prefix.replace(/\/+/g, "/");
+  if (prefix.length > 1) {
+    prefix = prefix.replace(/\/+$, "");
+  }
+  return prefix === "" ? "/" : prefix;
+}
+
+/**
+ * Формуємо абсолютну публічну URL-адресу, поєднуючи домен, префікс та відносний шлях.
+ */
+function buildPublicUrl(siteOrigin, publicPrefix, rawPath) {
+  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+  const normalizedPrefix = normalizePublicPrefix(publicPrefix);
+  let normalizedPath = String(rawPath || "");
+  if (!normalizedPath.startsWith("/")) {
+    normalizedPath = `/${normalizedPath}`;
+  }
+  normalizedPath = normalizedPath.replace(/\/+/g, "/");
+  const combinedPath = normalizedPrefix === "/"
+    ? normalizedPath
+    : `${normalizedPrefix}${normalizedPath}`.replace(/\/+/g, "/");
+  return `${cleanOrigin}${combinedPath}`;
+}
+
+/**
+ * Створюємо публічну адресу сторінки за конкретною датою.
+ */
+function pageUrlForDate({ siteOrigin, publicPrefix, canonicalPrefix, year, month, day }) {
+  const canonicalPath = buildCanonicalPath({ canonicalPrefix, year, month, day });
+  return buildPublicUrl(siteOrigin, publicPrefix, canonicalPath);
+}
+
+/**
+ * Формуємо публічний шлях до річного sitemap-файлу (у тому числі зі суфіксами a/b/...).
+ */
+function yearSitemapUrl({ siteOrigin, publicPrefix, year, fileName }) {
+  const targetName = fileName || `maya-${year}.xml`;
+  const sanitizedName = String(targetName).replace(/^\/+/, "");
+  const relative = `/sitemaps/${sanitizedName}`;
+  return buildPublicUrl(siteOrigin, publicPrefix, relative);
+}
+
+/**
  * Повертаємо потрібний вузол overrides для конкретної пари.
  */
 function getOverrideBlock(overrides, glyphSlug, tone) {
@@ -694,13 +762,21 @@ function buildPlaceholderReplacements({
 /**
  * Формуємо блоки внутрішньої навігації й паралельно розраховуємо метадані для sitemap.
  */
-function buildNavigationLinks({ date, startDate, endDate, canonicalPrefix, siteOrigin }) {
+function buildNavigationLinks({
+  date,
+  startDate,
+  endDate,
+  canonicalPrefix,
+  siteOrigin,
+  publicPrefix,
+}) {
   const previousDate = new Date(date.getTime() - DAY_MS);
   const nextDate = new Date(date.getTime() + DAY_MS);
   const currentParts = buildDateParts(date);
   const archiveUrl = buildArchiveUrl({
     canonicalPrefix,
     siteOrigin,
+    publicPrefix,
     year: currentParts.year,
   });
 
@@ -713,13 +789,14 @@ function buildNavigationLinks({ date, startDate, endDate, canonicalPrefix, siteO
   let previousLinkHtml = "";
   if (!startDate || previousDate >= startDate) {
     const prevParts = buildDateParts(previousDate);
-    const prevPath = buildCanonicalPath({
+    const prevUrl = pageUrlForDate({
+      siteOrigin,
+      publicPrefix,
       canonicalPrefix,
       year: prevParts.year,
       month: prevParts.month,
       day: prevParts.day,
     });
-    const prevUrl = buildCanonicalUrl(siteOrigin, prevPath);
     previousLinkHtml = createNavLink({
       href: prevUrl,
       label: `Попередній день — ${prevParts.day}.${prevParts.month}.${prevParts.year}`,
@@ -730,13 +807,14 @@ function buildNavigationLinks({ date, startDate, endDate, canonicalPrefix, siteO
   let nextLinkHtml = "";
   if (!endDate || nextDate <= endDate) {
     const nextParts = buildDateParts(nextDate);
-    const nextPath = buildCanonicalPath({
+    const nextUrl = pageUrlForDate({
+      siteOrigin,
+      publicPrefix,
       canonicalPrefix,
       year: nextParts.year,
       month: nextParts.month,
       day: nextParts.day,
     });
-    const nextUrl = buildCanonicalUrl(siteOrigin, nextPath);
     nextLinkHtml = createNavLink({
       href: nextUrl,
       label: `Наступний день — ${nextParts.day}.${nextParts.month}.${nextParts.year}`,
@@ -786,15 +864,14 @@ function computeSitemapMeta(isoDate) {
 /**
  * Формуємо абсолютну URL-адресу архіву конкретного року.
  */
-function buildArchiveUrl({ canonicalPrefix, siteOrigin, year }) {
-  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+function buildArchiveUrl({ canonicalPrefix, siteOrigin, publicPrefix, year }) {
   const prefix = canonicalPrefix === "/" ? "" : canonicalPrefix;
   let path = `${prefix}/${year}/`;
   if (!path.startsWith("/")) {
     path = `/${path}`;
   }
   path = path.replace(/\/+/g, "/");
-  return `${cleanOrigin}${path}`;
+  return buildPublicUrl(siteOrigin, publicPrefix, path);
 }
 
 /**
@@ -930,6 +1007,7 @@ async function updateSitemaps({
   yearlyDir,
   publicRoot,
   canonicalPrefix,
+  publicPrefix,
 }) {
   await fs.mkdir(yearlyDir, { recursive: true });
   const grouped = new Map();
@@ -942,10 +1020,43 @@ async function updateSitemaps({
 
   for (const [year, yearPages] of grouped.entries()) {
     const existingEntries = await readYearlySitemapSet(yearlyDir, year);
+    const normalizedEntries = new Map();
+
+    for (const entry of existingEntries.values()) {
+      const iso = entry.isoDate || extractIsoFromUrl(entry.loc);
+      if (!iso) {
+        continue;
+      }
+      const [entryYear, entryMonth, entryDay] = iso.split("-");
+      const normalizedLoc = pageUrlForDate({
+        siteOrigin,
+        publicPrefix,
+        canonicalPrefix,
+        year: entryYear,
+        month: entryMonth,
+        day: entryDay,
+      });
+      normalizedEntries.set(normalizedLoc, {
+        loc: normalizedLoc,
+        isoDate: iso,
+        lastmod: entry.lastmod,
+        changefreq: entry.changefreq,
+        priority: entry.priority,
+      });
+    }
+
     for (const page of yearPages) {
       const meta = computeSitemapMeta(page.isoDate);
-      existingEntries.set(page.canonicalUrl, {
-        loc: page.canonicalUrl,
+      const loc = pageUrlForDate({
+        siteOrigin,
+        publicPrefix,
+        canonicalPrefix,
+        year: page.year,
+        month: page.month,
+        day: page.day,
+      });
+      normalizedEntries.set(loc, {
+        loc,
         isoDate: page.isoDate,
         lastmod: page.lastmod || new Date().toISOString(),
         changefreq: page.changefreq || meta.changefreq,
@@ -955,7 +1066,7 @@ async function updateSitemaps({
 
     const { entries } = await writeYearlySitemaps({
       year,
-      entries: existingEntries,
+      entries: normalizedEntries,
       yearlyDir,
     });
 
@@ -965,11 +1076,11 @@ async function updateSitemaps({
       canonicalPrefix,
       publicRoot,
       siteOrigin,
+      publicPrefix,
     });
   }
 
   // Після оновлення річних карт потрібно перебудувати індексну sitemap.xml.
-  const sitemapBase = normalizeSiteOrigin(siteOrigin);
   const yearlyFiles = await safeReadDir(yearlyDir);
   const sitemapUrls = [];
 
@@ -979,7 +1090,7 @@ async function updateSitemaps({
     }
     const filePath = path.join(yearlyDir, fileName);
     const stats = await fs.stat(filePath);
-    const loc = `${sitemapBase}/sitemaps/${fileName}`;
+    const loc = yearSitemapUrl({ siteOrigin, publicPrefix, fileName });
     sitemapUrls.push({ loc, lastmod: stats.mtime.toISOString() });
   }
 
@@ -1128,7 +1239,14 @@ function buildYearlySitemap(entries) {
 /**
  * Перебудовуємо HTML-архів для року, додаючи пагінацію.
  */
-async function writeYearArchive({ year, entries, canonicalPrefix, publicRoot, siteOrigin }) {
+async function writeYearArchive({
+  year,
+  entries,
+  canonicalPrefix,
+  publicRoot,
+  siteOrigin,
+  publicPrefix,
+}) {
   const normalizedEntries = [...entries].sort((a, b) => b.isoDate.localeCompare(a.isoDate));
   const pages = chunkArray(normalizedEntries, ARCHIVE_PAGE_SIZE);
   const segments = canonicalPrefix === "/"
@@ -1145,6 +1263,7 @@ async function writeYearArchive({ year, entries, canonicalPrefix, publicRoot, si
       totalPages: 1,
       canonicalPrefix,
       siteOrigin,
+      publicPrefix,
     });
     const emptyPath = path.join(archiveRoot, "index.html");
     await fs.writeFile(emptyPath, emptyHtml, "utf8");
@@ -1161,6 +1280,7 @@ async function writeYearArchive({ year, entries, canonicalPrefix, publicRoot, si
       totalPages: pages.length,
       canonicalPrefix,
       siteOrigin,
+      publicPrefix,
     });
 
     if (pageNumber === 1) {
@@ -1176,21 +1296,42 @@ async function writeYearArchive({ year, entries, canonicalPrefix, publicRoot, si
 /**
  * Будуємо фінальний HTML для сторінки архіву з урахуванням пагінації.
  */
-function buildArchiveHtml({ year, entries, pageNumber, totalPages, canonicalPrefix, siteOrigin }) {
+function buildArchiveHtml({
+  year,
+  entries,
+  pageNumber,
+  totalPages,
+  canonicalPrefix,
+  siteOrigin,
+  publicPrefix,
+}) {
   const title = `Архів гороскопу Майя ${year} — Aura`;
   const description = `Усі статичні сторінки гороскопу Майя за ${year} рік.`;
   const canonicalUrl = buildArchivePageUrl({
     canonicalPrefix,
     siteOrigin,
+    publicPrefix,
     year,
     pageNumber,
   });
 
   const prevLink = pageNumber > 1
-    ? buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber: pageNumber - 1 })
+    ? buildArchivePageUrl({
+        canonicalPrefix,
+        siteOrigin,
+        publicPrefix,
+        year,
+        pageNumber: pageNumber - 1,
+      })
     : null;
   const nextLink = pageNumber < totalPages
-    ? buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber: pageNumber + 1 })
+    ? buildArchivePageUrl({
+        canonicalPrefix,
+        siteOrigin,
+        publicPrefix,
+        year,
+        pageNumber: pageNumber + 1,
+      })
     : null;
 
   const listItems = entries
@@ -1203,7 +1344,14 @@ function buildArchiveHtml({ year, entries, pageNumber, totalPages, canonicalPref
     })
     .join("\n");
 
-  const pagination = buildArchivePagination({ year, canonicalPrefix, siteOrigin, pageNumber, totalPages });
+  const pagination = buildArchivePagination({
+    year,
+    canonicalPrefix,
+    siteOrigin,
+    publicPrefix,
+    pageNumber,
+    totalPages,
+  });
 
   return `<!DOCTYPE html>
 <html lang="uk">
@@ -1249,7 +1397,14 @@ ${listItems || "        <li>Архів наразі порожній. Перев
 /**
  * Формуємо навігацію пагінації з посиланнями на всі сторінки архіву року.
  */
-function buildArchivePagination({ year, canonicalPrefix, siteOrigin, pageNumber, totalPages }) {
+function buildArchivePagination({
+  year,
+  canonicalPrefix,
+  siteOrigin,
+  publicPrefix,
+  pageNumber,
+  totalPages,
+}) {
   if (totalPages <= 1) {
     return "";
   }
@@ -1259,7 +1414,13 @@ function buildArchivePagination({ year, canonicalPrefix, siteOrigin, pageNumber,
       parts.push(`        <span class="current">Сторінка ${page}</span>`);
       continue;
     }
-    const href = buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber: page });
+    const href = buildArchivePageUrl({
+      canonicalPrefix,
+      siteOrigin,
+      publicPrefix,
+      year,
+      pageNumber: page,
+    });
     parts.push(`        <a href="${escapeHtml(href)}">Сторінка ${page}</a>`);
   }
   parts.push("      </nav>");
@@ -1269,8 +1430,7 @@ function buildArchivePagination({ year, canonicalPrefix, siteOrigin, pageNumber,
 /**
  * Формуємо абсолютну адресу сторінки архіву конкретного року й сторінки.
  */
-function buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber }) {
-  const cleanOrigin = normalizeSiteOrigin(siteOrigin);
+function buildArchivePageUrl({ canonicalPrefix, siteOrigin, publicPrefix, year, pageNumber }) {
   const prefix = canonicalPrefix === "/" ? "" : canonicalPrefix;
   let path = `${prefix}/${year}/`;
   if (pageNumber && pageNumber > 1) {
@@ -1280,7 +1440,7 @@ function buildArchivePageUrl({ canonicalPrefix, siteOrigin, year, pageNumber }) 
     path = `/${path}`;
   }
   path = path.replace(/\/+/g, "/");
-  return `${cleanOrigin}${path}`;
+  return buildPublicUrl(siteOrigin, publicPrefix, path);
 }
 
 /**
