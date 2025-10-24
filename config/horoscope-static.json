@@ -8,6 +8,10 @@
   "template_version": "v2",
   "site_origin": "https://aura.bit.city",
   "canonical_prefix": "/maya",
+  "site": {
+    "origin": "https://aura.bit.city",
+    "publicPrefix": "/public"
+  },
   "sitemaps": {
     "index": "public/sitemap.xml",
     "yearly_dir": "public/sitemaps"
