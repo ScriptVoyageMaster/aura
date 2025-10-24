@@ -14,3 +14,6 @@
 
 # Keep empty folder structure
 !/public/maya/.gitkeep
+
+# Локальний конфіг згороскопів (не комітити)
+config/horoscope-static.json
