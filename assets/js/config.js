@@ -4,8 +4,10 @@
 // Окремо описуємо словник локалізації, щоб UI не містив згадок про час.
 const I18N = {
   ua: {
-    title: "Aura — генеративна графіка",
-    description: "Генеруйте унікальні візерунки на основі дати народження.",
+    title:
+      "Гороскоп Майя онлайн — Дізнайся свій знак і значення дати народження | Aura",
+    description:
+      "Дізнайтесь свій гороскоп Майя за датою народження. Введіть дату і відкрийте свій знак, тон і архетип. Безкоштовний аналіз дати народження за календарем Майя.",
     subtitle: "Генеративна магія твоєї дати",
     topBarLabel: "Твоя дата народження",
     date_label: "Дата",
@@ -51,8 +53,10 @@ const I18N = {
     canvasCollapse: "Згорнути",
   },
   en: {
-    title: "Aura — generative graphics",
-    description: "Generate unique patterns based on your birth date.",
+    title:
+      "Maya Horoscope Online — Discover Your Sign and Birth Meaning | Aura",
+    description:
+      "Discover your Mayan horoscope by birth date. Enter your date and reveal your sign, tone, and archetype. Free Mayan calendar birth analysis.",
     subtitle: "Generative magic of your date",
     topBarLabel: "Your birth date",
     date_label: "Date",
@@ -140,8 +144,10 @@ const CONFIG = {
   seo: {
     BASE_URL: "https://ТВІЙ-ДОМЕН/",
     OG_IMAGE: "https://ТВІЙ-ДОМЕН/preview.png",
-    TITLE_UA: "Aura — генеративна графіка",
-    DESCRIPTION_UA: "Генеруйте унікальні візерунки на основі дати народження.",
+    TITLE_UA:
+      "Гороскоп Майя онлайн — Дізнайся свій знак і значення дати народження | Aura",
+    DESCRIPTION_UA:
+      "Дізнайтесь свій гороскоп Майя за датою народження. Введіть дату і відкрийте свій знак, тон і архетип. Безкоштовний аналіз дати народження за календарем Майя.",
   },
 };
 
