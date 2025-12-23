@@ -94,6 +94,12 @@
   <body>
     <div id="aura" data-gender="unspecified">
       <div class="app">
+        <nav class="app-nav" aria-label="Основна навігація SPA">
+          <button type="button" class="app-nav__btn is-active" data-nav="play">Грати</button>
+          <button type="button" class="app-nav__btn" data-nav="admin">Адмінка</button>
+        </nav>
+
+        <section class="screen" data-screen="play">
       <header class="header">
         <h1 class="title">AURA</h1>
         <p class="subtitle" id="subtitle" data-i18n="subtitle">
@@ -303,33 +309,62 @@
           </ul>
         </nav>
       </footer>
+        </section>
+
+        <section class="screen admin-screen" data-screen="adminWorlds" hidden>
+          <div class="admin-panel">
+            <header class="admin-panel__header">
+              <h2 class="admin-panel__title">Адмінка: Сервери</h2>
+              <p class="admin-panel__hint">
+                Тут відображається список серверів і їхній стан. Таблиця завантажиться після перевірки доступу.
+              </p>
+            </header>
+            <div class="admin-panel__state" data-role="admin-worlds-state" aria-live="polite">
+              Loading...
+            </div>
+            <div class="admin-panel__table" data-role="admin-worlds-table" hidden>
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Max States</th>
+                    <th scope="col">Bot Count</th>
+                    <th scope="col">Created At</th>
+                    <th scope="col">Activated At</th>
+                  </tr>
+                </thead>
+                <tbody data-role="admin-worlds-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
 
-      <!-- Модальне вікно з поясненням задуму сайту -->
-      <div
-        class="modal"
-        id="info-modal"
-        hidden
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="info-modal-title"
-      >
-        <div class="modal__overlay" id="modal-overlay"></div>
-        <div class="modal__dialog">
-          <div class="modal__content">
-            <h2 class="modal__title" id="info-modal-title" data-i18n="aboutTitle">Про проєкт</h2>
-            <p class="modal__text" data-i18n-html="modalText">
-              Цей сайт відкриває приховану геометрію вашого життя.<br />
-              На основі дати народження народжується унікальний візерунок — візуальний відбиток вашої присутності у Всесвіті.<br />
-              Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.
-            </p>
-            <button class="modal__close" id="modal-close" data-i18n="modalClose">Добре</button>
-          </div>
+    <!-- Модальне вікно з поясненням задуму сайту -->
+    <div
+      class="modal"
+      id="info-modal"
+      hidden
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="info-modal-title"
+    >
+      <div class="modal__overlay" id="modal-overlay"></div>
+      <div class="modal__dialog">
+        <div class="modal__content">
+          <h2 class="modal__title" id="info-modal-title" data-i18n="aboutTitle">Про проєкт</h2>
+          <p class="modal__text" data-i18n-html="modalText">
+            Цей сайт відкриває приховану геометрію вашого життя.<br />
+            На основі дати народження народжується унікальний візерунок — візуальний відбиток вашої присутності у Всесвіті.<br />
+            Це не просто анімація, а символ початку й таємниці, який завжди буде лише вашим.
+          </p>
+          <button class="modal__close" id="modal-close" data-i18n="modalClose">Добре</button>
         </div>
       </div>
     </div>
-
     <script src="assets/js/config.js"></script>
     <script src="assets/js/utils/prng.js"></script>
     <script src="assets/js/utils/tzolkin.js"></script>

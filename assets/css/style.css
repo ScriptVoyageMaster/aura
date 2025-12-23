@@ -375,4 +375,105 @@ body {
   }
 }
 
+/* === SPA-навігація та адмінський екран === */
+.app-nav {
+  /* Простий горизонтальний бар для перемикання між ігровим режимом та адмінкою */
+  display: flex;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--outline);
+}
+
+.app-nav__btn {
+  /* Кнопки виглядають однаково, активний стан підсвічуємо окремо */
+  border: 1px solid var(--outline);
+  background: transparent;
+  color: var(--text-main);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.app-nav__btn.is-active {
+  /* Активна вкладка стає синьою, щоб користувач бачив поточний розділ */
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.screen[hidden] {
+  /* Швидко приховуємо цілі секції без зайвого споживання ресурсів */
+  display: none !important;
+}
+
+.admin-panel {
+  /* Базове обрамлення для адмінського списку серверів */
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 24px 16px;
+  background: var(--bg-panel, rgba(255, 255, 255, 0.02));
+  border: 1px solid var(--outline);
+  border-radius: 12px;
+  color: var(--text-main);
+}
+
+.admin-panel__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.admin-panel__title {
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.admin-panel__hint {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.admin-panel__state {
+  padding: 12px;
+  border: 1px dashed var(--outline);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-panel__state--error {
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.admin-panel__table {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--outline);
+  text-align: left;
+}
+
+.admin-table th {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.admin-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
 

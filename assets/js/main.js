@@ -69,6 +69,34 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   const fallbackMonth = document.getElementById("monthSelect");
   const fallbackYear = document.getElementById("yearSelect");
 
+  // Колекція навігаційних кнопок та екранів SPA для коректної маршрутизації.
+  const navButtons = document.querySelectorAll("[data-nav]");
+  const screens = new Map();
+  document.querySelectorAll("[data-screen]").forEach((element) => {
+    const key = element.dataset.screen;
+    if (!key) return;
+    if (screens.has(key)) {
+      console.warn(
+        "Виявлено дублікат екрана зі значенням data-screen:",
+        key,
+      );
+      return;
+    }
+    screens.set(key, element);
+  });
+
+  // Посилання на елементи адмінського екрана для швидкого відтворення станів таблиці.
+  const adminScreen = screens.get("adminWorlds");
+  const adminStateBox = adminScreen?.querySelector(
+    '[data-role="admin-worlds-state"]',
+  );
+  const adminTableWrapper = adminScreen?.querySelector(
+    '[data-role="admin-worlds-table"]',
+  );
+  const adminTableBody = adminScreen?.querySelector(
+    '[data-role="admin-worlds-tbody"]',
+  );
+
   // --- 2. Дані сцен ---
   // Оголошуємо перелік доступних сцен. Тепер підтримуємо лише "maya" та легку заглушку "druids".
   const scenes = {
@@ -125,6 +153,12 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
 
   const performanceTracker = { samples: [] };
   const pauseReasons = new Set();
+
+  // Стан адмінської таблиці: допомагає не дублювати запити та відображати поточний прогрес.
+  const adminWorldsState = {
+    isLoading: false,
+    hasLoaded: false,
+  };
 
   const frameInterval = 1000 / CONFIG.global.TARGET_FPS;
   const scenesDesignWidth = CONFIG.global.DESIGN_WIDTH;
@@ -1233,6 +1267,165 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
     }
   }
 
+  // --- 9. Екран адмінки та маршрутизація SPA ---
+
+  /**
+   * Активуємо потрібну кнопку навігації, щоб користувач бачив, де саме знаходиться.
+   */
+  function setActiveNav(navKey) {
+    navButtons.forEach((button) => {
+      const isActive = button.dataset.nav === navKey;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  }
+
+  /**
+   * Показуємо один екран за його ключем та приховуємо всі інші, щоб не мати дублюючих відображень.
+   */
+  function showScreen(screenKey) {
+    const target = screens.get(screenKey);
+    if (!target) {
+      console.warn("Не знайдено екрана для ключа:", screenKey);
+      return;
+    }
+
+    screens.forEach((element, key) => {
+      const shouldShow = key === screenKey;
+      element.toggleAttribute("hidden", !shouldShow);
+    });
+  }
+
+  /**
+   * Вирівнюємо сирі шляхи до підтримуваних маршрутових ключів.
+   */
+  function resolveRoute(pathname) {
+    if (pathname === "/") {
+      return "/play";
+    }
+    if (pathname === "/admin") {
+      return "/admin/worlds";
+    }
+    return pathname;
+  }
+
+  /**
+   * Основний обробник маршруту: перемикає екрани та підсвічує навігацію.
+   */
+  function handleRoute(pathname, { isPopstate = false } = {}) {
+    const normalized = resolveRoute(pathname);
+    if (!isPopstate && normalized !== pathname) {
+      history.replaceState({}, "", normalized);
+    }
+
+    if (normalized.startsWith("/admin")) {
+      setActiveNav("admin");
+      showScreen("adminWorlds");
+      loadAdminWorlds();
+      return;
+    }
+
+    setActiveNav("play");
+    showScreen("play");
+  }
+
+  /**
+   * Допоміжна функція для переходів за кліком без перезавантаження сторінки.
+   */
+  function navigateTo(pathname) {
+    const normalized = resolveRoute(pathname);
+    if (location.pathname !== normalized) {
+      history.pushState({}, "", normalized);
+    }
+    handleRoute(normalized, { isPopstate: true });
+  }
+
+  /**
+   * Відображаємо статус завантаження або помилки для адмінської таблиці.
+   */
+  function renderAdminState(message, { isError = false } = {}) {
+    if (!adminStateBox || !adminTableWrapper) {
+      return;
+    }
+    adminTableWrapper.hidden = true;
+    adminStateBox.hidden = false;
+    adminStateBox.textContent = message;
+    adminStateBox.classList.toggle("admin-panel__state--error", isError);
+  }
+
+  /**
+   * Малюємо таблицю серверів та приховуємо текстові стани.
+   */
+  function renderAdminWorldsTable(worlds) {
+    if (!adminTableBody || !adminTableWrapper || !adminStateBox) {
+      return;
+    }
+
+    adminTableBody.innerHTML = "";
+    worlds.forEach((world) => {
+      const row = document.createElement("tr");
+      const cells = [
+        world.id,
+        world.name || "—",
+        world.status || "—",
+        world.max_states ?? "—",
+        world.bot_count ?? "—",
+        world.created_at || "—",
+        world.activated_at || "—",
+      ];
+
+      cells.forEach((value) => {
+        const cell = document.createElement("td");
+        cell.textContent = String(value ?? "—");
+        row.append(cell);
+      });
+
+      adminTableBody.append(row);
+    });
+
+    adminStateBox.hidden = true;
+    adminTableWrapper.hidden = false;
+  }
+
+  /**
+   * Завантажуємо список серверів з бекенду, враховуючи обробку 403 та технічних помилок.
+   */
+  async function loadAdminWorlds() {
+    if (!adminScreen || adminWorldsState.isLoading || adminWorldsState.hasLoaded) {
+      return;
+    }
+
+    adminWorldsState.isLoading = true;
+    renderAdminState("Loading...");
+
+    try {
+      const response = await fetch("/api/admin/worlds");
+
+      if (response.status === 403) {
+        renderAdminState("Немає доступу", { isError: true });
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const payload = await response.json();
+      if (!Array.isArray(payload) || payload.length === 0) {
+        renderAdminState("Порожній список серверів");
+        return;
+      }
+
+      renderAdminWorldsTable(payload);
+      adminWorldsState.hasLoaded = true;
+    } catch (error) {
+      console.error("Не вдалося отримати перелік серверів:", error);
+      renderAdminState("Помилка завантаження", { isError: true });
+    } finally {
+      adminWorldsState.isLoading = false;
+    }
+  }
+
   showCanvasPlaceholder();
   renderDescriptionPlaceholder();
   hydrateUIFromUrlOrToday();
@@ -1249,7 +1442,25 @@ window.TZOLKIN_ORDER = TZOLKIN_ORDER;
   updateLaunchState();
   writeStateToUrl(readDateFromUI());
 
-  // --- 9. Анімаційний цикл ---
+  // Навігаційні кнопки перемикають маршрути без перезавантаження сторінки.
+  navButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const navKey = button.dataset.nav;
+      if (navKey === "admin") {
+        navigateTo("/admin/worlds");
+      } else {
+        navigateTo("/play");
+      }
+    });
+  });
+
+  window.addEventListener("popstate", () => {
+    handleRoute(location.pathname, { isPopstate: true });
+  });
+
+  handleRoute(location.pathname);
+
+  // --- 10. Анімаційний цикл ---
   function startAnimation() {
     if (!state.animationScheduled) {
       state.animationScheduled = true;
